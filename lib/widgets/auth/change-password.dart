@@ -47,7 +47,7 @@ class _ChangePasswordWidgetState extends State<ChangePasswordWidget> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      resizeToAvoidBottomInset: true,
+      resizeToAvoidBottomInset: false,
       body: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.center,
@@ -62,10 +62,7 @@ class _ChangePasswordWidgetState extends State<ChangePasswordWidget> {
                     children: [
                       Text(
                         "Change password",
-                        style: TextStyle(
-                          fontSize: 32,
-                          fontWeight: FontWeight.w700,
-                        ),
+                          style: Theme.of(context).textTheme.titleLarge,
                       ),
                       SizedBox(width: 0, height: 20),
                       TextField(
@@ -118,14 +115,6 @@ class _ChangePasswordWidgetState extends State<ChangePasswordWidget> {
                         onPressed: () {
                           changePassword();
                         },
-                        style: ButtonStyle(
-                          backgroundColor:
-                              MaterialStatePropertyAll<Color>(Colors.green),
-                          minimumSize: MaterialStatePropertyAll<Size>(
-                              Size(double.infinity, 50)),
-                          padding: MaterialStatePropertyAll<EdgeInsetsGeometry>(
-                              EdgeInsets.fromLTRB(15, 0, 15, 0)),
-                        ),
                         child: const Text('Change password'),
                       ),
                       SizedBox(width: 0, height: 20),
@@ -133,18 +122,9 @@ class _ChangePasswordWidgetState extends State<ChangePasswordWidget> {
                         onPressed: () {
                           gotoLoginScreen();
                         },
-                        style: ButtonStyle(
-                          backgroundColor:
-                              MaterialStatePropertyAll<Color>(Colors.green),
-                          minimumSize: MaterialStatePropertyAll<Size>(
-                              Size(double.infinity, 50)),
-                          padding: MaterialStatePropertyAll<EdgeInsetsGeometry>(
-                              EdgeInsets.fromLTRB(15, 0, 15, 0)),
-                        ),
                         child: const Text('Sign in'),
                       ),
                       SizedBox(width: 0, height: 20),
-
                     ],
                   ),
                 ),

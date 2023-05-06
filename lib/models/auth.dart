@@ -19,12 +19,30 @@ class AuthInfo {
 }
 
 class AuthResponse {
-  AuthResponse(this.user, this.status);
-  AuthInfo user;
+  AuthResponse(this.user, this.status, this.errors);
+
+  AuthInfo? user;
   int status;
+  List<ErrorResponse>? errors;
 
   factory AuthResponse.fromJson(Map<String, dynamic> json) => AuthResponse(
-        AuthInfo.fromJson(json['user']),
+        json['user'] == null ? null : AuthInfo.fromJson(json['user']),
         json['status'],
+        json['errors'] == null
+            ? null
+            : List<ErrorResponse>.from(
+                json['errors'].map((data) => ErrorResponse.fromJson(data))),
+      );
+}
+
+class ErrorResponse {
+  ErrorResponse(this.field, this.code);
+
+  String field;
+  String code;
+
+  factory ErrorResponse.fromJson(Map<String, dynamic> json) => ErrorResponse(
+        json['field'] == null ? '' : json['field'],
+        json['code'] == null ? '' : json['code'],
       );
 }

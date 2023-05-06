@@ -43,12 +43,23 @@ ThemeData getAppTheme(BuildContext context, bool isDarkTheme) {
         secondary: Colors.grey,
         tertiary: Colors.amber),
     elevatedButtonTheme: ElevatedButtonThemeData(
-        style: ButtonStyle(
-      backgroundColor: MaterialStateProperty.all<Color>(Colors.green),
-      minimumSize: MaterialStateProperty.all(Size(double.infinity, 40)),
-      padding: MaterialStateProperty.all(
-          const EdgeInsets.symmetric(vertical: 8, horizontal: 16)),
-    )),
+      style: ButtonStyle(
+        backgroundColor: MaterialStateProperty.all<Color>(Colors.green),
+        minimumSize: MaterialStateProperty.all(Size(double.infinity, 50)),
+        padding: MaterialStateProperty.all(
+          const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
+        ),
+      ),
+    ),
+    outlinedButtonTheme: OutlinedButtonThemeData(
+      style: OutlinedButton.styleFrom(
+        backgroundColor: Colors.white,
+        minimumSize: Size(double.infinity, 50),
+        padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
+        // textStyle: TextStyle(color: Colors.green),
+        foregroundColor: Colors.green,
+      ),
+    ),
     dialogTheme: DialogTheme(
       backgroundColor: Colors.green[200],
     ),

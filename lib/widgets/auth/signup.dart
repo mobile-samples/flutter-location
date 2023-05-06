@@ -28,7 +28,7 @@ class _SignupWidgetState extends State<SignupWidget> {
     final String firstName = firstnameController.value.text;
     final String lastName = lastnameController.value.text;
 
-    final int resBody = await AuthService.instance.signup(
+    final AuthResponse authRes = await AuthService.instance.signup(
       username: username,
       password: password,
       contact: contact,
@@ -36,19 +36,25 @@ class _SignupWidgetState extends State<SignupWidget> {
       lastName: lastName,
     );
 
-    if (resBody == 1) {
+    if (authRes.status == 1) {
       return Navigator.push(
         context,
         MaterialPageRoute(builder: (context) => const LoginWidget()),
       );
     }
-    return showDialogWithMsg(context, 'Alert', 'Signup failed');
+
+    String msg = '';
+    authRes.errors?.forEach((err) {
+      msg += err.field + " " + err.code + '\n';
+    });
+
+    return showDialogWithMsg(context, 'Alert', 'Signup failed\n' + msg);
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      resizeToAvoidBottomInset: true,
+      resizeToAvoidBottomInset: false,
       body: Column(
         children: [
           CircleBackground(
@@ -61,14 +67,13 @@ class _SignupWidgetState extends State<SignupWidget> {
                     children: [
                       Text(
                         "Signup",
-                        style: TextStyle(
-                            fontSize: 32, fontWeight: FontWeight.w700),
+                        style: Theme.of(context).textTheme.titleLarge,
                       ),
                       TextField(
                         controller: userNameController,
                         decoration: InputDecoration(
                           prefixIcon: Icon(Icons.account_box),
-                          hintText: "User name",
+                          hintText: "Username",
                           border: InputBorder.none,
                           fillColor: Colors.green,
                         ),
@@ -87,9 +92,6 @@ class _SignupWidgetState extends State<SignupWidget> {
                       ),
                       TextField(
                         controller: contactController,
-                        obscureText: true,
-                        enableSuggestions: false,
-                        autocorrect: false,
                         decoration: InputDecoration(
                           prefixIcon: Icon(Icons.contact_mail),
                           hintText: "Contact",
@@ -99,9 +101,6 @@ class _SignupWidgetState extends State<SignupWidget> {
                       ),
                       TextField(
                         controller: firstnameController,
-                        obscureText: true,
-                        enableSuggestions: false,
-                        autocorrect: false,
                         decoration: InputDecoration(
                           prefixIcon: Icon(Icons.person),
                           hintText: "First name",
@@ -111,9 +110,6 @@ class _SignupWidgetState extends State<SignupWidget> {
                       ),
                       TextField(
                         controller: lastnameController,
-                        obscureText: true,
-                        enableSuggestions: false,
-                        autocorrect: false,
                         decoration: InputDecoration(
                           prefixIcon: Icon(Icons.person),
                           hintText: "Last name",
@@ -126,18 +122,10 @@ class _SignupWidgetState extends State<SignupWidget> {
                         onPressed: () {
                           handleSignup();
                         },
-                        style: ButtonStyle(
-                          backgroundColor:
-                              MaterialStatePropertyAll<Color>(Colors.green),
-                          minimumSize: MaterialStatePropertyAll<Size>(
-                              Size(double.infinity, 50)),
-                          padding: MaterialStatePropertyAll<EdgeInsetsGeometry>(
-                              EdgeInsets.fromLTRB(15, 0, 15, 0)),
-                        ),
                         child: const Text('Sign up'),
                       ),
                       SizedBox(width: 0, height: 20),
-                      ElevatedButton(
+                      OutlinedButton(
                         onPressed: () {
                           Navigator.pop(
                             context,
@@ -145,14 +133,6 @@ class _SignupWidgetState extends State<SignupWidget> {
                                 builder: (context) => const LoginWidget()),
                           );
                         },
-                        style: ButtonStyle(
-                          backgroundColor:
-                              MaterialStatePropertyAll<Color>(Colors.green),
-                          minimumSize: MaterialStatePropertyAll<Size>(
-                              Size(double.infinity, 50)),
-                          padding: MaterialStatePropertyAll<EdgeInsetsGeometry>(
-                              EdgeInsets.fromLTRB(15, 0, 15, 0)),
-                        ),
                         child: const Text('Cancel'),
                       ),
                     ],
@@ -160,8 +140,6 @@ class _SignupWidgetState extends State<SignupWidget> {
                 ),
               ],
             ),
-            // ),
-            // ),
           )
         ],
       ),

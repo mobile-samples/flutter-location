@@ -2,10 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_user/models/auth.dart';
 import 'package:flutter_user/services/auth.dart';
 import 'package:flutter_user/widget-helpers/circle-background.dart';
-import 'package:flutter_user/widgets/auth/signup.dart';
 import 'package:flutter_user/widgets/home.dart';
 import '../../common/dialog.dart';
-import 'change-password.dart';
 
 class LoginWidget extends StatefulWidget {
   const LoginWidget({Key? key}) : super(key: key);
