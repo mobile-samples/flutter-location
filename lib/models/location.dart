@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 class Location {
   Location(
       this.createdat,
@@ -23,8 +25,8 @@ class Location {
   String? id;
   String? imageURL;
   LocationInfo? info;
-  String? latitude;
-  String? longitude;
+  double? latitude;
+  double? longitude;
   String? name;
   String? status;
   String? type;
@@ -60,7 +62,7 @@ class LocationInfo {
     this.score,
   );
   int? count;
-  String? rate;
+  double? rate;
   int? rate1;
   int? rate2;
   int? rate3;

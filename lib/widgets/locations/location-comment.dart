@@ -66,170 +66,136 @@ class _LocationCommentState extends State<LocationComment> {
     if (_loading) {
       return Center(
         child: CircularProgressIndicator(
-          backgroundColor: Colors.white,
-          valueColor: new AlwaysStoppedAnimation<Color>(Colors.green),
+          backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+          valueColor: new AlwaysStoppedAnimation<Color>(
+              Theme.of(context).colorScheme.primary),
         ),
       );
     }
-    return Container(
-        width: MediaQuery.of(context).size.width,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            TextButton(
-              style: TextButton.styleFrom(
-                primary: Colors.green,
-                textStyle: TextStyle(fontSize: 16),
-              ),
-              onPressed: () {
-                showModalBottomSheet(
-                    context: context,
-                    isScrollControlled: true,
-                    shape: RoundedRectangleBorder(
-                        borderRadius:
-                            BorderRadius.vertical(top: Radius.circular(20.0))),
-                    builder: (BuildContext buildContext) {
-                      return RateForm(postRate: postRate);
-                    });
-              },
-              child: Text('Post a Review'),
-            ),
-            Container(
-              child: ListView.builder(
-                  scrollDirection: Axis.vertical,
-                  shrinkWrap: true,
-                  itemCount: int.parse(listRate.total),
-                  itemBuilder: (context, index) {
-                    return Padding(
-                      padding: EdgeInsets.fromLTRB(5, 5, 5, 5),
-                      child: GestureDetector(
-                        onTap: () {},
-                        child: Card(
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(10),
-                          ),
-                          color: Color(0Xd9f0f0f0),
-                          child: Padding(
-                            padding: EdgeInsets.all(10),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        TextButton(
+          style: Theme.of(context).textButtonTheme.style,
+          onPressed: () {
+            showModalBottomSheet(
+                context: context,
+                isScrollControlled: true,
+                shape: RoundedRectangleBorder(
+                    borderRadius:
+                        BorderRadius.vertical(top: Radius.circular(20.0))),
+                builder: (BuildContext buildContext) {
+                  return RateForm(postRate: postRate);
+                });
+          },
+          child: Text('Post a Review'),
+        ),
+        ListView.builder(
+            shrinkWrap: true,
+            itemCount: listRate.total,
+            physics: const ClampingScrollPhysics(),
+            itemBuilder: (context, index) {
+              return Card(
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                color: Color.fromARGB(240, 240, 240, 240),
+                child: Padding(
+                  padding: EdgeInsets.all(10),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        'Review by ' +
+                            (!listRate.list[index].anonymous
+                                ? listRate.list[index].authorName ?? 'Anonymous'
+                                : 'Anonymous'),
+                        style: TextStyle(
+                            fontSize: 14, fontWeight: FontWeight.w400),
+                      ),
+                      Divider(),
+                      Container(
+                        width: double.maxFinite,
+                        height: 120,
+                        child: Column(
+                          children: [
+                            RatingBar.builder(
+                              initialRating: double.parse(
+                                  listRate.list[index].rate.toString()),
+                              minRating: 1,
+                              direction: Axis.horizontal,
+                              itemCount: 5,
+                              itemSize: 14,
+                              itemPadding:
+                                  EdgeInsets.symmetric(horizontal: 4.0),
+                              itemBuilder: (context, _) => Icon(
+                                Icons.star,
+                                color: Theme.of(context).colorScheme.tertiary,
+                              ),
+                              onRatingUpdate: (rating) {},
+                            ),
+                            Spacer(),
+                            Text(
+                              listRate.list[index].review ?? '',
+                              style: TextStyle(
+                                  fontSize: 14, fontWeight: FontWeight.w400),
+                            ),
+                            Spacer(),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                Text(
-                                  'Review by ' +
-                                      (!listRate.list[index].anonymous
-                                          ? listRate.list[index].authorName ??
-                                              'Anonymous'
-                                          : 'Anonymous'),
-                                  style: TextStyle(
-                                      fontSize: 14,
-                                      fontWeight: FontWeight.w400),
+                                Row(
+                                  children: [
+                                    IconButton(
+                                        onPressed: () {
+                                          useFul(
+                                              listRate.list[index].author ?? '',
+                                              !listRate.list[index].disable);
+                                        },
+                                        icon: Icon(listRate.list[index].disable
+                                            ? Icons.favorite
+                                            : Icons.favorite_outline)),
+                                    Text(listRate.list[index].usefulCount
+                                        .toString())
+                                  ],
                                 ),
-                                Divider(),
-                                Container(
-                                  width: double.maxFinite,
-                                  height: 120,
-                                  child: Column(
-                                    children: [
-                                      RatingBar.builder(
-                                        initialRating: double.parse(listRate
-                                            .list[index].rate
-                                            .toString()),
-                                        minRating: 1,
-                                        direction: Axis.horizontal,
-                                        itemCount: 5,
-                                        itemSize: 14,
-                                        itemPadding: EdgeInsets.symmetric(
-                                            horizontal: 4.0),
-                                        itemBuilder: (context, _) => Icon(
-                                          Icons.star,
-                                          color: Colors.amber,
-                                        ),
-                                        onRatingUpdate: (rating) {},
-                                      ),
-                                      Padding(
-                                        padding: EdgeInsets.only(top: 25),
-                                        child: Text(
-                                          listRate.list[index].review ?? '',
-                                          style: TextStyle(
-                                              fontSize: 14,
-                                              fontWeight: FontWeight.w400),
-                                        ),
-                                      ),
-                                      Spacer(),
-                                      Padding(
-                                        padding: EdgeInsets.only(top: 10),
-                                        child: Row(
-                                          children: [
-                                            Row(
-                                              children: [
-                                                IconButton(
-                                                    onPressed: () {
-                                                      useFul(
-                                                          listRate.list[index]
-                                                                  .author ??
-                                                              '',
-                                                          !listRate.list[index]
-                                                              .disable);
-                                                    },
-                                                    icon: Icon(listRate
-                                                            .list[index].disable
-                                                        ? Icons.favorite
-                                                        : Icons
-                                                            .favorite_outline)),
-                                                Text(listRate
-                                                    .list[index].usefulCount
-                                                    .toString())
-                                              ],
-                                            ),
-                                            Spacer(),
-                                            Row(
-                                              children: [
-                                                IconButton(
-                                                    onPressed: () {
-                                                      showModalBottomSheet(
-                                                          context: context,
-                                                          isScrollControlled:
-                                                              true,
-                                                          shape: RoundedRectangleBorder(
-                                                              borderRadius:
-                                                                  BorderRadius.vertical(
-                                                                      top: Radius
-                                                                          .circular(
-                                                                              20.0))),
-                                                          builder: (BuildContext
-                                                              buildContext) {
-                                                            return ReplyForm(
-                                                                locationId: widget
-                                                                    .locationId,
-                                                                authorOfRate:
-                                                                    listRate
-                                                                        .list[
-                                                                            index]
-                                                                        .author);
-                                                          });
-                                                    },
-                                                    icon: Icon(Icons
-                                                        .comment_outlined)),
-                                                Text(listRate
-                                                    .list[index].replyCount
-                                                    .toString())
-                                              ],
-                                            )
-                                          ],
-                                        ),
-                                      )
-                                    ],
-                                  ),
+                                Row(
+                                  children: [
+                                    IconButton(
+                                        onPressed: () {
+                                          showModalBottomSheet(
+                                              context: context,
+                                              isScrollControlled: true,
+                                              shape: RoundedRectangleBorder(
+                                                  borderRadius:
+                                                      BorderRadius.vertical(
+                                                          top: Radius.circular(
+                                                              20.0))),
+                                              builder:
+                                                  (BuildContext buildContext) {
+                                                return ReplyForm(
+                                                    locationId:
+                                                        widget.locationId,
+                                                    authorOfRate: listRate
+                                                        .list[index].author);
+                                              });
+                                        },
+                                        icon: Icon(Icons.comment_outlined)),
+                                    Text(listRate.list[index].replyCount
+                                        .toString())
+                                  ],
                                 )
                               ],
                             ),
-                          ),
+                          ],
                         ),
-                      ),
-                    );
-                  }),
-            )
-          ],
-        ));
+                      )
+                    ],
+                  ),
+                ),
+              );
+            }),
+      ],
+    );
   }
 }

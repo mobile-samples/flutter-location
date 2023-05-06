@@ -89,9 +89,9 @@ class RateService {
         '/useful/' +
         (userId ?? '');
     final response = useful
-        ? await http.post(Uri.parse(url), headers: headers)
+        ? await http.post(Uri.parse(url), headers: headers,  body: jsonEncode(<dynamic, dynamic>{}))
         : await http.delete(Uri.parse(url), headers: headers);
-    if (response.statusCode == 200 && json.decode(response.body) > 1) {
+    if (response.statusCode == 200 && json.decode(response.body) > 0) {
       return 1;
     } else {
       throw json.decode(response.body)['error']['message'];

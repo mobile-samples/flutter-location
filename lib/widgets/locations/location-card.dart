@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_user/models/location.dart';
 
 class LocationCard extends StatelessWidget {
@@ -9,40 +8,26 @@ class LocationCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
         alignment: Alignment.centerLeft,
-        decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.circular(4),
-          boxShadow: [
-            BoxShadow(
-                color: Color(0xffDDDDDD),
-                blurRadius: 2.0,
-                spreadRadius: 2.0,
-                offset: Offset(
-                  2.0, // Move to right 7.0 horizontally
-                  2.0, // Move to bottom 8.0 Vertically
-                ))
-          ],
-        ),
-        child: Column(
+        height: double.maxFinite,
+        width: 200,
+        child: Card(
+            child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Container(
-                height: 125,
-                width: 200,
-                decoration: BoxDecoration(
-                  color: Colors.black,
-                ),
-                child: Image(
-                  image: NetworkImage(location.imageURL ?? ''),
-                )),
+            Image(
+              image: NetworkImage(location.imageURL ??
+                  'https://upload.wikimedia.org/wikipedia/commons/thumb/d/d1/Image_not_available.png/640px-Image_not_available.png'),
+              width: double.infinity,
+              height: 125,
+              fit: BoxFit.cover,
+            ),
             Padding(
-                padding: EdgeInsets.fromLTRB(10, 8, 10, 8),
-                child: Container(
-                    child: Text(
-                  location.name ?? '',
-                  style: TextStyle(fontWeight: FontWeight.w500),
-                )))
+              padding: EdgeInsets.fromLTRB(5, 10, 0, 0),
+              child: Text(
+                location.name ?? '',
+              ),
+            )
           ],
-        ));
+        )));
   }
 }

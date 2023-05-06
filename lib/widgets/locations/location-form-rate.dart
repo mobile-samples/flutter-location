@@ -33,23 +33,17 @@ class _RateFormState extends State<RateForm> {
             mainAxisSize: MainAxisSize.min,
             children: [
               Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   TextButton(
-                    style: TextButton.styleFrom(
-                      primary: Colors.green,
-                      textStyle: TextStyle(fontSize: 16),
-                    ),
+                    style: Theme.of(context).textButtonTheme.style,
                     onPressed: () {
                       Navigator.pop(context);
                     },
                     child: Text('Done'),
                   ),
-                  Spacer(),
                   TextButton(
-                    style: TextButton.styleFrom(
-                      primary: Colors.green,
-                      textStyle: TextStyle(fontSize: 16),
-                    ),
+                    style: Theme.of(context).textButtonTheme.style,
                     onPressed: () async {
                       await postRateHandle(context);
                     },
@@ -67,7 +61,7 @@ class _RateFormState extends State<RateForm> {
                 itemPadding: EdgeInsets.symmetric(horizontal: 4.0),
                 itemBuilder: (context, _) => Icon(
                   Icons.star,
-                  color: Colors.amber,
+                  color: Theme.of(context).colorScheme.tertiary,
                 ),
                 onRatingUpdate: (rating) {
                   setState(() {
@@ -75,38 +69,28 @@ class _RateFormState extends State<RateForm> {
                   });
                 },
               ),
-              Padding(
-                padding: EdgeInsets.only(top: 10),
-                child: Card(
-                  color: Colors.white,
-                  child: Padding(
-                    padding: EdgeInsets.all(12),
-                    child: TextField(
-                      controller: review,
-                      maxLines: 8, //or null
-                    ),
-                  ),
+              Card(
+                color: Theme.of(context).colorScheme.background,
+                child: TextField(
+                  controller: review,
+                  maxLines: 8, //or null
                 ),
               ),
-              Padding(
-                padding: EdgeInsets.fromLTRB(12, 10, 12, 10),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Text('Anonymous'),
-                    Switch(
-                      value: anonymous,
-                      activeColor: Colors.green,
-                      onChanged: (bool value) {
-                        setState(() {
-                          anonymous = value;
-                        });
-                      },
-                    )
-                  ],
-                ),
-              )
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Text('Anonymous'),
+                  Switch(
+                    value: anonymous,
+                    activeColor: Theme.of(context).colorScheme.primary,
+                    onChanged: (bool value) {
+                      setState(() {
+                        anonymous = value;
+                      });
+                    },
+                  )
+                ],
+              ),
             ],
           ),
         ),

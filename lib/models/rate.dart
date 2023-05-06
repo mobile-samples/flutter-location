@@ -53,6 +53,6 @@ class RateReply {
       json['commentId'],
       json['time'],
       json['comment'],
-      json['userURL'] != null ? json['userURL'] : '',
+      json['authorURL'] != null ? json['authorURL'] : '',
       json['anonymous'] != null ? json['anonymous'] : false);
 }

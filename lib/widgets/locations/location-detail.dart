@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_user/models/location.dart';
 import 'package:flutter_user/services/location.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
@@ -49,16 +48,16 @@ class _LocationDetailState extends State<LocationDetail> {
             itemPadding: EdgeInsets.symmetric(horizontal: 4.0),
             itemBuilder: (context, _) => Icon(
               Icons.star,
-              color: Colors.amber,
+              color: Theme.of(context).colorScheme.tertiary,
             ),
             onRatingUpdate: (rating) {},
           ),
           Container(
               width: 150,
               child: LinearProgressIndicator(
-                backgroundColor: Colors.grey,
+                backgroundColor: Theme.of(context).colorScheme.secondary,
                 valueColor: AlwaysStoppedAnimation<Color>(
-                  Colors.amber,
+                  Theme.of(context).colorScheme.tertiary,
                 ),
                 value:
                     ((per * 100) / (info?.count == 0 ? 1 : info?.count)) ?? 0,
@@ -75,8 +74,9 @@ class _LocationDetailState extends State<LocationDetail> {
     if (_loading) {
       return Center(
         child: CircularProgressIndicator(
-          backgroundColor: Colors.white,
-          valueColor: new AlwaysStoppedAnimation<Color>(Colors.green),
+          backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+          valueColor: new AlwaysStoppedAnimation<Color>(
+              Theme.of(context).colorScheme.primary),
         ),
       );
     }
@@ -84,52 +84,45 @@ class _LocationDetailState extends State<LocationDetail> {
       child: Scaffold(
         appBar: AppBar(
           iconTheme: IconThemeData(
-            color: Colors.white, //change your color here
+            color: Theme.of(context)
+                .scaffoldBackgroundColor, //change your color here
           ),
           title: Text("Location"),
-          backgroundColor: Colors.green,
+          backgroundColor: Theme.of(context).colorScheme.primary,
           centerTitle: true,
         ),
         resizeToAvoidBottomInset: false,
         body: SingleChildScrollView(
           child: Column(
             children: [
-              Container(
-                  width: MediaQuery.of(context).size.width,
-                  decoration: BoxDecoration(
-                      color: Colors.black,
-                      image: DecorationImage(
-                          image: NetworkImage(location.imageURL ?? ''),
-                          fit: BoxFit.cover)),
-                  height: 220),
+              Image(
+                image: NetworkImage(location.imageURL ?? ''),
+                fit: BoxFit.cover,
+                height: 220,
+                width: MediaQuery.of(context).size.width,
+              ),
               Padding(
                 padding: EdgeInsets.all(10),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text(
-                              location.name ?? '',
-                              style: TextStyle(
-                                  fontSize: 22, fontWeight: FontWeight.w700),
-                            ),
+                            Text(location.name ?? '',
+                                style:
+                                    Theme.of(context).textTheme.headlineMedium),
                             Text(
                               location.description ?? '',
-                              style:
-                                  TextStyle(color: Colors.grey, fontSize: 14),
+                              style: Theme.of(context).textTheme.labelSmall,
                             )
                           ],
                         ),
-                        Spacer(),
                         TextButton(
-                          style: TextButton.styleFrom(
-                            primary: Colors.green,
-                            textStyle: TextStyle(fontSize: 16),
-                          ),
+                          style: Theme.of(context).textButtonTheme.style,
                           onPressed: () {
                             showModalBottomSheet(
                                 context: context,
@@ -151,8 +144,7 @@ class _LocationDetailState extends State<LocationDetail> {
                     Divider(),
                     Text(
                       'Rating & Reviews',
-                      style:
-                          TextStyle(fontWeight: FontWeight.w600, fontSize: 18),
+                      style: Theme.of(context).textTheme.titleMedium,
                     ),
                     Padding(
                       padding: EdgeInsets.only(top: 10),
@@ -161,20 +153,19 @@ class _LocationDetailState extends State<LocationDetail> {
                           Column(
                             children: [
                               Text(
-                                location.info?.score ?? '0',
-                                style: TextStyle(
-                                    fontSize: 40, fontWeight: FontWeight.w500),
+                                location.info?.rate.toString() ?? '0',
+                                style: Theme.of(context).textTheme.titleLarge,
                               ),
                               Text(
                                 'out of 5',
-                                style: TextStyle(color: Colors.grey),
+                                style: Theme.of(context).textTheme.labelSmall,
                               )
                             ],
                           ),
                           Spacer(),
                           Row(
                             children: [
-                              getListStarWidgets(location.info),
+                              getListStarWidgets(location.info, context),
                             ],
                           ),
                         ],

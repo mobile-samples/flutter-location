@@ -16,6 +16,7 @@ class _ReplyFormState extends State<ReplyForm> {
   late List<RateReply> listReply;
   late bool _loading = true;
   TextEditingController comment = TextEditingController();
+  final ScrollController scrollController = ScrollController();
   bool anonymous = true;
   @override
   void initState() {
@@ -31,6 +32,9 @@ class _ReplyFormState extends State<ReplyForm> {
         listReply = res;
         _loading = false;
       });
+      if (scrollController.hasClients) {
+        scrollController.jumpTo(scrollController.position.maxScrollExtent + 80);
+      }
     }
   }
 
@@ -51,8 +55,9 @@ class _ReplyFormState extends State<ReplyForm> {
     if (_loading) {
       return Center(
         child: CircularProgressIndicator(
-          backgroundColor: Colors.white,
-          valueColor: new AlwaysStoppedAnimation<Color>(Colors.green),
+          backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+          valueColor: new AlwaysStoppedAnimation<Color>(
+              Theme.of(context).colorScheme.primary),
         ),
       );
     }
@@ -65,19 +70,23 @@ class _ReplyFormState extends State<ReplyForm> {
       child: Scaffold(
           appBar: AppBar(
             iconTheme: IconThemeData(
-              color: Colors.white, //change your color here
+              color: Theme.of(context)
+                  .colorScheme
+                  .background, //change your color here
             ),
             title: Text('Reply'),
-            backgroundColor: Colors.green,
+            backgroundColor: Theme.of(context).colorScheme.primary,
             centerTitle: true,
           ),
           body: Column(
             children: [
-              Container(
+              Expanded(
+                flex: 4,
                 child: ListView.builder(
                   scrollDirection: Axis.vertical,
                   itemCount: listReply.length,
                   shrinkWrap: true,
+                  controller: scrollController,
                   itemBuilder: (context, index) {
                     return Card(
                         shape: RoundedRectangleBorder(
@@ -90,7 +99,7 @@ class _ReplyFormState extends State<ReplyForm> {
                               CircleAvatar(
                                 backgroundImage: NetworkImage(!listReply[index]
                                         .anonymous
-                                    ? listReply[index].userURL ?? ''
+                                    ? listReply[index].authorURL ?? ''
                                     : 'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png'),
                               ),
                               Padding(
@@ -113,7 +122,9 @@ class _ReplyFormState extends State<ReplyForm> {
                                         ),
                                         Text(
                                           listReply[index].time!.split('T')[0],
-                                          style: TextStyle(color: Colors.grey),
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .labelSmall,
                                         )
                                       ],
                                     ),
@@ -127,50 +138,46 @@ class _ReplyFormState extends State<ReplyForm> {
                   },
                 ),
               ),
-              Spacer(),
-              Padding(
-                padding: EdgeInsets.only(top: 10),
-                child: Card(
-                  color: Colors.white,
-                  child: Padding(
-                    padding: EdgeInsets.all(12),
-                    child: TextField(
-                      controller: comment,
-                      maxLines: 1, //or null
-                    ),
-                  ),
-                ),
-              ),
-              Padding(
-                padding: EdgeInsets.fromLTRB(12, 10, 12, 10),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Text('Anonymous'),
-                    Switch(
-                      value: anonymous,
-                      activeColor: Colors.green,
-                      onChanged: (bool value) {
-                        setState(() {
-                          anonymous = value;
-                        });
-                      },
-                    ),
-                    Spacer(),
-                    TextButton(
-                      style: TextButton.styleFrom(
-                        primary: Colors.green,
-                        textStyle: TextStyle(fontSize: 16),
+              Expanded(
+                  flex: 1,
+                  child: Column(
+                    children: [
+                      Card(
+                        color: Theme.of(context).colorScheme.background,
+                        child: Padding(
+                          padding: EdgeInsets.all(12),
+                          child: TextField(
+                            controller: comment,
+                            maxLines: 1, //or null
+                          ),
+                        ),
                       ),
-                      onPressed: () async {
-                        await postReply();
-                      },
-                      child: Text('Reply'),
-                    ),
-                  ],
-                ),
-              )
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Text('Anonymous'),
+                          Switch(
+                            value: anonymous,
+                            activeColor: Theme.of(context).colorScheme.primary,
+                            onChanged: (bool value) {
+                              setState(() {
+                                anonymous = value;
+                              });
+                            },
+                          ),
+                          Spacer(),
+                          TextButton(
+                            style: Theme.of(context).textButtonTheme.style,
+                            onPressed: () async {
+                              await postReply();
+                            },
+                            child: Text('Reply'),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ))
             ],
           )),
     ));

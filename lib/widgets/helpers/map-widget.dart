@@ -29,17 +29,18 @@ class _MapWidgetState extends State<MapWidget> {
       child: Scaffold(
         appBar: AppBar(
           iconTheme: IconThemeData(
-            color: Colors.white, //change your color here
+            color: Theme.of(context)
+                .scaffoldBackgroundColor, //change your color here
           ),
           title: Text(widget.locationName),
-          backgroundColor: Colors.green,
+          backgroundColor: Theme.of(context).colorScheme.primary,
           centerTitle: true,
         ),
         body: FlutterMap(
           options: MapOptions(
             // screenSize: Size.fromHeight(300),
-            center: latLng.LatLng(double.parse(widget.latitude ?? '0'),
-                double.parse(widget.longitude ?? '0')),
+            center: latLng.LatLng(
+                (widget.latitude ?? '0'), (widget.longitude ?? '0')),
             zoom: 17.0,
           ),
           layers: [
@@ -52,8 +53,8 @@ class _MapWidgetState extends State<MapWidget> {
                 Marker(
                   width: 80.0,
                   height: 80.0,
-                  point: latLng.LatLng(double.parse(widget.latitude ?? '0'),
-                      double.parse(widget.longitude ?? '0')),
+                  point: latLng.LatLng(
+                      (widget.latitude ?? 0), (widget.longitude ?? 0)),
                   builder: (ctx) => Container(
                     child: Icon(
                       Icons.place,

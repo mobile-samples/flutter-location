@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_user/common/app_theme.dart';
 import 'package:flutter_user/services/auth.dart';
 import 'package:flutter_user/widgets/home.dart';
 
@@ -14,15 +15,15 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
         title: 'Film',
-        theme: ThemeData(
-          primarySwatch: Colors.blue,
-        ),
+        theme: getAppTheme(context, false),
         home: FutureBuilder(
           future: AuthService.instance.tryAutoLogin(),
           builder: (context, authResult) {
             if (authResult.connectionState == ConnectionState.waiting) {
               return CircularProgressIndicator(
-                valueColor: AlwaysStoppedAnimation<Color>(Colors.green),
+                valueColor: AlwaysStoppedAnimation<Color>(
+                  Theme.of(context).colorScheme.primary,
+                ),
               );
             }
             if (authResult.connectionState == ConnectionState.done) {

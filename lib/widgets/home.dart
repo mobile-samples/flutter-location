@@ -39,8 +39,9 @@ class _HomeWidgetState extends State<HomeWidget> {
             }
             return Center(
               child: CircularProgressIndicator(
-                backgroundColor: Colors.white,
-                valueColor: new AlwaysStoppedAnimation<Color>(Colors.green),
+                backgroundColor: Theme.of(context).colorScheme.background,
+                valueColor: new AlwaysStoppedAnimation<Color>(
+                    Theme.of(context).colorScheme.primary),
               ),
             );
           },

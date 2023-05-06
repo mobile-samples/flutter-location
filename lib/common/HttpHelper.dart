@@ -15,6 +15,7 @@ class HttpHelper {
     } else if (Platform.isIOS) {
       return baseUrlIOS;
     }
+    return 'http://localhost:8082';
   }
 
   buildHeader() async {

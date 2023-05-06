@@ -2,7 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_user/models/auth.dart';
 import 'package:flutter_user/services/auth.dart';
 import 'package:flutter_user/widget-helpers/circle-background.dart';
+import 'package:flutter_user/widgets/auth/signup.dart';
 import 'package:flutter_user/widgets/home.dart';
+import '../../common/dialog.dart';
+import 'change-password.dart';
 
 class LoginWidget extends StatefulWidget {
   const LoginWidget({Key? key}) : super(key: key);
@@ -18,6 +21,10 @@ class _LoginWidgetState extends State<LoginWidget> {
   handleLogin() async {
     final String username = userNameController.value.text;
     final String password = passwordController.value.text;
+    if (username == "" || password == "") {
+      return showDialogWithMsg(
+          context, 'Alert', 'Please input your username or password');
+    }
     final AuthResponse res = await AuthService.instance
         .authenticate(username: username, password: password);
     if (res.user.token != '') {

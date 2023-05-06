@@ -47,4 +47,54 @@ class AuthService {
     }
     return false;
   }
+
+  Future<int> isChangePassword(
+      {required String username,
+      required String password,
+      required String currentPassword}) async {
+    late String baseUrl = HttpHelper.instance.getUrl();
+    final res = await http.post(
+      Uri.parse(baseUrl + '/password/change'),
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
+      body: jsonEncode(<String, String>{
+        'username': username,
+        'password': password,
+        'currentPassword': currentPassword,
+      }),
+    );
+    if (res.statusCode != 200) {
+      throw json.decode(res.body)['error']['message'];
+    }
+    return int.parse(res.body);
+  }
+
+  Future<int> signup({
+    required String username,
+    required String password,
+    required String contact,
+    required String firstName,
+    required String lastName,
+  }) async {
+    late String baseUrl = HttpHelper.instance.getUrl();
+    final res = await http.post(
+      Uri.parse(baseUrl + '/signup/signup'),
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
+      body: jsonEncode(<String, String>{
+        "username": username,
+        "password": password,
+        "contact": contact,
+        "firstName": firstName,
+        "lastName": lastName,
+      }),
+    );
+    if (res.statusCode != 200) {
+      throw json.decode(res.body)['error']['message'];
+    }
+    // print(res.body.status);
+    return int.parse(res.body);
+  }
 }
