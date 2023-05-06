@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_user/models/rate.dart';
 import 'package:flutter_user/models/search.dart';
 import 'package:flutter_user/services/rate.dart';

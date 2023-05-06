@@ -32,7 +32,7 @@ class _LocationDetailState extends State<LocationDetail> {
     });
   }
 
-  Widget getListStarWidgets(LocationInfo? info) {
+  Widget getListStarWidgets(LocationInfo? info, BuildContext context) {
     List<Widget> list = [];
     final infoMap = info?.toMap();
     for (var i = 5; i > 0; i--) {

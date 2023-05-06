@@ -25,7 +25,7 @@ class _LoginWidgetState extends State<LoginWidget> {
     }
     final AuthResponse res = await AuthService.instance
         .authenticate(username: username, password: password);
-    if (res.user.token != '') {
+    if (res.user?.token != '') {
       Navigator.push(
         context,
         MaterialPageRoute(builder: (context) => const HomeWidget()),

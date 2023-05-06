@@ -36,14 +36,14 @@ class RateComment {
 
 class RateReply {
   RateReply(this.author, this.authorName, this.id, this.commentId, this.time,
-      this.comment, this.userURL, this.anonymous);
+      this.comment, this.authorURL, this.anonymous);
   String? author;
   String? authorName;
   String? id;
   String? commentId;
   String? time;
   String? comment;
-  String? userURL;
+  String? authorURL;
   bool anonymous;
 
   factory RateReply.fromJson(Map<String, dynamic> json) => RateReply(

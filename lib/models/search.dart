@@ -22,7 +22,7 @@ abstract class Filter {
 
 class SearchResult<T> {
   List<T> list;
-  String total;
+  int total;
   bool? last;
   String? nextPageToken;
 
