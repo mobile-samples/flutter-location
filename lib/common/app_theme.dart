@@ -14,7 +14,7 @@ ThemeData getAppTheme(BuildContext context, bool isDarkTheme) {
     textTheme: Theme.of(context).textTheme.copyWith(
           titleLarge: TextStyle(
             color: isDarkTheme ? Colors.white : Colors.black,
-            fontSize: 32,
+            fontSize: 28,
             fontWeight: FontWeight.w800,
           ),
           titleMedium: TextStyle(
@@ -24,12 +24,18 @@ ThemeData getAppTheme(BuildContext context, bool isDarkTheme) {
           ),
           headlineMedium: TextStyle(
               color: isDarkTheme ? Colors.white : Colors.black,
-              fontSize: 28,
+              fontSize: 20,
               fontWeight: FontWeight.w600),
           labelSmall: TextStyle(
               color: isDarkTheme ? Colors.white : Colors.grey,
-              fontSize: 14,
+              fontSize: 10,
               fontWeight: FontWeight.w500),
+        ),
+    cardTheme: Theme.of(context).cardTheme.copyWith(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(10),
+          ),
+          color: Color.fromARGB(240, 240, 240, 240),
         ),
     textButtonTheme: TextButtonThemeData(
       style: ButtonStyle(

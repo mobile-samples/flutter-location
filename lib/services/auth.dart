@@ -99,4 +99,50 @@ class AuthService {
     dynamic resBody = jsonDecode(res.body);
     return AuthResponse.fromJson(resBody);
   }
+
+  Future<bool> sendEmailForgotPW({required String contact}) async {
+    late String baseUrl = HttpHelper.instance.getUrl();
+    final res = await http.post(
+      Uri.parse(baseUrl + '/password/forgot'),
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
+      body: jsonEncode(<String, String>{
+        "contact": contact,
+      }),
+    );
+    if (res.statusCode != 200) {
+      throw json.decode(res.body)['error']['message'];
+    }
+
+    if (jsonDecode(res.body).toString() == 'true') {
+      return true;
+    }
+    return false;
+  }
+
+  Future<int> resetPassword({
+    required String username,
+    required String passcode,
+    required String password,
+  }) async {
+    late String baseUrl = HttpHelper.instance.getUrl();
+    final res = await http.post(
+      Uri.parse(baseUrl + '/password/reset'),
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
+      body: jsonEncode(<String, String>{
+        "username": username,
+        "passcode": passcode,
+        "password": password,
+      }),
+    );
+    if (res.statusCode != 200) {
+      throw json.decode(res.body)['error']['message'];
+    }
+
+    dynamic resBody = jsonDecode(res.body);
+    return int.parse(resBody.toString());
+  }
 }

@@ -59,8 +59,7 @@ class _LocationDetailState extends State<LocationDetail> {
                 valueColor: AlwaysStoppedAnimation<Color>(
                   Theme.of(context).colorScheme.tertiary,
                 ),
-                value:
-                    ((per * 100) / (info?.count == 0 ? 1 : info?.count)) ?? 0,
+                value: ((per * 100) / 5) ?? 0,
               )),
         ],
       ));
@@ -146,30 +145,30 @@ class _LocationDetailState extends State<LocationDetail> {
                       'Rating & Reviews',
                       style: Theme.of(context).textTheme.titleMedium,
                     ),
-                    Padding(
-                      padding: EdgeInsets.only(top: 10),
-                      child: Row(
-                        children: [
-                          Column(
-                            children: [
-                              Text(
-                                location.info?.rate.toString() ?? '0',
-                                style: Theme.of(context).textTheme.titleLarge,
-                              ),
-                              Text(
-                                'out of 5',
-                                style: Theme.of(context).textTheme.labelSmall,
-                              )
-                            ],
-                          ),
-                          Spacer(),
-                          Row(
-                            children: [
-                              getListStarWidgets(location.info, context),
-                            ],
-                          ),
-                        ],
-                      ),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    Row(
+                      children: [
+                        Column(
+                          children: [
+                            Text(
+                              location.info?.rate.toString() ?? '0',
+                              style: Theme.of(context).textTheme.titleLarge,
+                            ),
+                            Text(
+                              'out of 5',
+                              style: Theme.of(context).textTheme.labelSmall,
+                            )
+                          ],
+                        ),
+                        Spacer(),
+                        Row(
+                          children: [
+                            getListStarWidgets(location.info, context),
+                          ],
+                        ),
+                      ],
                     ),
                     LocationComment(
                       locationId: location.id ?? '',

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+
+import '../../common/dialog.dart';
 
 class RateForm extends StatefulWidget {
   const RateForm({Key? key, required this.postRate}) : super(key: key);
@@ -15,6 +16,10 @@ class _RateFormState extends State<RateForm> {
   bool anonymous = true;
 
   postRateHandle(BuildContext context) async {
+    if (rate == 0 || review.value.text == "") {
+      return showDialogWithMsg(
+          context, 'Alert', 'Please input your rate / review');
+    }
     final res = await widget.postRate(rate, review.value.text, anonymous);
     if (res > 0) {
       Navigator.pop(context);

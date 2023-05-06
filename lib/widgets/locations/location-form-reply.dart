@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_user/models/rate.dart';
 import 'package:flutter_user/services/rate.dart';
 
+import '../../common/dialog.dart';
+
 class ReplyForm extends StatefulWidget {
   const ReplyForm(
       {Key? key, required this.locationId, required this.authorOfRate})
@@ -39,6 +41,10 @@ class _ReplyFormState extends State<ReplyForm> {
   }
 
   postReply<double>() async {
+    if (comment.value.text == "") {
+      return showDialogWithMsg(
+          context, 'Alert', 'Please input your rate / review');
+    }
     final date = DateTime.now().toIso8601String();
     final res = await RateService.instance.postReply(widget.locationId,
         widget.authorOfRate, comment.value.text, date, anonymous);
@@ -96,39 +102,56 @@ class _ReplyFormState extends State<ReplyForm> {
                           padding: EdgeInsets.all(10),
                           child: Row(
                             children: [
-                              CircleAvatar(
-                                backgroundImage: NetworkImage(!listReply[index]
-                                        .anonymous
-                                    ? listReply[index].authorURL ?? ''
-                                    : 'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png'),
+                              Expanded(
+                                flex: 1,
+                                child: CircleAvatar(
+                                  backgroundImage: NetworkImage(!listReply[
+                                              index]
+                                          .anonymous
+                                      ? listReply[index].authorURL ?? ''
+                                      : 'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png'),
+                                ),
                               ),
-                              Padding(
-                                padding: EdgeInsets.only(left: 20),
-                                child: Column(
+                              Expanded(
+                                flex: 6,
+                                child: Row(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-                                    Row(
-                                      children: [
-                                        Padding(
-                                          padding: EdgeInsets.only(right: 10),
-                                          child: Text(
-                                            !listReply[index].anonymous
-                                                ? listReply[index].authorName ??
-                                                    ''
-                                                : 'Anonymous',
-                                            style: TextStyle(
-                                                fontWeight: FontWeight.w500),
+                                    Expanded(
+                                      flex: 3,
+                                      child: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Padding(
+                                            padding: EdgeInsets.only(right: 10),
+                                            child: Text(
+                                              !listReply[index].anonymous
+                                                  ? listReply[index]
+                                                          .authorName ??
+                                                      ''
+                                                  : 'Anonymous',
+                                              style: TextStyle(
+                                                  fontWeight: FontWeight.w500),
+                                            ),
                                           ),
-                                        ),
-                                        Text(
-                                          listReply[index].time!.split('T')[0],
-                                          style: Theme.of(context)
-                                              .textTheme
-                                              .labelSmall,
-                                        )
-                                      ],
+                                          Text(
+                                            listReply[index]
+                                                .time!
+                                                .split('T')[0],
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .labelSmall,
+                                          ),
+                                        ],
+                                      ),
                                     ),
-                                    Text(listReply[index].comment ?? '')
+                                    VerticalDivider(),
+                                    Expanded(
+                                      flex: 7,
+                                      child:
+                                          Text(listReply[index].comment ?? ''),
+                                    ),
                                   ],
                                 ),
                               )

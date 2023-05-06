@@ -72,7 +72,6 @@ class _LocationCommentState extends State<LocationComment> {
       );
     }
     return Column(
-      crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         TextButton(
           style: Theme.of(context).textButtonTheme.style,
@@ -95,10 +94,6 @@ class _LocationCommentState extends State<LocationComment> {
             physics: const ClampingScrollPhysics(),
             itemBuilder: (context, index) {
               return Card(
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(10),
-                ),
-                color: Color.fromARGB(240, 240, 240, 240),
                 child: Padding(
                   padding: EdgeInsets.all(10),
                   child: Column(
@@ -117,6 +112,7 @@ class _LocationCommentState extends State<LocationComment> {
                         width: double.maxFinite,
                         height: 120,
                         child: Column(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             RatingBar.builder(
                               initialRating: double.parse(
@@ -133,57 +129,43 @@ class _LocationCommentState extends State<LocationComment> {
                               ),
                               onRatingUpdate: (rating) {},
                             ),
-                            Spacer(),
                             Text(
                               listRate.list[index].review ?? '',
                               style: TextStyle(
                                   fontSize: 14, fontWeight: FontWeight.w400),
                             ),
-                            Spacer(),
                             Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                Row(
-                                  children: [
-                                    IconButton(
-                                        onPressed: () {
-                                          useFul(
-                                              listRate.list[index].author ?? '',
-                                              !listRate.list[index].disable);
-                                        },
-                                        icon: Icon(listRate.list[index].disable
-                                            ? Icons.favorite
-                                            : Icons.favorite_outline)),
-                                    Text(listRate.list[index].usefulCount
-                                        .toString())
-                                  ],
-                                ),
-                                Row(
-                                  children: [
-                                    IconButton(
-                                        onPressed: () {
-                                          showModalBottomSheet(
-                                              context: context,
-                                              isScrollControlled: true,
-                                              shape: RoundedRectangleBorder(
-                                                  borderRadius:
-                                                      BorderRadius.vertical(
-                                                          top: Radius.circular(
-                                                              20.0))),
-                                              builder:
-                                                  (BuildContext buildContext) {
-                                                return ReplyForm(
-                                                    locationId:
-                                                        widget.locationId,
-                                                    authorOfRate: listRate
-                                                        .list[index].author);
-                                              });
-                                        },
-                                        icon: Icon(Icons.comment_outlined)),
-                                    Text(listRate.list[index].replyCount
-                                        .toString())
-                                  ],
-                                )
+                                IconButton(
+                                    onPressed: () {
+                                      useFul(listRate.list[index].author ?? '',
+                                          !listRate.list[index].disable);
+                                    },
+                                    icon: Icon(listRate.list[index].disable
+                                        ? Icons.favorite
+                                        : Icons.favorite_outline)),
+                                Text(listRate.list[index].usefulCount
+                                    .toString()),
+                                Spacer(),
+                                IconButton(
+                                    onPressed: () {
+                                      showModalBottomSheet(
+                                          context: context,
+                                          isScrollControlled: true,
+                                          shape: RoundedRectangleBorder(
+                                              borderRadius:
+                                                  BorderRadius.vertical(
+                                                      top: Radius.circular(
+                                                          20.0))),
+                                          builder: (BuildContext buildContext) {
+                                            return ReplyForm(
+                                                locationId: widget.locationId,
+                                                authorOfRate: listRate
+                                                    .list[index].author);
+                                          });
+                                    },
+                                    icon: Icon(Icons.comment_outlined)),
+                                Text(listRate.list[index].replyCount.toString())
                               ],
                             ),
                           ],

@@ -34,14 +34,8 @@ class _ChangePasswordWidgetState extends State<ChangePasswordWidget> {
         MaterialPageRoute(builder: (context) => const LoginWidget()),
       );
     }
-    return showDialogWithMsg(context, 'Alert', 'Change password failed');
-  }
 
-  gotoLoginScreen() {
-    Navigator.pop(
-      context,
-      MaterialPageRoute(builder: (context) => const LoginWidget()),
-    );
+    return showDialogWithMsg(context, 'Alert', 'Change password failed');
   }
 
   @override
@@ -62,7 +56,7 @@ class _ChangePasswordWidgetState extends State<ChangePasswordWidget> {
                     children: [
                       Text(
                         "Change password",
-                          style: Theme.of(context).textTheme.titleLarge,
+                        style: Theme.of(context).textTheme.titleLarge,
                       ),
                       SizedBox(width: 0, height: 20),
                       TextField(
@@ -118,11 +112,15 @@ class _ChangePasswordWidgetState extends State<ChangePasswordWidget> {
                         child: const Text('Change password'),
                       ),
                       SizedBox(width: 0, height: 20),
-                      ElevatedButton(
+                      OutlinedButton(
                         onPressed: () {
-                          gotoLoginScreen();
+                          Navigator.pop(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => const LoginWidget()),
+                          );
                         },
-                        child: const Text('Sign in'),
+                        child: const Text('Cancel'),
                       ),
                       SizedBox(width: 0, height: 20),
                     ],

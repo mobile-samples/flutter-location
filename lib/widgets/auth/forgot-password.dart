@@ -1,7 +1,8 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_user/services/auth.dart';
 import 'package:flutter_user/widgets/auth/reset-password.dart';
 
+import '../../common/dialog.dart';
 import '../../widget-helpers/circle-background.dart';
 
 class ForgotPasswordWidget extends StatefulWidget {
@@ -14,12 +15,19 @@ class ForgotPasswordWidget extends StatefulWidget {
 class _ForgotPasswordWidget extends State<ForgotPasswordWidget> {
   TextEditingController contactController = TextEditingController();
 
-  resetPW() {
-    Navigator.push(
+  sendEmail() async {
+    final isSend = await AuthService.instance
+        .sendEmailForgotPW(contact: contactController.value.text);
+    if (!isSend) {
+      return showDialogWithMsg(context, 'Alert', 'Send email error');
+    }
+    return Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) => const ResetPasswordWidget(),
-      ),
+          builder: (context) => ResetPasswordWidget(),
+          settings: RouteSettings(
+            arguments: contactController.value.text,
+          )),
     );
   }
 
@@ -59,7 +67,7 @@ class _ForgotPasswordWidget extends State<ForgotPasswordWidget> {
                       SizedBox(width: 0, height: 20),
                       ElevatedButton(
                         onPressed: () {
-                          resetPW();
+                          sendEmail();
                         },
                         child: const Text('Send'),
                       ),

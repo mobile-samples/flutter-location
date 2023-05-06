@@ -1,5 +1,3 @@
-import 'dart:ffi';
-
 class Location {
   Location(
       this.createdat,
@@ -84,8 +82,12 @@ class LocationInfo {
   }
 
   factory LocationInfo.fromJson(Map<String, dynamic> json) => LocationInfo(
-      json['count'],
-      json['rate'],
+      json['count'] == null ? 0 : json['count'],
+      json['rate'] == null
+          ? 0
+          : (json['rate'] is int
+              ? double.parse(json['rate'].toString())
+              : json['rate']),
       json['rate1'],
       json['rate2'],
       json['rate3'],
