@@ -1,7 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:flutter_user/widgets/account/account-list.dart';
+import 'package:flutter_user/widgets/account/account.dart';
 import 'package:flutter_user/widgets/locations/location-list.dart';
+import 'companies/list.dart';
 
 class HomeWidget extends StatefulWidget {
   const HomeWidget({Key? key}) : super(key: key);
@@ -11,6 +14,24 @@ class HomeWidget extends StatefulWidget {
 }
 
 class _HomeWidgetState extends State<HomeWidget> {
+  late String? userId = "";
+
+  @override
+  void initState() {
+    super.initState();
+    getUserId();
+  }
+
+  getUserId() async {
+    final storage = new FlutterSecureStorage();
+    final userIdFromStore = await storage.read(key: 'userId');
+    if (userIdFromStore != '') {
+      setState(() {
+        userId = userIdFromStore;
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return CupertinoTabScaffold(
@@ -23,7 +44,15 @@ class _HomeWidgetState extends State<HomeWidget> {
           ),
           BottomNavigationBarItem(
             icon: Icon(CupertinoIcons.film_fill),
-            label: 'Movíe',
+            label: 'Movies',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.people),
+            label: 'Users',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.business),
+            label: 'Companies',
           ),
           BottomNavigationBarItem(
             icon: Icon(CupertinoIcons.person_fill),
@@ -37,6 +66,18 @@ class _HomeWidgetState extends State<HomeWidget> {
             if (index == 0) {
               return LocationListWidget();
             }
+            if (index == 2) {
+              return AccountListWidget();
+            }
+            if (index == 3) {
+              return CompanyListWidget();
+            }
+            if (index == 4 && userId != '') {
+              return AccountWidget(
+                userId: userId ?? '',
+              );
+            }
+
             return Center(
               child: CircularProgressIndicator(
                 backgroundColor: Theme.of(context).colorScheme.background,

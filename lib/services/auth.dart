@@ -35,6 +35,16 @@ class AuthService {
     });
   }
 
+  Future<bool> logout() async {
+    final storage = new FlutterSecureStorage();
+    try {
+      await storage.deleteAll();
+      return true;
+    } catch (e) {
+      throw (e);
+    }
+  }
+
   Future<bool> tryAutoLogin() async {
     final storage = new FlutterSecureStorage();
     final token = await storage.read(key: 'token');

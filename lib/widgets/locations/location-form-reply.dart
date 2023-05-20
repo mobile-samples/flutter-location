@@ -6,10 +6,15 @@ import '../../common/dialog.dart';
 
 class ReplyForm extends StatefulWidget {
   const ReplyForm(
-      {Key? key, required this.locationId, required this.authorOfRate})
+      {Key? key,
+      required this.serviceName,
+      required this.locationId,
+      required this.authorOfRate})
       : super(key: key);
   final locationId;
   final authorOfRate;
+  final serviceName;
+
   @override
   State<ReplyForm> createState() => _ReplyFormState();
 }
@@ -19,7 +24,8 @@ class _ReplyFormState extends State<ReplyForm> {
   late bool _loading = true;
   TextEditingController comment = TextEditingController();
   final ScrollController scrollController = ScrollController();
-  bool anonymous = true;
+  bool anonymous = false;
+
   @override
   void initState() {
     super.initState();
@@ -27,17 +33,17 @@ class _ReplyFormState extends State<ReplyForm> {
   }
 
   getReply() async {
-    final res = await RateService.instance
-        .getReplyofRate(widget.locationId, widget.authorOfRate);
-    if (res.length > 0) {
-      setState(() {
-        listReply = res;
-        _loading = false;
-      });
-      if (scrollController.hasClients) {
-        scrollController.jumpTo(scrollController.position.maxScrollExtent + 80);
-      }
+    final res = await RateService.instance.getReplyofRate(
+        widget.serviceName, widget.locationId, widget.authorOfRate ?? '');
+    // if (res.length > 0) {
+    setState(() {
+      listReply = res;
+      _loading = false;
+    });
+    if (scrollController.hasClients) {
+      scrollController.jumpTo(scrollController.position.maxScrollExtent + 80);
     }
+    // }
   }
 
   postReply<double>() async {
@@ -46,14 +52,38 @@ class _ReplyFormState extends State<ReplyForm> {
           context, 'Alert', 'Please input your rate / review');
     }
     final date = DateTime.now().toIso8601String();
-    final res = await RateService.instance.postReply(widget.locationId,
-        widget.authorOfRate, comment.value.text, date, anonymous);
+    final res = await RateService.instance.postReply(
+        widget.serviceName,
+        widget.locationId,
+        widget.authorOfRate,
+        comment.value.text,
+        date,
+        anonymous);
     if (res > 0) {
       await getReply();
       comment.clear();
       return 1;
     }
     return 0;
+  }
+
+  List<Widget> getAnonymousWidget() {
+    List<Widget> anonymousList = [];
+    if (widget.serviceName == 'locations') {
+      var switchWidget = Switch(
+        value: anonymous,
+        activeColor: Theme.of(context).colorScheme.primary,
+        onChanged: (bool value) {
+          setState(() {
+            anonymous = value;
+          });
+        },
+      );
+      anonymousList.add(Text('Anonymous'));
+      anonymousList.add(switchWidget);
+    }
+
+    return anonymousList;
   }
 
   @override
@@ -179,16 +209,7 @@ class _ReplyFormState extends State<ReplyForm> {
                         mainAxisAlignment: MainAxisAlignment.start,
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
-                          Text('Anonymous'),
-                          Switch(
-                            value: anonymous,
-                            activeColor: Theme.of(context).colorScheme.primary,
-                            onChanged: (bool value) {
-                              setState(() {
-                                anonymous = value;
-                              });
-                            },
-                          ),
+                          ...getAnonymousWidget(),
                           Spacer(),
                           TextButton(
                             style: Theme.of(context).textButtonTheme.style,

@@ -4,7 +4,6 @@ import 'package:flutter_user/services/location.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_user/widgets/helpers/map-widget.dart';
 import 'package:flutter_user/widgets/locations/location-comment.dart';
-import 'package:webview_flutter/webview_flutter.dart';
 
 class LocationDetail extends StatefulWidget {
   const LocationDetail({Key? key, required this.locationId}) : super(key: key);
@@ -16,7 +15,6 @@ class LocationDetail extends StatefulWidget {
 class _LocationDetailState extends State<LocationDetail> {
   late Location location;
   late bool _loading = true;
-  late final WebViewController controller;
   @override
   void initState() {
     super.initState();
@@ -79,108 +77,219 @@ class _LocationDetailState extends State<LocationDetail> {
         ),
       );
     }
-    return SafeArea(
-      child: Scaffold(
-        appBar: AppBar(
-          iconTheme: IconThemeData(
-            color: Theme.of(context)
-                .scaffoldBackgroundColor, //change your color here
-          ),
-          title: Text("Location"),
-          backgroundColor: Theme.of(context).colorScheme.primary,
-          centerTitle: true,
-        ),
-        resizeToAvoidBottomInset: false,
-        body: SingleChildScrollView(
-          child: Column(
-            children: [
-              Image(
-                image: NetworkImage(location.imageURL ?? ''),
-                fit: BoxFit.cover,
-                height: 220,
-                width: MediaQuery.of(context).size.width,
+    return Scaffold(
+      body: SizedBox(
+        height: double.maxFinite,
+        child: Stack(
+          children: [
+            Image(
+              image: NetworkImage(location.imageURL ?? ''),
+              fit: BoxFit.cover,
+              height: 300,
+              width: MediaQuery.of(context).size.width,
+            ),
+            Positioned(
+              top: 40,
+              left: 10,
+              child: Row(
+                children: [
+                  IconButton(
+                    onPressed: () {},
+                    iconSize: 32,
+                    icon: Icon(Icons.chevron_left),
+                  ),
+                ],
               ),
-              Padding(
-                padding: EdgeInsets.all(10),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            ),
+            Positioned(
+              top: 270,
+              child: SingleChildScrollView(
+                scrollDirection: Axis.vertical,
+                child: Container(
+                  width: MediaQuery.of(context).size.width,
+                  height: MediaQuery.of(context).size.height,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(32),
+                        topRight: Radius.circular(32)),
+                    color: Colors.white,
+                  ),
+                  child: Padding(
+                    padding: EdgeInsets.all(8),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Text(location.name ?? '',
-                                style:
-                                    Theme.of(context).textTheme.headlineMedium),
-                            Text(
-                              location.description ?? '',
-                              style: Theme.of(context).textTheme.labelSmall,
-                            )
-                          ],
-                        ),
-                        TextButton(
-                          style: Theme.of(context).textButtonTheme.style,
-                          onPressed: () {
-                            showModalBottomSheet(
-                                context: context,
-                                isScrollControlled: true,
-                                shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.vertical(
-                                        top: Radius.circular(20.0))),
-                                builder: (BuildContext buildContext) {
-                                  return MapWidget(
-                                      latitude: location.latitude,
-                                      longitude: location.longitude,
-                                      locationName: location.name);
-                                });
-                          },
-                          child: Text('View Map'),
-                        ),
-                      ],
-                    ),
-                    Divider(),
-                    Text(
-                      'Rating & Reviews',
-                      style: Theme.of(context).textTheme.titleMedium,
-                    ),
-                    SizedBox(
-                      height: 10,
-                    ),
-                    Row(
-                      children: [
-                        Column(
-                          children: [
-                            Text(
-                              location.info?.rate.toString() ?? '0',
-                              style: Theme.of(context).textTheme.titleLarge,
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(location.name ?? '',
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .headlineMedium),
+                                Text(
+                                  location.description ?? '',
+                                  style: Theme.of(context).textTheme.labelSmall,
+                                )
+                              ],
                             ),
-                            Text(
-                              'out of 5',
-                              style: Theme.of(context).textTheme.labelSmall,
-                            )
+                            TextButton(
+                              style: Theme.of(context).textButtonTheme.style,
+                              onPressed: () {
+                                showModalBottomSheet(
+                                    context: context,
+                                    isScrollControlled: true,
+                                    shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.vertical(
+                                            top: Radius.circular(20.0))),
+                                    builder: (BuildContext buildContext) {
+                                      return MapWidget(
+                                          latitude: location.latitude,
+                                          longitude: location.longitude,
+                                          locationName: location.name);
+                                    });
+                              },
+                              child: Text('View Map'),
+                            ),
                           ],
                         ),
-                        Spacer(),
+                        Divider(),
+                        Text(
+                          'Rating & Reviews',
+                          style: Theme.of(context).textTheme.titleMedium,
+                        ),
+                        SizedBox(
+                          height: 10,
+                        ),
                         Row(
                           children: [
-                            getListStarWidgets(location.info, context),
+                            Column(
+                              children: [
+                                Text(
+                                  location.info?.rate.toString() ?? '0',
+                                  style: Theme.of(context).textTheme.titleLarge,
+                                ),
+                                Text(
+                                  'out of 5',
+                                  style: Theme.of(context).textTheme.labelSmall,
+                                )
+                              ],
+                            ),
+                            Spacer(),
+                            Row(
+                              children: [
+                                getListStarWidgets(location.info, context),
+                              ],
+                            ),
                           ],
                         ),
+                        LocationComment(
+                          locationId: location.id ?? '',
+                          getLocationDetail: getLocationDetail,
+                        )
                       ],
                     ),
-                    LocationComment(
-                      locationId: location.id ?? '',
-                      getLocationDetail: getLocationDetail,
-                    )
-                  ],
+                  ),
                 ),
-              )
-            ],
-          ),
+              ),
+            ),
+          ],
         ),
       ),
     );
+    // return Scaffold(
+    //   resizeToAvoidBottomInset: false,
+    //   body: SingleChildScrollView(
+    //     child: Column(
+    //       children: [
+    //         Image(
+    //           image: NetworkImage(location.imageURL ?? ''),
+    //           fit: BoxFit.cover,
+    //           height: 220,
+    //           width: MediaQuery.of(context).size.width,
+    //         ),
+    //         Padding(
+    //           padding: EdgeInsets.all(10),
+    //           child: Column(
+    //             crossAxisAlignment: CrossAxisAlignment.start,
+    //             children: [
+    //               Row(
+    //                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
+    //                 children: [
+    //                   Column(
+    //                     crossAxisAlignment: CrossAxisAlignment.start,
+    //                     children: [
+    //                       Text(location.name ?? '',
+    //                           style:
+    //                               Theme.of(context).textTheme.headlineMedium),
+    //                       Text(
+    //                         location.description ?? '',
+    //                         style: Theme.of(context).textTheme.labelSmall,
+    //                       )
+    //                     ],
+    //                   ),
+    //                   TextButton(
+    //                     style: Theme.of(context).textButtonTheme.style,
+    //                     onPressed: () {
+    //                       showModalBottomSheet(
+    //                           context: context,
+    //                           isScrollControlled: true,
+    //                           shape: RoundedRectangleBorder(
+    //                               borderRadius: BorderRadius.vertical(
+    //                                   top: Radius.circular(20.0))),
+    //                           builder: (BuildContext buildContext) {
+    //                             return MapWidget(
+    //                                 latitude: location.latitude,
+    //                                 longitude: location.longitude,
+    //                                 locationName: location.name);
+    //                           });
+    //                     },
+    //                     child: Text('View Map'),
+    //                   ),
+    //                 ],
+    //               ),
+    //               Divider(),
+    //               Text(
+    //                 'Rating & Reviews',
+    //                 style: Theme.of(context).textTheme.titleMedium,
+    //               ),
+    //               SizedBox(
+    //                 height: 10,
+    //               ),
+    //               Row(
+    //                 children: [
+    //                   Column(
+    //                     children: [
+    //                       Text(
+    //                         location.info?.rate.toString() ?? '0',
+    //                         style: Theme.of(context).textTheme.titleLarge,
+    //                       ),
+    //                       Text(
+    //                         'out of 5',
+    //                         style: Theme.of(context).textTheme.labelSmall,
+    //                       )
+    //                     ],
+    //                   ),
+    //                   Spacer(),
+    //                   Row(
+    //                     children: [
+    //                       getListStarWidgets(location.info, context),
+    //                     ],
+    //                   ),
+    //                 ],
+    //               ),
+    //               LocationComment(
+    //                 locationId: location.id ?? '',
+    //                 getLocationDetail: getLocationDetail,
+    //               )
+    //             ],
+    //           ),
+    //         )
+    //       ],
+    //     ),
+    //   ),
+    // );
   }
 }

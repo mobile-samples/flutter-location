@@ -33,7 +33,9 @@ class MyApp extends StatelessWidget {
                 return LoginWidget();
               }
             }
-            return LoginWidget();
+            return Center(
+              child: Text("We got some issue"),
+            );
           },
         ));
   }

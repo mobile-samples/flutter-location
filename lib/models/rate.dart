@@ -7,6 +7,7 @@ class RateComment {
       this.review,
       this.disable,
       this.rate,
+      this.rates,
       this.replyCount,
       this.usefulCount,
       this.anonymous);
@@ -16,7 +17,8 @@ class RateComment {
   String? ratetime;
   String? review;
   bool disable;
-  int? rate;
+  double? rate;
+  List<int>? rates;
   int? replyCount;
   int? usefulCount;
   bool anonymous;
@@ -25,10 +27,11 @@ class RateComment {
       json['author'],
       json['authorName'] != null ? json['authorName'] : '',
       json['id'],
-      json['ratetime'],
+      json['time'],
       json['review'],
-      json['disable'],
-      json['rate'],
+      json['disable'] != null ? json['disable'] : false,
+      json['rate'] != null ? double.parse(json['rate'].toString()) : 0.0,
+      json['rates'] != null  ? json['rates'].cast<int>() : null,
       json['replyCount'],
       json['usefulCount'],
       json['anonymous'] != null ? json['anonymous'] : false);

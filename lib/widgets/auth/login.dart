@@ -123,6 +123,7 @@ class _LoginWidgetState extends State<LoginWidget> {
           )
         ],
       ),
+      bottomNavigationBar: null,
     );
   }
 }

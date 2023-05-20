@@ -7,20 +7,21 @@ import 'package:http/http.dart' as http;
 
 class RateService {
   RateService._instantiate();
+
   static final RateService instance = RateService._instantiate();
 
-  Future<SearchResult<RateComment>> search(String locationId) async {
+  Future<SearchResult<RateComment>> search(String url, String id, String sort) async {
     final storage = new FlutterSecureStorage();
     late String baseUrl = HttpHelper.instance.getUrl();
     final userId = await storage.read(key: 'userId');
     final headers = await HttpHelper.instance.buildHeader();
     final response = await http.post(
-      Uri.parse(baseUrl + '/locations/rates/search'),
+      Uri.parse(baseUrl + url),
       headers: headers,
       body: jsonEncode(<String, dynamic>{
-        'id': locationId,
+        'id': id,
         'limit': 24,
-        'sort': 'time desc',
+        'sort': sort,
         'userId': userId
       }),
     );
@@ -34,17 +35,18 @@ class RateService {
   }
 
   Future<List<RateReply>> getReplyofRate(
-      String locationId, String authorOfRate) async {
+      String serviceName, String id, String authorOfRate) async {
     late String baseUrl = HttpHelper.instance.getUrl();
-    final response = await http.get(Uri.parse(baseUrl +
-        '/locations/rates/' +
-        locationId +
-        '/' +
-        authorOfRate +
-        '/comments'));
+    final response = await http.get(
+      Uri.parse(baseUrl + '/$serviceName/rates/$id/$authorOfRate/comments'),
+    );
     if (response.statusCode == 200) {
-      List<RateReply> listReply = List<RateReply>.from(
-          jsonDecode(response.body).map((x) => RateReply.fromJson(x)));
+      List<RateReply> listReply = [];
+      if (jsonDecode(response.body) != null) {
+        listReply = List<RateReply>.from(
+          jsonDecode(response.body).map((x) => RateReply.fromJson(x)),
+        );
+      }
       return listReply;
     } else {
       throw json.decode(response.body)['error']['message'];
@@ -76,20 +78,17 @@ class RateService {
   }
 
   Future<int> postUseful(
-      String locationId, String authorOfRate, bool useful) async {
+      String serviceName, String id, String authorOfRate, bool useful) async {
     final storage = new FlutterSecureStorage();
     late String baseUrl = HttpHelper.instance.getUrl();
     final userId = await storage.read(key: 'userId');
     final headers = await HttpHelper.instance.buildHeader();
     final url = baseUrl +
-        '/locations/rates/' +
-        locationId +
-        '/' +
-        authorOfRate +
-        '/useful/' +
+        '/$serviceName/rates/$id/$authorOfRate/useful/' +
         (userId ?? '');
     final response = useful
-        ? await http.post(Uri.parse(url), headers: headers,  body: jsonEncode(<dynamic, dynamic>{}))
+        ? await http.post(Uri.parse(url),
+            headers: headers, body: jsonEncode(<dynamic, dynamic>{}))
         : await http.delete(Uri.parse(url), headers: headers);
     if (response.statusCode == 200 && json.decode(response.body) > 0) {
       return 1;
@@ -98,19 +97,15 @@ class RateService {
     }
   }
 
-  Future<int> postReply(String locationId, String authorOfRate, String comment,
-      String time, bool anonymous) async {
+  Future<int> postReply(String serviceName, String id, String authorOfRate,
+      String comment, String time, bool anonymous) async {
     final storage = new FlutterSecureStorage();
     late String baseUrl = HttpHelper.instance.getUrl();
     final userId = await storage.read(key: 'userId');
     final headers = await HttpHelper.instance.buildHeader();
     final response = await http.post(
       Uri.parse(baseUrl +
-          '/locations/rates/' +
-          locationId +
-          '/' +
-          authorOfRate +
-          '/comments/' +
+          '/$serviceName/rates/$id/$authorOfRate/comments/' +
           (userId ?? '')),
       headers: headers,
       body: jsonEncode(<String, dynamic>{

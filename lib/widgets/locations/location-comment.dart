@@ -20,6 +20,7 @@ class LocationComment extends StatefulWidget {
 class _LocationCommentState extends State<LocationComment> {
   late SearchResult<RateComment> listRate;
   late bool _loading = true;
+
   @override
   void initState() {
     super.initState();
@@ -27,7 +28,8 @@ class _LocationCommentState extends State<LocationComment> {
   }
 
   getRateComment() async {
-    final res = await RateService.instance.search(widget.locationId);
+    final res = await RateService.instance
+        .search('/locations/rates/search', widget.locationId, 'time desc');
     setState(() {
       listRate = res;
       _loading = false;
@@ -54,7 +56,7 @@ class _LocationCommentState extends State<LocationComment> {
 
   useFul(String authorOfRate, bool useful) async {
     final res = await RateService.instance
-        .postUseful(widget.locationId, authorOfRate, useful);
+        .postUseful(widget.locationId, 'locations', authorOfRate, useful);
     if (res > 0) {
       await getRateComment();
     }
@@ -159,6 +161,7 @@ class _LocationCommentState extends State<LocationComment> {
                                                           20.0))),
                                           builder: (BuildContext buildContext) {
                                             return ReplyForm(
+                                                serviceName: "locations",
                                                 locationId: widget.locationId,
                                                 authorOfRate: listRate
                                                     .list[index].author);

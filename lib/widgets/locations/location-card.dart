@@ -6,28 +6,49 @@ class LocationCard extends StatelessWidget {
   final Location location;
   @override
   Widget build(BuildContext context) {
-    return Container(
-        alignment: Alignment.centerLeft,
-        height: double.maxFinite,
-        width: 200,
-        child: Card(
-            child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+    return Padding(
+      padding: EdgeInsets.only(
+        right: 12,
+      ),
+      child: Container(
+        width: 150,
+        height: 300,
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(16.0),
+          image: DecorationImage(
+            image: NetworkImage(location.imageURL ?? ''),
+            fit: BoxFit.cover,
+          ),
+        ),
+        child: Stack(
           children: [
-            Image(
-              image: NetworkImage(location.imageURL ??
-                  'https://upload.wikimedia.org/wikipedia/commons/thumb/d/d1/Image_not_available.png/640px-Image_not_available.png'),
-              width: double.infinity,
-              height: 125,
-              fit: BoxFit.cover,
+            Opacity(
+              opacity: 0.3,
+              child: Container(
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(16.0),
+                  color: Colors.black,
+                ),
+              ),
             ),
             Padding(
-              padding: EdgeInsets.fromLTRB(5, 10, 0, 0),
-              child: Text(
-                location.name ?? '',
+              padding: EdgeInsets.only(
+                left: 16.0,
+                right: 16.0,
+                bottom: 16.0,
+              ),
+              child: Align(
+                alignment: Alignment.bottomLeft,
+                child: Text(
+                  location.name ?? '',
+                  style: Theme.of(context).textTheme.titleMedium,
+                  maxLines: 2,
+                ),
               ),
             )
           ],
-        )));
+        ),
+      ),
+    );
   }
 }
