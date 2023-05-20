@@ -19,6 +19,11 @@ class HttpHelper {
     return 'http://localhost:8082';
   }
 
+  jsonDecode(List<int> bodyBytes) {
+     String source = Utf8Decoder().convert(bodyBytes);
+     return json.decode(source);
+  }
+
   buildHeader() async {
     final storage = new FlutterSecureStorage();
     final token = await storage.read(key: 'token') ?? '';

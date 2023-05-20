@@ -70,14 +70,4 @@ class RateReply {
       });
     }
   }
-
-  factory RateReply.fromJson(Map<String, dynamic> json) => RateReply(
-      json['author'],
-      json['authorName'] != null ? json['authorName'] : '',
-      json['id'],
-      json['commentId'],
-      json['time'],
-      json['comment'],
-      json['authorURL'] != null ? json['authorURL'] : '',
-      json['anonymous'] != null ? json['anonymous'] : false);
 }
