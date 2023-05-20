@@ -4,6 +4,7 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:flutter_user/widgets/account/account-list.dart';
 import 'package:flutter_user/widgets/account/account.dart';
 import 'package:flutter_user/widgets/locations/location-list.dart';
+import 'package:flutter_user/widgets/films/films.dart';
 import 'companies/list.dart';
 
 class HomeWidget extends StatefulWidget {
@@ -65,6 +66,9 @@ class _HomeWidgetState extends State<HomeWidget> {
           builder: (BuildContext context) {
             if (index == 0) {
               return LocationListWidget();
+            }
+            if (index == 1) {
+              return FilmListWidget();
             }
             if (index == 2) {
               return AccountListWidget();

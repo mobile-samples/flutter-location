@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_user/models/rate.dart';
 import 'package:flutter_user/services/rate.dart';
+import 'package:flutter_user/models/history.dart';
 
 import '../../common/dialog.dart';
 
@@ -135,9 +136,9 @@ class _ReplyFormState extends State<ReplyForm> {
                               Expanded(
                                 flex: 1,
                                 child: CircleAvatar(
-                                  backgroundImage: NetworkImage(!listReply[
-                                              index]
-                                          .anonymous
+                                  backgroundImage: NetworkImage(!(listReply[
+                                  index]
+                                      .anonymous??false)
                                       ? listReply[index].authorURL ?? ''
                                       : 'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png'),
                                 ),
@@ -156,7 +157,7 @@ class _ReplyFormState extends State<ReplyForm> {
                                           Padding(
                                             padding: EdgeInsets.only(right: 10),
                                             child: Text(
-                                              !listReply[index].anonymous
+                                              !(listReply[index].anonymous??false)
                                                   ? listReply[index]
                                                           .authorName ??
                                                       ''

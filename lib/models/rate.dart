@@ -1,3 +1,5 @@
+import 'package:flutter_user/models/history.dart';
+
 class RateComment {
   RateComment(
       this.author,
@@ -11,6 +13,7 @@ class RateComment {
       this.replyCount,
       this.usefulCount,
       this.anonymous);
+
   String? author;
   String? authorName;
   String? id;
@@ -40,6 +43,7 @@ class RateComment {
 class RateReply {
   RateReply(this.author, this.authorName, this.id, this.commentId, this.time,
       this.comment, this.authorURL, this.anonymous);
+
   String? author;
   String? authorName;
   String? id;
@@ -47,7 +51,25 @@ class RateReply {
   String? time;
   String? comment;
   String? authorURL;
-  bool anonymous;
+  bool? anonymous;
+  List<Histories>? histories;
+
+  RateReply.fromJson(Map<String, dynamic> json) {
+    commentId = json['commentId'];
+    id = json['id'];
+    author = json['author'];
+    comment = json['comment'];
+    time = json['time'];
+    authorName = json['authorName'] != null ? json['authorName'] : '';
+    authorURL = json['authorURL'] != null ? json['authorURL'] : '';
+    anonymous = json['anonymous'] == null ? false : json['anonymous'];
+    if (json['histories'] != null) {
+      histories = <Histories>[];
+      json['histories'].forEach((v) {
+        histories!.add(new Histories.fromJson(v));
+      });
+    }
+  }
 
   factory RateReply.fromJson(Map<String, dynamic> json) => RateReply(
       json['author'],

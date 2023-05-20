@@ -1,7 +1,10 @@
+
+import 'package:flutter_user/models/film.dart';
 import 'package:flutter_user/models/location.dart';
 import 'package:flutter_user/models/rate.dart';
 import 'company.dart';
 import 'package:flutter_user/models/user.dart';
+import 'package:flutter_user/models/comment.dart';
 
 class Filter {
   int? page;
@@ -57,6 +60,12 @@ class SearchResult<T> {
           return List<T>.from(json['list'].map((x) => Company.fromJson(x)));
         case UserInfo:
           return List<T>.from(json['list'].map((x) => UserInfo.fromJson(x)));
+        case Film:
+          return List<T>.from(json['list'].map((x) => Film.fromJson(x)));
+        case CommentThread:
+          return List<T>.from(json['list'].map((x) => CommentThread.fromJson(x)));
+        case CommentReply:
+          return List<T>.from(json['list'].map((x) => CommentReply.fromJson(x)));
         default:
           return null;
       }

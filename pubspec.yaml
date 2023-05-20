@@ -31,10 +31,10 @@ dependencies:
   flutter_secure_storage: ^8.0.0
   http: ^0.13.3
   flutter_map: ^0.14.0
-  latlong: ^0.6.1
-  flutter_rating_bar: ^4.0.0
+  latlong2: ^0.8.1
+  flutter_rating_bar: ^4.0.1
   webview_flutter: ^2.0.13
-
+  avatars: ^3.0.0
 dev_dependencies:
   flutter_test:
     sdk: flutter
