@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_user/features/comment/comment_model.dart';
 import 'package:flutter_user/features/rate/rate_model.dart';
 import 'package:webview_flutter/webview_flutter.dart';
-import 'package:flutter_user/features/reviews/tab_reviews.dart';
+import 'package:flutter_user/features/review/tab_reviews.dart';
 
 import 'package:flutter_user/features/comment/reaction_comment.dart';
 import 'package:flutter_user/features/comment/reaction.dart';

@@ -1,5 +1,5 @@
 import 'dart:convert';
-import 'package:flutter_user/features/locations/location_model.dart';
+import 'package:flutter_user/features/location/location_model.dart';
 import 'package:flutter_user/common/models/search.dart';
 import 'package:flutter_user/utils/http_helper.dart';
 import 'package:http/http.dart' as http;

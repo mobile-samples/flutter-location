@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_user/common/models/history_model.dart';
 import 'package:flutter_user/features/comment/rate_service.dart';
-import 'package:flutter_user/features/reviews/widgets/plugin_comment.dart';
+import 'package:flutter_user/features/review/widgets/plugin_comment.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:flutter_user/utils/date_utils.dart' as dt;
 

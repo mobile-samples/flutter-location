@@ -1,6 +1,6 @@
 import 'package:flutter_user/common/models/history_model.dart';
-import 'package:flutter_user/features/reviews/notifications.dart';
-import 'package:flutter_user/features/reviews/widgets/plugin_comment.dart';
+import 'package:flutter_user/features/review/notifications.dart';
+import 'package:flutter_user/features/review/widgets/plugin_comment.dart';
 import 'package:flutter_user/features/comment/reply/comment_reply_list.dart';
 import 'package:avatars/avatars.dart';
 import 'package:flutter_user/utils/date_utils.dart' as dt;

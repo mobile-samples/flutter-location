@@ -1,24 +1,27 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:flutter_user/common/models/search.dart';
+import 'package:flutter_user/features/comment/comment_item.dart';
 import 'package:flutter_user/features/comment/comment_model.dart';
 import 'package:flutter_user/features/comment/comment_service.dart';
-import 'package:flutter_user/features/comment/search_comment.dart';
 import 'package:flutter_user/features/comment/reaction.dart';
 import 'package:flutter_user/features/comment/reply/comment_thread_form.dart';
-import 'package:flutter_user/features/comment/comment_item.dart';
-import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:flutter_user/features/comment/search_comment.dart';
 
-class CommentTab extends StatefulWidget {
-  const CommentTab(
-      {Key? key,
-      required this.id,
-      required this.load,
-      required this.searchCommentThreadService,
-      required this.reactionService,
-      required this.commentThreadService,
-      required this.commentThreadReplyService})
-      : super(key: key);
+class Comments extends StatefulWidget {
+  Comments({
+    Key? key,
+    required this.id,
+    required this.serviceName,
+    required this.load,
+    required this.searchCommentThreadService,
+    required this.reactionService,
+    required this.commentThreadService,
+    required this.commentThreadReplyService,
+  });
+
   final String id;
+  final String serviceName;
   final Function load;
   final SearchCommentThreadService<CommentThread> searchCommentThreadService;
   final ReactionService reactionService;
@@ -26,12 +29,13 @@ class CommentTab extends StatefulWidget {
   final CommentThreadReplyService commentThreadReplyService;
 
   @override
-  State<CommentTab> createState() => _CommentTabState();
+  State<StatefulWidget> createState() {
+    return _CommentsState();
+  }
 }
 
-class _CommentTabState extends State<CommentTab> {
-  late SearchResult<CommentThread> r;
-  late bool _loading = true;
+class _CommentsState extends State<Comments> {
+  late SearchResult<CommentThread> res;
 
   @override
   void initState() {
@@ -40,11 +44,10 @@ class _CommentTabState extends State<CommentTab> {
   }
 
   load() async {
-    final r1 =
-        await widget.searchCommentThreadService.search('/films', widget.id);
+    final r = await widget.searchCommentThreadService
+        .search(widget.serviceName, widget.id);
     setState(() {
-      r = r1;
-      _loading = false;
+      res = r;
     });
   }
 
@@ -63,6 +66,8 @@ class _CommentTabState extends State<CommentTab> {
     final userId = await storage.read(key: 'userId');
     final res =
         await widget.reactionService.setUseful(commentId, author, userId);
+    // final res = await widget.reactionService
+    //     .setUseful(widget.serviceName, commentId, author, userId);
     if (res > 0) {
       await load();
     }
@@ -73,6 +78,8 @@ class _CommentTabState extends State<CommentTab> {
     final userId = await storage.read(key: 'userId');
     final res =
         await widget.reactionService.removeUseful(commentId, author, userId);
+    // final res = await widget.reactionService
+    //     .removeUseful(widget.serviceName, commentId, author, userId);
     if (res > 0) {
       await load();
     }
@@ -80,15 +87,6 @@ class _CommentTabState extends State<CommentTab> {
 
   @override
   Widget build(BuildContext context) {
-    if (_loading) {
-      return Center(
-        child: CircularProgressIndicator(
-          backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-          valueColor: new AlwaysStoppedAnimation<Color>(
-              Theme.of(context).colorScheme.primary),
-        ),
-      );
-    }
     return Column(
       crossAxisAlignment: CrossAxisAlignment.end,
       children: [
@@ -107,21 +105,22 @@ class _CommentTabState extends State<CommentTab> {
           },
           child: Text('Comment'),
         ),
-        Expanded(
+        Container(
           child: ListView.builder(
-              shrinkWrap: true,
-              itemCount: r.list.length,
-              physics: const NeverScrollableScrollPhysics(),
-              itemBuilder: (context, index) {
-                return CommentItem(
-                  item: r.list[index],
-                  load: load,
-                  commentThreadReplyService: widget.commentThreadReplyService,
-                  commentThreadService: widget.commentThreadService,
-                  useFul: useFul,
-                  deleteUseFul: deleteUseFul,
-                );
-              }),
+            shrinkWrap: true,
+            itemCount: res.list.length,
+            physics: const NeverScrollableScrollPhysics(),
+            itemBuilder: (context, index) {
+              return CommentItem(
+                item: res.list[index],
+                load: load,
+                commentThreadReplyService: widget.commentThreadReplyService,
+                commentThreadService: widget.commentThreadService,
+                useFul: useFul,
+                deleteUseFul: deleteUseFul,
+              );
+            },
+          ),
         )
       ],
     );

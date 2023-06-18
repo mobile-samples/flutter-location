@@ -6,7 +6,7 @@ import 'package:flutter_user/features/comment/comment_model.dart';
 import 'package:http/http.dart' as http;
 
 abstract class SearchCommentThreadService<CommentThread> {
-  Future<SearchResult<CommentThread>> search(String id);
+  Future<SearchResult<CommentThread>> search(String serviceName, String id);
 }
 
 class SearchCommentThreadClient
@@ -14,16 +14,17 @@ class SearchCommentThreadClient
   SearchCommentThreadClient._instantiate();
   static final SearchCommentThreadClient instance =
       SearchCommentThreadClient._instantiate();
-  late String baseUrl = HttpHelper.instance.getUrl() + "/films";
+  late String baseUrl = HttpHelper.instance.getUrl();
 
   SearchCommentThreadClient(this.baseUrl);
 
-  Future<SearchResult<CommentThread>> search(String id) async {
+  Future<SearchResult<CommentThread>> search(
+      String serviceName, String id) async {
     final storage = new FlutterSecureStorage();
     final userId = await storage.read(key: 'userId');
     final headers = await HttpHelper.instance.buildHeader();
     final response = await http.post(
-      Uri.parse('$baseUrl/commentthread/search'),
+      Uri.parse('$baseUrl/$serviceName/commentthread/search'),
       headers: headers,
       body: jsonEncode(<String, dynamic>{
         'id': id,

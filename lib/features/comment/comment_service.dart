@@ -205,6 +205,8 @@ import 'package:http/http.dart' as http;
 // }
 
 class FilmCommentThreadClient implements CommentThreadService {
+  FilmCommentThreadClient() : super();
+
   FilmCommentThreadClient._instantiate();
 
   static final FilmCommentThreadClient instance =
@@ -263,6 +265,8 @@ class FilmCommentThreadClient implements CommentThreadService {
 }
 
 class FilmCommentThreadReplyClient implements CommentThreadReplyService {
+  FilmCommentThreadReplyClient() : super();
+
   FilmCommentThreadReplyClient._instantiate();
 
   static final FilmCommentThreadReplyClient instance =

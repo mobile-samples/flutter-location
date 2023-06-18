@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_user/features/locations/location_model.dart';
-import 'package:flutter_user/features/locations/location_service.dart';
+import 'package:flutter_user/features/location/location_model.dart';
+import 'package:flutter_user/features/location/location_service.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
-import 'package:flutter_user/features/helpers/map-widget.dart';
+import 'package:flutter_user/features/location/widgets/map-widget.dart';
 
 import 'location-comment.dart';
 

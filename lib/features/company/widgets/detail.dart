@@ -2,7 +2,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_user/common/widgets/custom_appbar.dart';
-import 'package:flutter_user/features/companies/company_service.dart';
+import 'package:flutter_user/features/company/company_service.dart';
 
 import '../company_model.dart';
 import 'review-tab.dart';

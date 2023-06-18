@@ -1,12 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-import 'package:flutter_user/features/companies/widgets/list.dart';
-import 'package:flutter_user/features/films/widgets/films.dart';
+import 'package:flutter_user/features/company/widgets/list.dart';
+import 'package:flutter_user/features/film/widgets/films.dart';
 
 import 'account/widgets/account-list.dart';
 import 'account/widgets/account.dart';
-import 'locations/widgets/location-list.dart';
+import 'location/widgets/location-list.dart';
 
 class HomeWidget extends StatefulWidget {
   const HomeWidget({Key? key}) : super(key: key);

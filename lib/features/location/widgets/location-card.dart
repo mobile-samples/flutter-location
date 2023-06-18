@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_user/features/locations/location_model.dart';
+import 'package:flutter_user/features/location/location_model.dart';
 
 class LocationCard extends StatelessWidget {
   const LocationCard({Key? key, required this.location}) : super(key: key);

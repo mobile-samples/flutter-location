@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_user/features/films/film_model.dart';
+import 'package:flutter_user/features/film/film_model.dart';
 import 'package:flutter_user/features/comment/comment_model.dart';
 import 'package:flutter_user/features/rate/rate_model.dart';
 import 'package:flutter_user/features/rate/widgets/review_tab.dart';

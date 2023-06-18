@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_user/features/companies/company_model.dart';
-import 'package:flutter_user/features/companies/company_service.dart';
+import 'package:flutter_user/features/company/company_model.dart';
+import 'package:flutter_user/features/company/company_service.dart';
 
 import 'card.dart';
 import 'detail.dart';

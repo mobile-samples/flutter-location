@@ -1,10 +1,10 @@
 import 'package:flutter_user/features/account/user_model.dart';
-import 'package:flutter_user/features/companies/company_model.dart';
-import 'package:flutter_user/features/films/film_model.dart';
+import 'package:flutter_user/features/company/company_model.dart';
+import 'package:flutter_user/features/film/film_model.dart';
 import 'package:flutter_user/features/rate/rate_model.dart';
 import 'package:flutter_user/features/comment/comment_model.dart';
 
-import '../../features/locations/location_model.dart';
+import '../../features/location/location_model.dart';
 
 class Filter {
   int? page;

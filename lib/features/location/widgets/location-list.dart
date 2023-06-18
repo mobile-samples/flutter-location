@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_user/features/locations/location_model.dart';
-import 'package:flutter_user/features/locations/location_service.dart';
+import 'package:flutter_user/features/location/location_model.dart';
+import 'package:flutter_user/features/location/location_service.dart';
 import "package:collection/collection.dart";
 
 import 'location-card.dart';
