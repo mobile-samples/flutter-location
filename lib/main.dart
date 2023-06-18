@@ -18,6 +18,7 @@ class MyApp extends StatelessWidget {
       title: 'Film',
       theme: getAppTheme(context, false),
       routes: routes,
+      onGenerateRoute: generateRoutes,
       home: FutureBuilder(
         future: AuthService.instance.tryAutoLogin(),
         builder: (context, authResult) {
