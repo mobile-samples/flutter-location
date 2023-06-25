@@ -12,6 +12,12 @@ AppBar getAppBarWithArrowBack(BuildContext context, String title) {
   );
 }
 
+AppBar getAppBarWithoutArrowBack(BuildContext context, String title) {
+  return AppBar(
+    title: Text(title),
+  );
+}
+
 class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   final Widget firstIcon;
   final Widget child;
@@ -44,7 +50,8 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
                 Stack(
                   children: <Widget>[
                     ClipPath(
-                      clipper: _AppBarProfileClipper(this.height + (this.childHeight / 2)),
+                      clipper: _AppBarProfileClipper(
+                          this.height + (this.childHeight / 2)),
                       child: Container(
                         width: double.maxFinite,
                         height: this.height,
@@ -92,7 +99,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   }
 
   @override
-  Size get preferredSize => Size.fromHeight(this.height + this.childHeight) ;
+  Size get preferredSize => Size.fromHeight(this.height + this.childHeight);
 }
 
 class _AppBarProfileClipper extends CustomClipper<Path> {

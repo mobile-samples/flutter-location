@@ -1,25 +1,24 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_user/common/client/client.dart';
 import 'package:flutter_user/common/client/model.dart';
 import 'package:flutter_user/common/client/search_state.dart';
 import 'package:flutter_user/common/widgets/custom_appbar.dart';
-import 'package:flutter_user/features/job/model.dart';
-import 'package:flutter_user/features/job/service.dart';
+import 'package:flutter_user/features/job/job_model.dart';
+import 'package:flutter_user/features/job/job_service.dart';
 import 'package:flutter_user/utils/screen_utils.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-import 'card.dart';
-import 'detail.dart';
+import 'job_card.dart';
+import 'Job_detail.dart';
 
-class ArticleListWidget extends StatefulWidget {
-  const ArticleListWidget({Key? key}) : super(key: key);
+class JobListWidget extends StatefulWidget {
+  const JobListWidget({Key? key}) : super(key: key);
 
   @override
-  State<ArticleListWidget> createState() => _ArticleListWidgetState();
+  State<JobListWidget> createState() => _JobListWidgetState();
 }
 
-class _ArticleListWidgetState
-    extends SearchState<ArticleListWidget, Job, JobFilter> {
+class _JobListWidgetState extends SearchState<JobListWidget, Job, JobFilter> {
   final ScrollController _scrollController = ScrollController();
   late JobFilter filter;
 
@@ -41,12 +40,17 @@ class _ArticleListWidgetState
   }
 
   gotoDetail(String id) {
-    Navigator.pushNamed(context, JobDetail.routeName, arguments: id);
+    Navigator.push(
+        context, MaterialPageRoute(builder: (context) => JobDetail(id: id)));
+
+    // Cannot use Navigator.pushNamed in a ListView.builder because they are not same context
+    // Navigator.pushNamed(context, JobDetail.routeName, arguments: id);
   }
 
   @override
   PreferredSizeWidget buildAppbar(BuildContext context) {
-    return getAppBarWithArrowBack(context, "Jobs");
+    return getAppBarWithoutArrowBack(
+        context, AppLocalizations.of(context)!.title);
   }
 
   @override

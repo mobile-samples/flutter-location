@@ -52,5 +52,5 @@ class SearchResult<T> {
   String? nextPageToken;
   bool? last;
 
-  SearchResult(this.total, this.list, this.nextPageToken, this.last);
+  SearchResult(this.total, this.list);
 }

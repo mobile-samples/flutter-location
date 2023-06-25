@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:flutter_user/features/company/widgets/list.dart';
 import 'package:flutter_user/features/film/widgets/films.dart';
+import 'package:flutter_user/features/job/widgets/job_list.dart';
 
 import 'account/widgets/account-list.dart';
 import 'account/widgets/account.dart';
@@ -10,8 +11,6 @@ import 'location/widgets/location-list.dart';
 
 class HomeWidget extends StatefulWidget {
   const HomeWidget({Key? key}) : super(key: key);
-
-  static const routeName = '/home';
 
   @override
   State<HomeWidget> createState() => _HomeWidgetState();
@@ -77,7 +76,7 @@ class _HomeWidgetState extends State<HomeWidget> {
               return AccountListWidget();
             }
             if (index == 3) {
-              return CompanyListWidget();
+              return JobListWidget();
             }
             if (index == 4 && userId != '') {
               return AccountWidget(

@@ -36,6 +36,9 @@ dependencies:
   webview_flutter: ^2.0.13
   avatars: ^3.0.0
   flutter_widget_from_html: ^0.9.1
+  flutter_localizations:
+    sdk: flutter
+  intl: any
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -46,6 +49,7 @@ dev_dependencies:
 # The following section is specific to Flutter.
 flutter:
 
+  generate: true
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in
   # the material Icons class.

@@ -1,9 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_user/features/auth/widgets/login.dart';
 import 'package:flutter_user/features/home.dart';
-import 'package:flutter_user/features/job/widgets/detail.dart';
+import 'package:flutter_user/features/job/widgets/Job_detail.dart';
+import 'package:flutter_user/features/landing.dart';
+
+import 'router_constants.dart';
 
 final Map<String, WidgetBuilder> routes = {
-  HomeWidget.routeName: (context) => const HomeWidget(),
+  landingRoute: (context) => const LandingWidget(),
+  homeRoute: (context) => const HomeWidget(),
+  loginRoute: (context) => const LoginWidget(),
 };
 
 MaterialPageRoute<dynamic>? generateRoutes(RouteSettings settings) {
@@ -17,6 +23,6 @@ MaterialPageRoute<dynamic>? generateRoutes(RouteSettings settings) {
         ),
       );
     default:
-      return null;
+      return new MaterialPageRoute(builder: (context) => LandingWidget());
   }
 }

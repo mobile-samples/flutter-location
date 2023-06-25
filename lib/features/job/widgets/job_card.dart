@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_user/features/job/model.dart';
+import 'package:flutter_user/features/job/job_model.dart';
 
 class JobCard extends StatelessWidget {
   const JobCard({Key? key, required this.data}) : super(key: key);
@@ -12,14 +12,13 @@ class JobCard extends StatelessWidget {
       padding: EdgeInsets.fromLTRB(20, 5, 20, 5),
       child: Row(
         children: [
-          // Expanded(
-          //   flex: 1,
-          //   child: CircleAvatar(
-          //     backgroundImage: (data.imageURL == null || data.imageURL!.isEmpty)
-          //         ? null
-          //         : NetworkImage(data.imageURL.toString()),
-          //   ),
-          // ),
+          Expanded(
+            flex: 1,
+            child: CircleAvatar(
+              backgroundImage: NetworkImage(
+                  "https://static.vecteezy.com/system/resources/previews/008/214/517/large_2x/abstract-geometric-logo-or-infinity-line-logo-for-your-company-free-vector.jpg"),
+            ),
+          ),
           Expanded(
             flex: 8,
             child: Padding(
@@ -32,7 +31,7 @@ class JobCard extends StatelessWidget {
                       style:
                           TextStyle(fontSize: 18, fontWeight: FontWeight.w400)),
                   Text(
-                    data.benifit,
+                    data.benefit,
                     style: TextStyle(fontSize: 16, color: Colors.black),
                     maxLines: 1,
                     overflow: TextOverflow.visible,

@@ -9,7 +9,7 @@ class Job {
     this.quantity,
     this.applicantCount,
     this.requirements,
-    this.benifit,
+    this.benefit,
     this.companyId,
     this.publishedAt,
     this.expiredAt,
@@ -22,27 +22,42 @@ class Job {
   num quantity;
   num applicantCount;
   String requirements;
-  String benifit;
+  String benefit;
   String companyId;
   DateTime? publishedAt;
   DateTime? expiredAt;
 
-  Map<String, dynamic> toJson() => {};
-
   factory Job.fromJson(Map<String, dynamic> json) => Job(
-        json['JobId'] ?? json['Jobid'],
-        json['Jobname'] ?? '',
-        json['email'],
-        json['displayName'] ?? json['displayname'],
-        json['imageURL'] ?? json['imageurl'],
-        json['status'],
-        json['gender'] ?? '',
-        json['phone'] ?? '',
-        json['title'] ?? '',
-        json['position'] ?? '',
-        json['roles']?.cast<String>(),
+        json['id'] as String,
+        json['title'] as String,
+        json['description'] as String,
+        (json['skill'] as List<dynamic>).map((e) => e as String).toList(),
+        json['quantity'] as num,
+        json['applicantCount'] as num,
+        json['requirements'] as String,
+        json['benefit'] as String,
+        json['companyId'] as String,
+        json['publishedAt'] == null
+            ? null
+            : DateTime.parse(json['publishedAt'] as String),
+        json['expiredAt'] == null
+            ? null
+            : DateTime.parse(json['expiredAt'] as String),
       );
 
+  Map<String, dynamic> toJson(Job instance) => {
+        'id': instance.id,
+        'title': instance.title,
+        'description': instance.description,
+        'skill': instance.skill,
+        'quantity': instance.quantity,
+        'applicantCount': instance.applicantCount,
+        'requirements': instance.requirements,
+        'benefit': instance.benefit,
+        'companyId': instance.companyId,
+        'publishedAt': instance.publishedAt?.toIso8601String(),
+        'expiredAt': instance.expiredAt?.toIso8601String(),
+      };
   static String getId(Job job) => job.id;
 }
 

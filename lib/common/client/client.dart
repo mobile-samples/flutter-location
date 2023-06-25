@@ -164,8 +164,6 @@ class SearchClient<T, S extends Filter> {
       (json['list'] as List<dynamic>)
           .map((e) => this.createObjectFromJson(e as Map<String, dynamic>))
           .toList(),
-      json['nextPageToken'] as String?,
-      json['last'] as bool?,
     );
   }
 
@@ -179,7 +177,7 @@ class SearchClient<T, S extends Filter> {
         if (res.statusCode == 200) {
           return buildSearchResult(res.body);
         } else {
-          return SearchResult<T>(0, [], '', true);
+          return SearchResult<T>(0, []);
         }
       }).catchError((err) {
         throw err;
@@ -191,7 +189,7 @@ class SearchClient<T, S extends Filter> {
         if (res.statusCode == 200) {
           return buildSearchResult(res.body);
         } else {
-          return SearchResult<T>(0, [], '', true);
+          return SearchResult<T>(0, []);
         }
       }).catchError((err) {
         throw err;

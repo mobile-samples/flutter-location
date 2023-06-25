@@ -52,7 +52,7 @@ abstract class SearchState<W extends StatefulWidget, T, S extends Filter>
                 ScaffoldMessenger.of(context).showSnackBar(
                     const SnackBar(content: Text('Cannot get data')));
               });
-              return buildChild(context, SearchResult(0, [], '', true));
+              return buildChild(context, SearchResult(0, []));
             }
             return Center(
               child: CircularProgressIndicator(

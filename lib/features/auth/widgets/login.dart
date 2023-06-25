@@ -3,6 +3,7 @@ import 'package:flutter_user/common/widgets/circle-background.dart';
 import 'package:flutter_user/common/widgets/dialog.dart';
 import 'package:flutter_user/common/widgets/hyberlink.dart';
 import 'package:flutter_user/features/home.dart';
+import 'package:flutter_user/router/router_constants.dart';
 
 import '../auth_model.dart';
 import '../auth_service.dart';
@@ -52,10 +53,11 @@ class _LoginWidgetState extends State<LoginWidget> {
     final AuthResponse res = await AuthService.instance
         .authenticate(username: username, password: password);
     if (res.user?.token != '') {
-      Navigator.push(
-        context,
-        MaterialPageRoute(builder: (context) => const HomeWidget()),
-      );
+      Navigator.pushNamed(context, homeRoute);
+      // Navigator.push(
+      //   context,
+      //   MaterialPageRoute(builder: (context) => const HomeWidget()),
+      // );
     }
   }
 
@@ -83,6 +85,7 @@ class _LoginWidgetState extends State<LoginWidget> {
                         style: Theme.of(context).textTheme.titleMedium,
                       ),
                       TextField(
+                        style: TextStyle(color: Colors.black),
                         controller: userNameController,
                         decoration: InputDecoration(
                           prefixIcon: Icon(Icons.account_box),
@@ -96,6 +99,7 @@ class _LoginWidgetState extends State<LoginWidget> {
                         obscureText: true,
                         enableSuggestions: false,
                         autocorrect: false,
+                        style: TextStyle(color: Colors.black),
                         decoration: InputDecoration(
                           prefixIcon: Icon(Icons.password),
                           hintText: "Password",

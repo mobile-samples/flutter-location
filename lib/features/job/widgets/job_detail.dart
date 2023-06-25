@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_user/features/job/model.dart';
-import 'package:flutter_user/features/job/service.dart';
+import 'package:flutter_user/features/job/job_model.dart';
+import 'package:flutter_user/features/job/Job_service.dart';
 
 class JobDetail extends StatefulWidget {
   const JobDetail({Key? key, required this.id});
 
-  static const routeName = '/jobDetail';
+  static const routeName = 'jobDetail';
 
   final String id;
 
