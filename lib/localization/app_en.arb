@@ -2,5 +2,9 @@
   "title": "Hello",
   "@title": {
     "description": "The conventional newborn programmer greeting"
+  },
+  "job_list_title": "Job list",
+  "@job_list_title": {
+    "description": "Job list title"
   }
 }

@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_user/common/widgets/custom_appbar.dart';
 import 'package:flutter_user/features/job/job_model.dart';
 import 'package:flutter_user/features/job/Job_service.dart';
 
 class JobDetail extends StatefulWidget {
   const JobDetail({Key? key, required this.id});
-
-  static const routeName = 'jobDetail';
 
   final String id;
 
@@ -47,14 +46,7 @@ class _JobDetailState extends State<JobDetail> {
     return SafeArea(
       child: Scaffold(
         resizeToAvoidBottomInset: false,
-        appBar: AppBar(
-          iconTheme: IconThemeData(
-            color: Theme.of(context).scaffoldBackgroundColor,
-          ),
-          title: Text("Job"),
-          backgroundColor: Theme.of(context).colorScheme.primary,
-          centerTitle: true,
-        ),
+        appBar: getAppBarWithArrowBack(context, data?.title ?? ''),
         body: Column(
           children: [
             Text(

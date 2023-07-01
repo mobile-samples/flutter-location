@@ -9,7 +9,7 @@ import 'package:flutter_user/utils/screen_utils.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import 'job_card.dart';
-import 'Job_detail.dart';
+import 'job_detail.dart';
 
 class JobListWidget extends StatefulWidget {
   const JobListWidget({Key? key}) : super(key: key);
@@ -44,13 +44,13 @@ class _JobListWidgetState extends SearchState<JobListWidget, Job, JobFilter> {
         context, MaterialPageRoute(builder: (context) => JobDetail(id: id)));
 
     // Cannot use Navigator.pushNamed in a ListView.builder because they are not same context
-    // Navigator.pushNamed(context, JobDetail.routeName, arguments: id);
+    // Navigator.pushNamed(context, jobDetail, arguments: id);
   }
 
   @override
   PreferredSizeWidget buildAppbar(BuildContext context) {
     return getAppBarWithoutArrowBack(
-        context, AppLocalizations.of(context)!.title);
+        context, AppLocalizations.of(context)!.job_list_title);
   }
 
   @override

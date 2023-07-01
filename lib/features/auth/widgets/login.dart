@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_user/common/widgets/circle-background.dart';
 import 'package:flutter_user/common/widgets/dialog.dart';
 import 'package:flutter_user/common/widgets/hyberlink.dart';
-import 'package:flutter_user/features/home.dart';
 import 'package:flutter_user/router/router_constants.dart';
 
 import '../auth_model.dart';
@@ -54,10 +53,6 @@ class _LoginWidgetState extends State<LoginWidget> {
         .authenticate(username: username, password: password);
     if (res.user?.token != '') {
       Navigator.pushNamed(context, homeRoute);
-      // Navigator.push(
-      //   context,
-      //   MaterialPageRoute(builder: (context) => const HomeWidget()),
-      // );
     }
   }
 

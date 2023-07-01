@@ -10,6 +10,8 @@ class AuthService {
 
   static final AuthService instance = AuthService._instantiate();
 
+  final storage = new FlutterSecureStorage();
+
   Future<AuthResponse> authenticate(
       {required String username, required String password}) async {
     late String baseUrl = HttpHelper.instance.getUrl();
@@ -25,7 +27,6 @@ class AuthService {
       }),
     )
         .then((value) async {
-      final storage = new FlutterSecureStorage();
       dynamic res = jsonDecode(value.body);
       AuthResponse auth = AuthResponse.fromJson(res);
       await storage.write(key: 'token', value: auth.user?.token);
@@ -36,7 +37,6 @@ class AuthService {
   }
 
   Future<bool> logout() async {
-    final storage = new FlutterSecureStorage();
     try {
       await storage.deleteAll();
       return true;
@@ -46,7 +46,6 @@ class AuthService {
   }
 
   Future<bool> tryAutoLogin() async {
-    final storage = new FlutterSecureStorage();
     final token = await storage.read(key: 'token');
     final expired = await storage.read(key: 'expired');
     if (token != null && expired != null) {

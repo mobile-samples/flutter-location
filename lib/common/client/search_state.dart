@@ -31,7 +31,7 @@ abstract class SearchState<W extends StatefulWidget, T, S extends Filter>
 
   void search() {
     final filter = getFilter();
-    final res = getService().search(true, true, filter);
+    final res = getService().search(true, false, filter);
     setState(() {
       searchResult = res;
       this.setFilter();
@@ -61,7 +61,6 @@ abstract class SearchState<W extends StatefulWidget, T, S extends Filter>
                     Theme.of(context).colorScheme.primary),
               ),
             );
-            ;
           }),
     );
   }

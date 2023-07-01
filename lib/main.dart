@@ -21,28 +21,6 @@ class MyApp extends StatelessWidget {
       routes: routes,
       onGenerateRoute: generateRoutes,
       initialRoute: landingRoute,
-      // home: FutureBuilder(
-      //   future: AuthService.instance.tryAutoLogin(),
-      //   builder: (context, authResult) {
-      //     if (authResult.connectionState == ConnectionState.waiting) {
-      //       return CircularProgressIndicator(
-      //         valueColor: AlwaysStoppedAnimation<Color>(
-      //           Theme.of(context).colorScheme.primary,
-      //         ),
-      //       );
-      //     }
-      //     if (authResult.connectionState == ConnectionState.done) {
-      //       if (authResult.data == true) {
-      //         return HomeWidget();
-      //       } else {
-      //         return LoginWidget();
-      //       }
-      //     }
-      //     return Center(
-      //       child: Text("We got some issue"),
-      //     );
-      //   },
-      // ),
     );
   }
 }

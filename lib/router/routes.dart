@@ -14,7 +14,7 @@ final Map<String, WidgetBuilder> routes = {
 
 MaterialPageRoute<dynamic>? generateRoutes(RouteSettings settings) {
   switch (settings.name) {
-    case JobDetail.routeName:
+    case jobDetail:
       final args = settings.arguments as String;
       return MaterialPageRoute<dynamic>(
         settings: settings,

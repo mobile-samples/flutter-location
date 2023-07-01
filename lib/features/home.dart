@@ -1,12 +1,13 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-import 'package:flutter_user/features/company/widgets/list.dart';
 import 'package:flutter_user/features/film/widgets/films.dart';
 import 'package:flutter_user/features/job/widgets/job_list.dart';
+import 'package:flutter_user/router/router_constants.dart';
 
 import 'account/widgets/account-list.dart';
 import 'account/widgets/account.dart';
+import 'auth/auth_service.dart';
 import 'location/widgets/location-list.dart';
 
 class HomeWidget extends StatefulWidget {
@@ -22,17 +23,22 @@ class _HomeWidgetState extends State<HomeWidget> {
   @override
   void initState() {
     super.initState();
-    getUserId();
-  }
-
-  getUserId() async {
     final storage = new FlutterSecureStorage();
-    final userIdFromStore = await storage.read(key: 'userId');
-    if (userIdFromStore != '') {
-      setState(() {
-        userId = userIdFromStore;
-      });
-    }
+    storage
+        .read(key: 'userId')
+        .then((data) => {
+              if (data != '')
+                {
+                  setState(() {
+                    userId = data;
+                  })
+                }
+              else
+                {Navigator.pushReplacementNamed(context, loginRoute)}
+            })
+        .catchError((e) {
+      Navigator.pushReplacementNamed(context, loginRoute);
+    });
   }
 
   @override
@@ -83,7 +89,6 @@ class _HomeWidgetState extends State<HomeWidget> {
                 userId: userId ?? '',
               );
             }
-
             return Center(
               child: CircularProgressIndicator(
                 backgroundColor: Theme.of(context).colorScheme.background,
