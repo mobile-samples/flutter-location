@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_user/features/location/location_model.dart';
 
 class LocationCard extends StatelessWidget {
-  const LocationCard({Key? key, required this.location}) : super(key: key);
+  const LocationCard({super.key, required this.location});
   final Location location;
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.only(
+      padding: const EdgeInsets.only(
         right: 12,
       ),
       child: Container(
@@ -32,7 +32,7 @@ class LocationCard extends StatelessWidget {
               ),
             ),
             Padding(
-              padding: EdgeInsets.only(
+              padding: const EdgeInsets.only(
                 left: 16.0,
                 right: 16.0,
                 bottom: 16.0,

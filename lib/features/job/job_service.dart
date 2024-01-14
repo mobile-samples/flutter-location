@@ -1,19 +1,15 @@
-import 'dart:io';
-
 import 'package:flutter_user/common/client/client.dart';
-import 'package:flutter_user/common/client/model.dart';
+import 'package:flutter_user/utils/http_helper.dart';
 
 import 'job_model.dart';
 
-class JobService extends Client<Job, String, ResultInfo<Job>, JobFilter> {
+class JobService extends Client<Job, String, JobFilter> {
   static final JobService instance = JobService._instantiate();
 
   JobService._instantiate()
       : super(
-          serviceUrl: Platform.isIOS
-              ? 'http://localhost:8082/jobs'
-              : 'http://10.0.2.2:8082/jobs',
-          createObjectFromJson: Job.fromJson,
+          serviceUrl: HttpHelper.instance.getUrl() + '/jobs',
+          fromJson: Job.fromJson,
           getId: Job.getId,
         );
 }

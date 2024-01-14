@@ -9,12 +9,12 @@ import 'user_model.dart';
 class UserService {
   UserService._instantiate();
   static final UserService instance = UserService._instantiate();
-  final storage = new FlutterSecureStorage();
+  final storage = const FlutterSecureStorage();
 
   Future<List<UserInfo>> searchUser(Filter filter) async {
     late String baseUrl = HttpHelper.instance.getUrl();
     final headers = await HttpHelper.instance.buildHeader();
-    final response = await http.post(Uri.parse(baseUrl + '/users/search'),
+    final response = await http.post(Uri.parse('$baseUrl/users/search'),
         headers: headers, body: jsonEncode(filter));
     if (response.statusCode == 200) {
       dynamic res = jsonDecode(response.body);
@@ -29,7 +29,7 @@ class UserService {
     late String baseUrl = HttpHelper.instance.getUrl();
     final headers = await HttpHelper.instance.buildHeader();
     final response = await http.get(
-      Uri.parse(baseUrl + '/my-profile/' + (userId ?? '')),
+      Uri.parse('$baseUrl/my-profile/$userId'),
       headers: headers,
     );
     if (response.statusCode == 200) {
@@ -44,7 +44,7 @@ class UserService {
   Future<List<String>> getSkills(String keyword) async {
     late String baseUrl = HttpHelper.instance.getUrl();
     final response = await http
-        .get(Uri.parse(baseUrl + '/skills?keyword=' + keyword + '&max=20'));
+        .get(Uri.parse('$baseUrl/skills?keyword=$keyword&max=20'));
     if (response.statusCode == 200) {
       dynamic res = jsonDecode(response.body);
       List<String> listSkills = List<String>.from(res.map((e) => e.toString()));
@@ -58,7 +58,7 @@ class UserService {
     late String baseUrl = HttpHelper.instance.getUrl();
     final headers = await HttpHelper.instance.buildHeader();
     final response = await http.patch(
-      Uri.parse(baseUrl + '/my-profile/' + (userInfo.id ?? '')),
+      Uri.parse('$baseUrl/my-profile/${userInfo.id ?? ''}'),
       headers: headers,
       body: jsonEncode(userInfo),
     );

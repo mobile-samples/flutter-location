@@ -9,8 +9,7 @@ import 'package:flutter_user/features/comment/reply/comment_thread_form.dart';
 import 'package:flutter_user/features/comment/search_comment.dart';
 
 class Comments extends StatefulWidget {
-  Comments({
-    Key? key,
+  const Comments({super.key, 
     required this.id,
     required this.serviceName,
     required this.load,
@@ -62,7 +61,7 @@ class _CommentsState extends State<Comments> {
   }
 
   useFul(String commentId, String author) async {
-    final storage = new FlutterSecureStorage();
+    const storage = FlutterSecureStorage();
     final userId = await storage.read(key: 'userId');
     final res =
         await widget.reactionService.setUseful(commentId, author, userId);
@@ -74,7 +73,7 @@ class _CommentsState extends State<Comments> {
   }
 
   deleteUseFul(String commentId, String author) async {
-    final storage = new FlutterSecureStorage();
+    const storage = FlutterSecureStorage();
     final userId = await storage.read(key: 'userId');
     final res =
         await widget.reactionService.removeUseful(commentId, author, userId);
@@ -96,31 +95,29 @@ class _CommentsState extends State<Comments> {
             showModalBottomSheet(
                 context: context,
                 isScrollControlled: true,
-                shape: RoundedRectangleBorder(
+                shape: const RoundedRectangleBorder(
                     borderRadius:
                         BorderRadius.vertical(top: Radius.circular(20.0))),
                 builder: (BuildContext buildContext) {
                   return CommentThreadForm(post: postComment);
                 });
           },
-          child: Text('Comment'),
+          child: const Text('Comment'),
         ),
-        Container(
-          child: ListView.builder(
-            shrinkWrap: true,
-            itemCount: res.list.length,
-            physics: const NeverScrollableScrollPhysics(),
-            itemBuilder: (context, index) {
-              return CommentItem(
-                item: res.list[index],
-                load: load,
-                commentThreadReplyService: widget.commentThreadReplyService,
-                commentThreadService: widget.commentThreadService,
-                useFul: useFul,
-                deleteUseFul: deleteUseFul,
-              );
-            },
-          ),
+        ListView.builder(
+          shrinkWrap: true,
+          itemCount: res.list.length,
+          physics: const NeverScrollableScrollPhysics(),
+          itemBuilder: (context, index) {
+            return CommentItem(
+              item: res.list[index],
+              load: load,
+              commentThreadReplyService: widget.commentThreadReplyService,
+              commentThreadService: widget.commentThreadService,
+              useFul: useFul,
+              deleteUseFul: deleteUseFul,
+            );
+          },
         )
       ],
     );

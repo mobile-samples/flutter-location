@@ -14,7 +14,7 @@ class ArticleService {
   static final ArticleService instance = ArticleService._instantiate();
 
   Future<SearchResult<Article>> search(String? textInput) async {
-    final storage = new FlutterSecureStorage();
+    const storage = FlutterSecureStorage();
     final userId = await storage.read(key: 'userId');
     int limit = 24;
     var bodyMap = {
@@ -45,7 +45,7 @@ class ArticleService {
 
   Future<Article> getByID(String id) async {
     late String baseUrl = HttpHelper.instance.getUrl();
-    final response = await http.get(Uri.parse(baseUrl + '/articles/$id'));
+    final response = await http.get(Uri.parse('$baseUrl/articles/$id'));
 
     if (response.statusCode == 200) {
       var res = jsonDecode(utf8.decode(response.bodyBytes));
@@ -66,6 +66,7 @@ class ArticleCommentThread extends FilmCommentThreadClient {
       ArticleCommentThread._instantiate();
 
   // String name = "articles";
+  @override
   String url = HttpHelper.instance.getUrl() + "/articles";
 }
 
@@ -76,5 +77,6 @@ class ArticleCommentThreadReply extends FilmCommentThreadReplyClient {
 
   static final ArticleCommentThreadReply instance =
       ArticleCommentThreadReply._instantiate();
+  @override
   String url = HttpHelper.instance.getUrl() + "/articles";
 }

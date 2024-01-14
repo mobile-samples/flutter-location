@@ -43,26 +43,26 @@ class Film {
 
 
   factory Film.fromJson(Map<String, dynamic> json) => Film(
-      json['createdat'] == null ? '' : json['createdat'],
-      json['createdby'] == null ? '' : json['createdby'],
-      json['description'] == null ? '' : json['description'],
-      json['id'] == null ? '' : json['id'],
-      json['imageURL'] == null ? '' : json['imageURL'],
-      json['trailerURL'] == null ? '' : json['trailerURL'],
+      json['createdat'] ?? '',
+      json['createdby'] ?? '',
+      json['description'] ?? '',
+      json['id'] ?? '',
+      json['imageURL'] ?? '',
+      json['trailerURL'] ?? '',
       json['categories'] == null ? [] : json['categories'].cast<String>(),
       json['directors'] == null ? [] : json['directors'].cast<String>(),
       json['casts'] == null ? [] : json['casts'].cast<String>(),
       json['productions'] == null ? [] : json['productions'].cast<String>(),
       json['countries'] == null ? [] : json['countries'].cast<String>(),
-      json['writer'] == null ? '' : json['writer'],
+      json['writer'] ?? '',
       json['gallery'] == null ? [] : json['gallery'].cast<String>(),
-      json['coverurl'] == null ? '' : json['coverurl'],
+      json['coverurl'] ?? '',
       json['info'] != null ? Info.fromJson(json['info']) : null,
-      json['title'] == null ? '' : json['title'],
-      json['status'] == null ? '' : json['status'],
-      json['type'] == null ? '' : json['type'],
-      json['updatedby'] == null ? '' : json['updatedby'],
-      json['version'] == null ? '' : json['version']);
+      json['title'] ?? '',
+      json['status'] ?? '',
+      json['type'] ?? '',
+      json['updatedby'] ?? '',
+      json['version'] ?? '');
 }
 
 class Info {
@@ -114,7 +114,7 @@ class Info {
   }
 
   factory Info.fromJson(Map<String, dynamic> json) => Info(
-      json['count'] == null ? 0 : json['count'],
+      json['count'] ?? 0,
       json['rate'] == null
           ? 0
           : (json['rate'] is int

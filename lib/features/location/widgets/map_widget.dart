@@ -1,18 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
-import 'package:latlong2/latlong.dart' as latLng;
+import 'package:latlong2/latlong.dart' as lat_long;
 import 'package:flutter_map/flutter_map.dart';
 
 class MapWidget extends StatefulWidget {
   const MapWidget(
-      {Key? key,
+      {super.key,
       required this.latitude,
       required this.longitude,
-      required this.locationName})
-      : super(key: key);
-  final latitude;
-  final longitude;
-  final locationName;
+      required this.locationName});
+  final double latitude;
+  final double longitude;
+  final String locationName;
   @override
   State<MapWidget> createState() => _MapWidgetState();
 }
@@ -23,9 +21,10 @@ class _MapWidgetState extends State<MapWidget> {
     return SafeArea(
         child: Padding(
       padding: EdgeInsets.only(
-          top: MediaQueryData.fromWindow(WidgetsBinding.instance!.window)
+          top: MediaQueryData.fromView(View.of(context))
               .padding
-              .top),
+              .top
+              ),
       child: Scaffold(
         appBar: AppBar(
           iconTheme: IconThemeData(
@@ -39,29 +38,27 @@ class _MapWidgetState extends State<MapWidget> {
         body: FlutterMap(
           options: MapOptions(
             // screenSize: Size.fromHeight(300),
-            center: latLng.LatLng(
-                (widget.latitude ?? '0'), (widget.longitude ?? '0')),
-            zoom: 17.0,
+            initialCenter: lat_long.LatLng(
+                (widget.latitude), (widget.longitude)),
+            initialZoom: 17.0,
           ),
-          layers: [
-            TileLayerOptions(
+          children: [
+            TileLayer(
                 urlTemplate:
                     "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
-                subdomains: ['a', 'b', 'c']),
-            MarkerLayerOptions(
+                subdomains: const ['a', 'b', 'c']),
+            MarkerLayer(
               markers: [
                 Marker(
                   width: 80.0,
                   height: 80.0,
-                  point: latLng.LatLng(
-                      (widget.latitude ?? 0), (widget.longitude ?? 0)),
-                  builder: (ctx) => Container(
-                    child: Icon(
+                  point: lat_long.LatLng(
+                      (widget.latitude), (widget.longitude)),
+                  child: const Icon(
                       Icons.place,
                       color: Colors.red,
                       size: 24,
                     ),
-                  ),
                 ),
               ],
             ),

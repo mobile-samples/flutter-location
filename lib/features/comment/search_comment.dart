@@ -18,9 +18,10 @@ class SearchCommentThreadClient
 
   SearchCommentThreadClient(this.baseUrl);
 
+  @override
   Future<SearchResult<CommentThread>> search(
       String serviceName, String id) async {
-    final storage = new FlutterSecureStorage();
+    const storage = FlutterSecureStorage();
     final userId = await storage.read(key: 'userId');
     final headers = await HttpHelper.instance.buildHeader();
     final response = await http.post(

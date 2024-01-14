@@ -4,13 +4,12 @@ import '../user_model.dart';
 
 class BasicInfoForm extends StatefulWidget {
   const BasicInfoForm(
-      {Key? key, required this.userInfo, required this.saveInfo})
-      : super(key: key);
+      {super.key, required this.userInfo, required this.saveInfo});
   final UserInfo userInfo;
   final Function saveInfo;
 
   @override
-  _BasicInfoFormState createState() => _BasicInfoFormState();
+  State<BasicInfoForm> createState() => _BasicInfoFormState();
 }
 
 class _BasicInfoFormState extends State<BasicInfoForm> {
@@ -45,12 +44,12 @@ class _BasicInfoFormState extends State<BasicInfoForm> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Basic info'),
+        title: const Text('Basic info'),
         backgroundColor: Colors.green,
       ),
       body: Container(
         color: Colors.white,
-        padding: EdgeInsets.all(16.0),
+        padding: const EdgeInsets.all(16.0),
         child: Form(
           key: formKey,
           child: Column(
@@ -62,7 +61,7 @@ class _BasicInfoFormState extends State<BasicInfoForm> {
                   labelText: 'First Name',
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(5.0),
-                    borderSide: BorderSide(
+                    borderSide: const BorderSide(
                       color: Colors.green,
                     ),
                   ),
@@ -74,7 +73,7 @@ class _BasicInfoFormState extends State<BasicInfoForm> {
                   return null;
                 },
               ),
-              SizedBox(
+              const SizedBox(
                 height: 10.0,
               ),
               TextFormField(
@@ -83,7 +82,7 @@ class _BasicInfoFormState extends State<BasicInfoForm> {
                   labelText: 'Last Name',
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(5.0),
-                    borderSide: BorderSide(
+                    borderSide: const BorderSide(
                       color: Colors.green,
                     ),
                   ),
@@ -95,7 +94,7 @@ class _BasicInfoFormState extends State<BasicInfoForm> {
                   return null;
                 },
               ),
-              SizedBox(
+              const SizedBox(
                 height: 10.0,
               ),
               TextFormField(
@@ -104,7 +103,7 @@ class _BasicInfoFormState extends State<BasicInfoForm> {
                   labelText: 'Occupation',
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(5.0),
-                    borderSide: BorderSide(
+                    borderSide: const BorderSide(
                       color: Colors.green,
                     ),
                   ),
@@ -116,7 +115,7 @@ class _BasicInfoFormState extends State<BasicInfoForm> {
                   return null;
                 },
               ),
-              SizedBox(
+              const SizedBox(
                 height: 10.0,
               ),
               TextFormField(
@@ -125,7 +124,7 @@ class _BasicInfoFormState extends State<BasicInfoForm> {
                   labelText: 'Place of Employment',
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(5.0),
-                    borderSide: BorderSide(
+                    borderSide: const BorderSide(
                       color: Colors.green,
                     ),
                   ),
@@ -137,7 +136,7 @@ class _BasicInfoFormState extends State<BasicInfoForm> {
                   return null;
                 },
               ),
-              SizedBox(
+              const SizedBox(
                 height: 10.0,
               ),
               TextFormField(
@@ -146,7 +145,7 @@ class _BasicInfoFormState extends State<BasicInfoForm> {
                   labelText: 'Website',
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(5.0),
-                    borderSide: BorderSide(
+                    borderSide: const BorderSide(
                       color: Colors.green,
                     ),
                   ),
@@ -158,7 +157,7 @@ class _BasicInfoFormState extends State<BasicInfoForm> {
                   return null;
                 },
               ),
-              SizedBox(
+              const SizedBox(
                 height: 20,
               ),
               Center(
@@ -172,7 +171,7 @@ class _BasicInfoFormState extends State<BasicInfoForm> {
                   },
                   style: ButtonStyle(
                       backgroundColor: MaterialStateProperty.all(Colors.green)),
-                  child: Padding(
+                  child: const Padding(
                     padding:
                         EdgeInsets.symmetric(horizontal: 50.0, vertical: 10.0),
                     child: Text(

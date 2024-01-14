@@ -15,13 +15,14 @@ class SearchRateClient implements SearchRateService<RateComment> {
   static final SearchRateClient instance = SearchRateClient._instantiate();
   final String name = "films";
 
+  @override
   Future<SearchResult<RateComment>> search(String id) async {
-    final storage = new FlutterSecureStorage();
+    const storage = FlutterSecureStorage();
     late String baseUrl = HttpHelper.instance.getUrl();
     final userId = await storage.read(key: 'userId');
     final headers = await HttpHelper.instance.buildHeader();
     final response = await http.post(
-      Uri.parse(baseUrl + '/' + name + '/rates/search'),
+      Uri.parse('$baseUrl/$name/rates/search'),
       headers: headers,
       body: jsonEncode(<String, dynamic>{
         'id': id,

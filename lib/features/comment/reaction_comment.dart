@@ -14,7 +14,7 @@ class ReactionCommentClient implements ReactionService {
 
   @override
   Future<int> removeUseful(String id, String author, String? userId) async {
-    final storage = new FlutterSecureStorage();
+    const storage = FlutterSecureStorage();
     final userId = await storage.read(key: 'userId');
     final headers = await HttpHelper.instance.buildHeader();
     final response = await http.delete(
@@ -29,7 +29,7 @@ class ReactionCommentClient implements ReactionService {
 
   @override
   Future<int> setUseful(String id, String author, String? userId) async {
-    final storage = new FlutterSecureStorage();
+    const storage = FlutterSecureStorage();
     final userId = await storage.read(key: 'userId');
     final headers = await HttpHelper.instance.buildHeader();
 
@@ -40,7 +40,6 @@ class ReactionCommentClient implements ReactionService {
     if (response.statusCode == 200 && json.decode(response.body) > 0) {
       return 1;
     } else {
-      print(json.decode(response.body));
       throw json.decode(response.body)['error']['message'];
     }
   }
@@ -50,7 +49,7 @@ class ReactionRateClient implements ReactionService {
   ReactionRateClient._instantiate();
 
   static final ReactionService instance = ReactionRateClient._instantiate();
-  static final String name = "films";
+  static const String name = "films";
   String url = HttpHelper.instance.getUrl() + "/" + name;
 
   @override
@@ -68,7 +67,7 @@ class ReactionRateClient implements ReactionService {
 
   @override
   Future<int> setUseful(String id, String author, String? userId) async {
-    final storage = new FlutterSecureStorage();
+    const storage = FlutterSecureStorage();
     final userId = await storage.read(key: 'userId');
     final headers = await HttpHelper.instance.buildHeader();
 

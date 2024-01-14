@@ -49,10 +49,10 @@ class UserInfo {
     occupation = json['occupation'];
     company = json['company'];
     bio = json['bio'];
-    givenname = json['givenname'] == null ? '' : json['givenname'];
-    familyname = json['familyname'] == null ? '' : json['familyname'];
-    website = json['website'] == null ? '' : json['website'];
-    location = json['location'] == null ? '' : json['location'];
+    givenname = json['givenname'] ?? '';
+    familyname = json['familyname'] ?? '';
+    website = json['website'] ?? '';
+    location = json['location'] ?? '';
     interests = json['interests'] == null
         ? ['']
         : List<String>.from(json['interests']?.map((x) => x.toString()));
@@ -62,7 +62,7 @@ class UserInfo {
     if (json['skills'] != null) {
       skills = <Skills>[];
       json['skills'].forEach((v) {
-        skills!.add(new Skills.fromJson(v));
+        skills!.add(Skills.fromJson(v));
       });
     } else {
       skills = [];
@@ -70,31 +70,31 @@ class UserInfo {
     if (json['achievements'] != null) {
       achievements = <Achievements>[];
       json['achievements'].forEach((v) {
-        achievements!.add(new Achievements.fromJson(v));
+        achievements!.add(Achievements.fromJson(v));
       });
     }
     if (json['companies'] != null) {
       companies = <Companies>[];
       json['companies'].forEach((v) {
-        companies!.add(new Companies.fromJson(v));
+        companies!.add(Companies.fromJson(v));
       });
     }
     if (json['educations'] != null) {
       educations = <Educations>[];
       json['educations'].forEach((v) {
-        educations!.add(new Educations.fromJson(v));
+        educations!.add(Educations.fromJson(v));
       });
     }
     if (json['works'] != null) {
       works = <Works>[];
       json['works'].forEach((v) {
-        works!.add(new Works.fromJson(v));
+        works!.add(Works.fromJson(v));
       });
     }
     if (json['gallery'] != null) {
       gallery = <Gallery>[];
       json['gallery'].forEach((v) {
-        gallery!.add(new Gallery.fromJson(v));
+        gallery!.add(Gallery.fromJson(v));
       });
     }
     imageURL = json['imageURL'];
@@ -102,39 +102,39 @@ class UserInfo {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['username'] = this.username;
-    data['email'] = this.email;
-    data['occupation'] = this.occupation;
-    data['company'] = this.company;
-    data['bio'] = this.bio;
-    data['givenname'] = this.givenname;
-    data['familyname'] = this.familyname;
-    data['website'] = this.website;
-    data['location'] = this.location;
-    data['interests'] = this.interests;
-    data['lookingFor'] = this.lookingFor;
-    if (this.skills != null) {
-      data['skills'] = this.skills!.map((v) => v.toJson()).toList();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['id'] = id;
+    data['username'] = username;
+    data['email'] = email;
+    data['occupation'] = occupation;
+    data['company'] = company;
+    data['bio'] = bio;
+    data['givenname'] = givenname;
+    data['familyname'] = familyname;
+    data['website'] = website;
+    data['location'] = location;
+    data['interests'] = interests;
+    data['lookingFor'] = lookingFor;
+    if (skills != null) {
+      data['skills'] = skills!.map((v) => v.toJson()).toList();
     }
-    if (this.achievements != null) {
-      data['achievements'] = this.achievements!.map((v) => v.toJson()).toList();
+    if (achievements != null) {
+      data['achievements'] = achievements!.map((v) => v.toJson()).toList();
     }
-    if (this.companies != null) {
-      data['companies'] = this.companies!.map((v) => v.toJson()).toList();
+    if (companies != null) {
+      data['companies'] = companies!.map((v) => v.toJson()).toList();
     }
-    if (this.educations != null) {
-      data['educations'] = this.educations!.map((v) => v.toJson()).toList();
+    if (educations != null) {
+      data['educations'] = educations!.map((v) => v.toJson()).toList();
     }
-    if (this.works != null) {
-      data['works'] = this.works!.map((v) => v.toJson()).toList();
+    if (works != null) {
+      data['works'] = works!.map((v) => v.toJson()).toList();
     }
-    if (this.gallery != null) {
-      data['gallery'] = this.gallery!.map((v) => v.toJson()).toList();
+    if (gallery != null) {
+      data['gallery'] = gallery!.map((v) => v.toJson()).toList();
     }
-    data['imageURL'] = this.imageURL;
-    data['coverURL'] = this.coverURL;
+    data['imageURL'] = imageURL;
+    data['coverURL'] = coverURL;
     return data;
   }
 }
@@ -149,8 +149,8 @@ class Skills {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['skill'] = this.skill;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['skill'] = skill;
     return data;
   }
 }
@@ -167,9 +167,9 @@ class Achievements {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['subject'] = this.subject;
-    data['description'] = this.description;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['subject'] = subject;
+    data['description'] = description;
     return data;
   }
 }
@@ -192,12 +192,12 @@ class Companies {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['name'] = this.name;
-    data['description'] = this.description;
-    data['position'] = this.position;
-    data['from'] = this.from;
-    data['to'] = this.to;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['name'] = name;
+    data['description'] = description;
+    data['position'] = position;
+    data['from'] = from;
+    data['to'] = to;
     return data;
   }
 }
@@ -220,12 +220,12 @@ class Works {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['name'] = this.name;
-    data['description'] = this.description;
-    data['position'] = this.position;
-    data['from'] = this.from;
-    data['to'] = this.to;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['name'] = name;
+    data['description'] = description;
+    data['position'] = position;
+    data['from'] = from;
+    data['to'] = to;
     return data;
   }
 }
@@ -251,13 +251,13 @@ class Educations {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['school'] = this.school;
-    data['degree'] = this.degree;
-    data['major'] = this.major;
-    data['from'] = this.from;
-    data['to'] = this.to;
-    data['title'] = this.title;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['school'] = school;
+    data['degree'] = degree;
+    data['major'] = major;
+    data['from'] = from;
+    data['to'] = to;
+    data['title'] = title;
     return data;
   }
 }
@@ -274,9 +274,9 @@ class Gallery {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['type'] = this.type;
-    data['url'] = this.url;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['type'] = type;
+    data['url'] = url;
     return data;
   }
 }

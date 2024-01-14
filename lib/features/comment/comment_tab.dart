@@ -10,14 +10,13 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 class CommentTab extends StatefulWidget {
   const CommentTab(
-      {Key? key,
+      {super.key,
       required this.id,
       required this.load,
       required this.searchCommentThreadService,
       required this.reactionService,
       required this.commentThreadService,
-      required this.commentThreadReplyService})
-      : super(key: key);
+      required this.commentThreadReplyService});
   final String id;
   final Function load;
   final SearchCommentThreadService<CommentThread> searchCommentThreadService;
@@ -59,7 +58,7 @@ class _CommentTabState extends State<CommentTab> {
   }
 
   useFul(String commentId, String author) async {
-    final storage = new FlutterSecureStorage();
+    const storage = FlutterSecureStorage();
     final userId = await storage.read(key: 'userId');
     final res =
         await widget.reactionService.setUseful(commentId, author, userId);
@@ -69,7 +68,7 @@ class _CommentTabState extends State<CommentTab> {
   }
 
   deleteUseFul(String commentId, String author) async {
-    final storage = new FlutterSecureStorage();
+    const storage = FlutterSecureStorage();
     final userId = await storage.read(key: 'userId');
     final res =
         await widget.reactionService.removeUseful(commentId, author, userId);
@@ -84,7 +83,7 @@ class _CommentTabState extends State<CommentTab> {
       return Center(
         child: CircularProgressIndicator(
           backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-          valueColor: new AlwaysStoppedAnimation<Color>(
+          valueColor: AlwaysStoppedAnimation<Color>(
               Theme.of(context).colorScheme.primary),
         ),
       );
@@ -98,14 +97,14 @@ class _CommentTabState extends State<CommentTab> {
             showModalBottomSheet(
                 context: context,
                 isScrollControlled: true,
-                shape: RoundedRectangleBorder(
+                shape: const RoundedRectangleBorder(
                     borderRadius:
                         BorderRadius.vertical(top: Radius.circular(20.0))),
                 builder: (BuildContext buildContext) {
                   return CommentThreadForm(post: postComment);
                 });
           },
-          child: Text('Comment'),
+          child: const Text('Comment'),
         ),
         Expanded(
           child: ListView.builder(

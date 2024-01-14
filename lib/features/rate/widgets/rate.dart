@@ -13,14 +13,13 @@ import 'reply_list.dart';
 
 class Rates extends StatefulWidget {
   const Rates(
-      {Key? key,
+      {super.key,
       required this.id,
       required this.load,
       required this.reactionRateService,
       required this.rateService,
       required this.searchRateService,
-      required this.rateCommentService})
-      : super(key: key);
+      required this.rateCommentService});
   final String id;
   final Function load;
   final ReactionService reactionRateService;
@@ -69,7 +68,7 @@ class _RatesState extends State<Rates> {
   }
 
   useFul(String authorOfRate) async {
-    final storage = new FlutterSecureStorage();
+    const storage = FlutterSecureStorage();
     final userId = await storage.read(key: 'userId');
     final res = await widget.reactionRateService
         .setUseful(widget.id, authorOfRate, userId);
@@ -79,7 +78,7 @@ class _RatesState extends State<Rates> {
   }
 
   deleteUseFul(String authorOfRate) async {
-    final storage = new FlutterSecureStorage();
+    const storage = FlutterSecureStorage();
     final userId = await storage.read(key: 'userId');
     final res = await widget.reactionRateService
         .removeUseful(widget.id, authorOfRate, userId);
@@ -94,7 +93,7 @@ class _RatesState extends State<Rates> {
       return Center(
         child: CircularProgressIndicator(
           backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-          valueColor: new AlwaysStoppedAnimation<Color>(
+          valueColor: AlwaysStoppedAnimation<Color>(
               Theme.of(context).colorScheme.primary),
         ),
       );
@@ -108,14 +107,14 @@ class _RatesState extends State<Rates> {
             showModalBottomSheet(
                 context: context,
                 isScrollControlled: true,
-                shape: RoundedRectangleBorder(
+                shape: const RoundedRectangleBorder(
                     borderRadius:
                         BorderRadius.vertical(top: Radius.circular(20.0))),
                 builder: (BuildContext buildContext) {
                   return RateForm(postRate: postRate);
                 });
           },
-          child: Text('Post a Review'),
+          child: const Text('Post a Review'),
         ),
         ListView.builder(
             shrinkWrap: true,
@@ -126,28 +125,27 @@ class _RatesState extends State<Rates> {
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(10),
                 ),
-                color: Color.fromARGB(240, 240, 240, 240),
+                color: const Color.fromARGB(240, 240, 240, 240),
                 child: Padding(
-                  padding: EdgeInsets.all(10),
+                  padding: const EdgeInsets.all(10),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Row(
                         children: [
                           Text(
-                            'Review by ' +
-                                (!listRate.list[index].anonymous
+                            'Review by ${!listRate.list[index].anonymous
                                     ? listRate.list[index].authorName ??
                                         'Anonymous'
-                                    : 'Anonymous'),
-                            style: TextStyle(
+                                    : 'Anonymous'}',
+                            style: const TextStyle(
                                 fontSize: 14, fontWeight: FontWeight.w400),
                           ),
-                          Spacer(),
+                          const Spacer(),
                         ],
                       ),
-                      Divider(),
-                      Container(
+                      const Divider(),
+                      SizedBox(
                         width: double.maxFinite,
                         height: 120,
                         child: Column(
@@ -168,7 +166,7 @@ class _RatesState extends State<Rates> {
                                     itemCount: 10,
                                     itemSize: 14,
                                     itemPadding:
-                                        EdgeInsets.symmetric(horizontal: 4.0),
+                                        const EdgeInsets.symmetric(horizontal: 4.0),
                                     itemBuilder: (context, _) => Icon(
                                       Icons.star,
                                       color: Theme.of(context)
@@ -178,13 +176,13 @@ class _RatesState extends State<Rates> {
                                     onRatingUpdate: (rating) {},
                                   ),
                                 ]),
-                            Spacer(),
+                            const Spacer(),
                             Text(
                               listRate.list[index].review ?? '',
-                              style: TextStyle(
+                              style: const TextStyle(
                                   fontSize: 14, fontWeight: FontWeight.w400),
                             ),
-                            Spacer(),
+                            const Spacer(),
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
@@ -216,7 +214,7 @@ class _RatesState extends State<Rates> {
                                           showModalBottomSheet(
                                               context: context,
                                               isScrollControlled: true,
-                                              shape: RoundedRectangleBorder(
+                                              shape: const RoundedRectangleBorder(
                                                   borderRadius:
                                                       BorderRadius.vertical(
                                                           top: Radius.circular(
@@ -227,12 +225,12 @@ class _RatesState extends State<Rates> {
                                                     load: getRateComment,
                                                     id: widget.id,
                                                     authorOfRate: listRate
-                                                        .list[index].author,
+                                                        .list[index].author ?? '',
                                                     rateCommentClient: widget
                                                         .rateCommentService);
                                               });
                                         },
-                                        icon: Icon(Icons.comment_outlined)),
+                                        icon: const Icon(Icons.comment_outlined)),
                                     Text(listRate.list[index].replyCount
                                         .toString())
                                   ],

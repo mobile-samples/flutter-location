@@ -16,24 +16,24 @@ Future<bool> confirm(
           actionsAlignment: MainAxisAlignment.center,
           title: Column(
             children: [
-              Icon(
+              const Icon(
                 Icons.notifications,
                 size: 30,
                 color: Colors.red,
               ),
-              title ?? Text("Confirm"),
+              title ?? const Text("Confirm"),
             ],
           ),
-          content: Container(
+          content: SizedBox(
               width: 300.0,
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.start,
                 //crossAxisAlignment: CrossAxisAlignment.stretch,
                 mainAxisSize: MainAxisSize.min,
                 children: <Widget>[
-                  Divider(),
+                  const Divider(),
                   content ?? const Text('Are you sure continue?'),
-                  Divider(),
+                  const Divider(),
                 ],
               )),
           shape: RoundedRectangleBorder(
@@ -48,12 +48,12 @@ Future<bool> confirm(
               child: Row(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  Icon(
+                  const Icon(
                     Icons.cancel_outlined,
                     size: 12,
                   ),
                   Padding(
-                      padding: EdgeInsets.only(left: 4),
+                      padding: const EdgeInsets.only(left: 4),
                       child: textCancel ?? const Text('Cancel')),
                 ],
               ),
@@ -67,13 +67,13 @@ Future<bool> confirm(
               child: Row(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  Icon(
+                  const Icon(
                     Icons.check,
                     size: 12,
                   ),
                   Padding(
-                      padding: EdgeInsets.only(left: 4),
-                      child: textOK ?? Text('OK')),
+                      padding: const EdgeInsets.only(left: 4),
+                      child: textOK ?? const Text('OK')),
                 ],
               ),
               onPressed: () => Navigator.of(context).pop(true),
@@ -87,8 +87,8 @@ Future<bool> confirm(
 Future<void> alert(BuildContext context,
     {Widget? title, Widget? content, Widget? textOK, bool? isError}) async {
   if (isError == true) {
-    title = title ?? Text("Error");
-    content = content ?? Text("System error!");
+    title = title ?? const Text("Error");
+    content = content ?? const Text("System error!");
   }
   await showDialog<bool>(
       context: context,
@@ -99,7 +99,7 @@ Future<void> alert(BuildContext context,
           actionsAlignment: MainAxisAlignment.center,
           title: Column(
             children: [
-              Icon(
+              const Icon(
                 Icons.add_alert,
                 size: 30,
                 color: Colors.red,
@@ -107,16 +107,16 @@ Future<void> alert(BuildContext context,
               if (title != null) title,
             ],
           ),
-          content: Container(
+          content: SizedBox(
               width: 300.0,
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.start,
                 //crossAxisAlignment: CrossAxisAlignment.stretch,
                 mainAxisSize: MainAxisSize.min,
                 children: <Widget>[
-                  Divider(),
+                  const Divider(),
                   if (content != null) content,
-                  Divider(),
+                  const Divider(),
                 ],
               )),
           shape: RoundedRectangleBorder(
@@ -131,13 +131,13 @@ Future<void> alert(BuildContext context,
               child: Row(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  Icon(
+                  const Icon(
                     Icons.check,
                     size: 12,
                   ),
                   Padding(
-                      padding: EdgeInsets.only(left: 4),
-                      child: textOK ?? Text('OK')),
+                      padding: const EdgeInsets.only(left: 4),
+                      child: textOK ?? const Text('OK')),
                 ],
               ),
               onPressed: () => Navigator.of(context).pop(true),

@@ -4,8 +4,7 @@ import '../film_model.dart';
 
 class FilmCard extends StatelessWidget {
   const FilmCard(
-      {Key? key, required this.isList, required this.film, required this.onTab})
-      : super(key: key);
+      {super.key, required this.isList, required this.film, required this.onTab});
   final Film film;
   final Function onTab;
   final bool isList;
@@ -14,10 +13,8 @@ class FilmCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
         onTap: () {
-          if (this.onTab != null) {
-            onTab();
-          }
-        },
+          onTab();
+                },
         child: SizedBox(
           height: 200,
           width: 250,
@@ -26,9 +23,9 @@ class FilmCard extends StatelessWidget {
               ? Row(
                   children: [
                     Padding(
-                      padding: EdgeInsets.all(8),
+                      padding: const EdgeInsets.all(8),
                       child: ClipRRect(
-                        borderRadius: BorderRadius.all(Radius.circular(10)),
+                        borderRadius: const BorderRadius.all(Radius.circular(10)),
                         child: Image.network(
                           film.imageURL ??
                               'https://upload.wikimedia.org/wikipedia/commons/thumb/d/d1/Image_not_available.png/640px-Image_not_available.png',
@@ -41,7 +38,7 @@ class FilmCard extends StatelessWidget {
                     SizedBox(
                       width: 200,
                       child: Padding(
-                        padding: EdgeInsets.all(4),
+                        padding: const EdgeInsets.all(4),
                         child: Column(
                           children: [
                             Text(
@@ -63,9 +60,9 @@ class FilmCard extends StatelessWidget {
               : Column(
                   children: [
                     Padding(
-                      padding: EdgeInsets.only(top: 0),
+                      padding: const EdgeInsets.only(top: 0),
                       child: ClipRRect(
-                        borderRadius: BorderRadius.all(Radius.circular(10)),
+                        borderRadius: const BorderRadius.all(Radius.circular(10)),
                         child: Image.network(
                           film.imageURL ??
                               'https://upload.wikimedia.org/wikipedia/commons/thumb/d/d1/Image_not_available.png/640px-Image_not_available.png',
@@ -78,7 +75,7 @@ class FilmCard extends StatelessWidget {
                     SizedBox(
                       width: 250,
                       child: Padding(
-                        padding: EdgeInsets.only(top: 5),
+                        padding: const EdgeInsets.only(top: 5),
                         child: Align(
                           alignment: Alignment.center,
                           child: Text(

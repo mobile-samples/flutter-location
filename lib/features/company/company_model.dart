@@ -26,16 +26,16 @@ class Company {
   CompanyInfo? info;
 
   factory Company.fromJson(Map<String, dynamic> json) => Company(
-        json['id'] == null ? '' : json['id'],
-        json['name'] == null ? '' : json['name'],
-        json['description'] == null ? '' : json['description'],
-        json['size'] == null ? 0 : json['size'],
-        json['address'] == null ? '' : json['address'],
-        json['imageURL'] == null ? '' : json['imageURL'],
-        json['status'] == null ? '' : json['status'],
-        json['establishedAt'] == null ? '' : json['establishedAt'],
-        json['categories'] == null ? null : json['categories'].cast<String>(),
-        json['gallery'] == null ? null : json['gallery'],
+        json['id'] ?? '',
+        json['name'] ?? '',
+        json['description'] ?? '',
+        json['size'] ?? 0,
+        json['address'] ?? '',
+        json['imageURL'] ?? '',
+        json['status'] ?? '',
+        json['establishedAt'] ?? '',
+        json['categories']?.cast<String>(),
+        json['gallery'],
         json['info'] == null ? null : CompanyInfo.fromJson(json['info']),
       );
 }
@@ -69,7 +69,7 @@ class CompanyInfo {
       json['rate3'],
       json['rate4'],
       json['rate5'],
-      json['count'] == null ? 0 : json['count'],
+      json['count'] ?? 0,
       json['score'] == null ? 0.0 : double.parse(json['score'].toString()),
     );
   }

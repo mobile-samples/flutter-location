@@ -22,15 +22,15 @@ class Filter {
   Filter(this.limit, this.page);
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['page'] = this.page;
-    data['limit'] = this.limit;
-    data['firstLimit'] = this.firstLimit;
-    data['fields'] = this.fields;
-    data['q'] = this.q;
-    data['keyword'] = this.keyword;
-    data['pageIndex'] = this.pageIndex;
-    data['pageSize'] = this.pageSize;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['page'] = page;
+    data['limit'] = limit;
+    data['firstLimit'] = firstLimit;
+    data['fields'] = fields;
+    data['q'] = q;
+    data['keyword'] = keyword;
+    data['pageIndex'] = pageIndex;
+    data['pageSize'] = pageSize;
 
     return data;
   }
@@ -48,7 +48,7 @@ class SearchResult<T> {
   );
 
   factory SearchResult.fromJson(Map<String, dynamic> json) {
-    final _build = () {
+    build() {
       switch (T) {
         case Location:
           return List<T>.from(json['list'].map((x) => Location.fromJson(x)));
@@ -71,9 +71,9 @@ class SearchResult<T> {
         default:
           return null;
       }
-    };
+    }
     return SearchResult(
-      json['list'] != null ? _build() ?? [] : [],
+      json['list'] != null ? build() ?? [] : [],
       json['total'],
     );
   }
@@ -84,7 +84,7 @@ class SaveResult<T> {
   T value;
   SaveResult(this.status, this.value);
   factory SaveResult.fromJson(Map<String, dynamic> json) {
-    final _build = () {
+    build() {
       switch (T) {
         case UserInfo:
           return UserInfo.fromJson(json);
@@ -92,10 +92,10 @@ class SaveResult<T> {
         default:
           return null;
       }
-    };
+    }
     return SaveResult(
       json['status'],
-      (json['value'] != null ? _build() ?? [] : []) as T,
+      (json['value'] != null ? build() ?? [] : []) as T,
     );
   }
 }

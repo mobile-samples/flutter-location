@@ -11,8 +11,8 @@ class AuthInfo {
 
   factory AuthInfo.fromJson(Map<String, dynamic> json) => AuthInfo(
       json['username'],
-      json['displayName'] == null ? '' : json['displayName'],
-      json['email'] == null ? '' : json['email'],
+      json['displayName'] ?? '',
+      json['email'] ?? '',
       json['id'],
       json['token'],
       json['tokenExpiredTime']);
@@ -42,7 +42,7 @@ class ErrorResponse {
   String code;
 
   factory ErrorResponse.fromJson(Map<String, dynamic> json) => ErrorResponse(
-        json['field'] == null ? '' : json['field'],
-        json['code'] == null ? '' : json['code'],
+        json['field'] ?? '',
+        json['code'] ?? '',
       );
 }

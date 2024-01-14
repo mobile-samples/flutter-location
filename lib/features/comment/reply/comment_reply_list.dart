@@ -8,13 +8,12 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 class CommentReplyForm extends StatefulWidget {
   const CommentReplyForm(
-      {Key? key,
+      {super.key,
       required this.id,
       required this.commentId,
-      required this.commentThreadReplyService})
-      : super(key: key);
-  final id;
-  final commentId;
+      required this.commentThreadReplyService});
+  final String id;
+  final String commentId;
   final CommentThreadReplyService commentThreadReplyService;
 
   @override
@@ -35,11 +34,11 @@ class _CommentReplyFormState extends State<CommentReplyForm> {
   }
 
   load() async {
-    final storage = new FlutterSecureStorage();
+    const storage = FlutterSecureStorage();
     final userId = await storage.read(key: 'userId');
     final res = await widget.commentThreadReplyService
         .getComments(widget.commentId, userId);
-    if (res.length > 0) {
+    if (res.isNotEmpty) {
       setState(() {
         list = res;
       });
@@ -66,7 +65,7 @@ class _CommentReplyFormState extends State<CommentReplyForm> {
   }
 
   updateComment(String commentId, String comment, bool anonymous) async {
-    final storage = new FlutterSecureStorage();
+    const storage = FlutterSecureStorage();
     final userId = await storage.read(key: 'userId');
     final res = await widget.commentThreadReplyService
         .update(commentId, comment, userId!);
@@ -79,7 +78,7 @@ class _CommentReplyFormState extends State<CommentReplyForm> {
     showModalBottomSheet(
         context: context,
         isScrollControlled: true,
-        shape: RoundedRectangleBorder(
+        shape: const RoundedRectangleBorder(
             borderRadius: BorderRadius.vertical(top: Radius.circular(20.0))),
         builder: (BuildContext buildContext) {
           return Positioned(
@@ -99,7 +98,7 @@ class _CommentReplyFormState extends State<CommentReplyForm> {
   }
 
   delete<double>(BuildContext context, String commentId) async {
-    final storage = new FlutterSecureStorage();
+    const storage = FlutterSecureStorage();
     final userId = await storage.read(key: 'userId');
     final res = await widget.commentThreadReplyService
         .delete(widget.id, commentId, userId!);
@@ -114,7 +113,7 @@ class _CommentReplyFormState extends State<CommentReplyForm> {
     showModalBottomSheet(
         context: context,
         isScrollControlled: true,
-        shape: RoundedRectangleBorder(
+        shape: const RoundedRectangleBorder(
             borderRadius: BorderRadius.vertical(top: Radius.circular(20.0))),
         builder: (BuildContext buildContext) {
           return ListHistories(
@@ -129,7 +128,7 @@ class _CommentReplyFormState extends State<CommentReplyForm> {
       return Center(
         child: CircularProgressIndicator(
           backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-          valueColor: new AlwaysStoppedAnimation<Color>(
+          valueColor: AlwaysStoppedAnimation<Color>(
               Theme.of(context).colorScheme.primary),
         ),
       );
@@ -137,7 +136,7 @@ class _CommentReplyFormState extends State<CommentReplyForm> {
     return SafeArea(
         child: Padding(
       padding: EdgeInsets.only(
-          top: MediaQueryData.fromWindow(WidgetsBinding.instance!.window)
+          top: MediaQueryData.fromView(View.of(context))
               .padding
               .top),
       child: Scaffold(
@@ -147,7 +146,7 @@ class _CommentReplyFormState extends State<CommentReplyForm> {
                   .colorScheme
                   .background, //change your color here
             ),
-            title: Text('Reply'),
+            title: const Text('Reply'),
             backgroundColor: Theme.of(context).colorScheme.primary,
             centerTitle: true,
           ),
@@ -167,7 +166,7 @@ class _CommentReplyFormState extends State<CommentReplyForm> {
                           borderRadius: BorderRadius.circular(10),
                         ),
                         child: Padding(
-                          padding: EdgeInsets.all(10),
+                          padding: const EdgeInsets.all(10),
                           child: Column(
                             children: [
                               Row(
@@ -178,14 +177,14 @@ class _CommentReplyFormState extends State<CommentReplyForm> {
                                         'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png'),
                                   ),
                                   Padding(
-                                    padding: EdgeInsets.only(left: 20),
+                                    padding: const EdgeInsets.only(left: 20),
                                     child: Text(
                                       list[index].authorName ?? '',
-                                      style: TextStyle(
+                                      style: const TextStyle(
                                           fontWeight: FontWeight.w500),
                                     ),
                                   ),
-                                  Spacer(),
+                                  const Spacer(),
                                   Text(
                                     dt.DateUtils.formatDate(
                                         list[index].time ?? ""),
@@ -193,12 +192,12 @@ class _CommentReplyFormState extends State<CommentReplyForm> {
                                         Theme.of(context).textTheme.labelSmall,
                                   ),
                                   IconButton(
-                                    icon: Icon(Icons.more_vert),
+                                    icon: const Icon(Icons.more_vert),
                                     onPressed: () {
                                       showModalBottomSheet(
                                           context: context,
                                           isScrollControlled: true,
-                                          shape: RoundedRectangleBorder(
+                                          shape: const RoundedRectangleBorder(
                                               borderRadius:
                                                   BorderRadius.vertical(
                                                       top: Radius.circular(
@@ -226,7 +225,7 @@ class _CommentReplyFormState extends State<CommentReplyForm> {
                                 ],
                               ),
                               Padding(
-                                padding: EdgeInsets.all(5),
+                                padding: const EdgeInsets.all(5),
                                 child: Row(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [Text(list[index].comment ?? '')],
@@ -238,7 +237,7 @@ class _CommentReplyFormState extends State<CommentReplyForm> {
                   },
                 ),
               ),
-              Divider(),
+              const Divider(),
               Align(
                   alignment: Alignment.bottomCenter,
                   child: Column(

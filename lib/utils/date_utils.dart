@@ -16,12 +16,12 @@ class DateUtils {
     } else if (difference.inDays >= 2) {
       String daysAgo = '${difference.inDays} days ago';
       dynamic month = (difference.inDays / 30).floor();
-      String monthsAgo = '${month} months ago';
+      String monthsAgo = '$month months ago';
 
       if (month > 0) {
         return '$daysAgo, $monthsAgo';
       } else {
-        return '$daysAgo';
+        return daysAgo;
       }
     } else if (difference.inDays == 1) {
       return 'Yesterday';

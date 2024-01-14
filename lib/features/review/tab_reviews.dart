@@ -12,7 +12,7 @@ import 'package:flutter_user/features/comment/comment_tab.dart';
 
 class TabReviews extends StatefulWidget {
   const TabReviews({
-    Key? key,
+    super.key,
     required this.id,
     this.info,
     required this.rateRange,
@@ -25,7 +25,7 @@ class TabReviews extends StatefulWidget {
     required this.searchCommentThreadService,
     required this.commentThreadService,
     required this.commentThreadReplyService,
-  }) : super(key: key);
+  });
   final String id;
   final Info? info;
   final int rateRange;
@@ -51,7 +51,7 @@ class _TabReviewsState extends State<TabReviews> {
         length: 2,
         child: Scaffold(
             body: Padding(
-          padding: EdgeInsets.all(8.0),
+          padding: const EdgeInsets.all(8.0),
           child: Column(
             children: [
               Container(
@@ -81,7 +81,7 @@ class _TabReviewsState extends State<TabReviews> {
                 children: [
                   SingleChildScrollView(
                       child: ReviewsTab(
-                    id: widget.id ?? '',
+                    id: widget.id,
                     rateRange: widget.rateRange,
                     info: widget.info,
                     load: widget.load,
@@ -91,7 +91,7 @@ class _TabReviewsState extends State<TabReviews> {
                     rateCommentService: widget.rateCommentService,
                   )),
                   CommentTab(
-                    id: widget.id ?? "",
+                    id: widget.id,
                     load: widget.load,
                     searchCommentThreadService:
                         widget.searchCommentThreadService,

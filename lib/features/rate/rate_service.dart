@@ -12,7 +12,7 @@ class RateService {
 
   Future<SearchResult<RateComment>> search(
       String url, String id, String sort) async {
-    final storage = new FlutterSecureStorage();
+    const storage = FlutterSecureStorage();
     late String baseUrl = HttpHelper.instance.getUrl();
     final userId = await storage.read(key: 'userId');
     final headers = await HttpHelper.instance.buildHeader();
@@ -39,7 +39,7 @@ class RateService {
       String serviceName, String id, String authorOfRate) async {
     late String baseUrl = HttpHelper.instance.getUrl();
     final response = await http.get(
-      Uri.parse(baseUrl + '/$serviceName/rates/$id/$authorOfRate/comments'),
+      Uri.parse('$baseUrl/$serviceName/rates/$id/$authorOfRate/comments'),
     );
     if (response.statusCode == 200) {
       List<RateReply> listReply = [];
@@ -56,13 +56,13 @@ class RateService {
 
   Future<int> postRate(String locationId, int rate, String review, String time,
       bool anonymous) async {
-    final storage = new FlutterSecureStorage();
+    const storage = FlutterSecureStorage();
     late String baseUrl = HttpHelper.instance.getUrl();
     final userId = await storage.read(key: 'userId');
     final headers = await HttpHelper.instance.buildHeader();
     final response = await http.post(
       Uri.parse(
-          baseUrl + '/locations/rates/' + locationId + '/' + (userId ?? '')),
+          '$baseUrl/locations/rates/$locationId/${userId ?? ''}'),
       headers: headers,
       body: jsonEncode(<String, dynamic>{
         'rate': rate,
@@ -80,13 +80,11 @@ class RateService {
 
   Future<int> postUseful(
       String serviceName, String id, String authorOfRate, bool useful) async {
-    final storage = new FlutterSecureStorage();
+    const storage = FlutterSecureStorage();
     late String baseUrl = HttpHelper.instance.getUrl();
     final userId = await storage.read(key: 'userId');
     final headers = await HttpHelper.instance.buildHeader();
-    final url = baseUrl +
-        '/$serviceName/rates/$id/$authorOfRate/useful/' +
-        (userId ?? '');
+    final url = '$baseUrl/$serviceName/rates/$id/$authorOfRate/useful/${userId ?? ''}';
     final response = useful
         ? await http.post(Uri.parse(url),
             headers: headers, body: jsonEncode(<dynamic, dynamic>{}))
@@ -100,14 +98,12 @@ class RateService {
 
   Future<int> postReply(String serviceName, String id, String authorOfRate,
       String comment, String time, bool anonymous) async {
-    final storage = new FlutterSecureStorage();
+    const storage = FlutterSecureStorage();
     late String baseUrl = HttpHelper.instance.getUrl();
     final userId = await storage.read(key: 'userId');
     final headers = await HttpHelper.instance.buildHeader();
     final response = await http.post(
-      Uri.parse(baseUrl +
-          '/$serviceName/rates/$id/$authorOfRate/comments/' +
-          (userId ?? '')),
+      Uri.parse('$baseUrl/$serviceName/rates/$id/$authorOfRate/comments/${userId ?? ''}'),
       headers: headers,
       body: jsonEncode(<String, dynamic>{
         'comment': comment,

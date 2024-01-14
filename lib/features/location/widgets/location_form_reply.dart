@@ -5,14 +5,13 @@ import 'package:flutter_user/features/rate/rate_service.dart';
 
 class ReplyForm extends StatefulWidget {
   const ReplyForm(
-      {Key? key,
+      {super.key,
       required this.serviceName,
       required this.locationId,
-      required this.authorOfRate})
-      : super(key: key);
-  final locationId;
-  final authorOfRate;
-  final serviceName;
+      required this.authorOfRate});
+  final String locationId;
+  final String authorOfRate;
+  final String serviceName;
 
   @override
   State<ReplyForm> createState() => _ReplyFormState();
@@ -33,7 +32,7 @@ class _ReplyFormState extends State<ReplyForm> {
 
   getReply() async {
     final res = await RateService.instance.getReplyofRate(
-        widget.serviceName, widget.locationId, widget.authorOfRate ?? '');
+        widget.serviceName, widget.locationId, widget.authorOfRate);
     // if (res.length > 0) {
     setState(() {
       listReply = res;
@@ -78,7 +77,7 @@ class _ReplyFormState extends State<ReplyForm> {
           });
         },
       );
-      anonymousList.add(Text('Anonymous'));
+      anonymousList.add(const Text('Anonymous'));
       anonymousList.add(switchWidget);
     }
 
@@ -91,7 +90,7 @@ class _ReplyFormState extends State<ReplyForm> {
       return Center(
         child: CircularProgressIndicator(
           backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-          valueColor: new AlwaysStoppedAnimation<Color>(
+          valueColor: AlwaysStoppedAnimation<Color>(
               Theme.of(context).colorScheme.primary),
         ),
       );
@@ -99,7 +98,7 @@ class _ReplyFormState extends State<ReplyForm> {
     return SafeArea(
         child: Padding(
       padding: EdgeInsets.only(
-          top: MediaQueryData.fromWindow(WidgetsBinding.instance!.window)
+          top: MediaQueryData.fromView(View.of(context))
               .padding
               .top),
       child: Scaffold(
@@ -109,7 +108,7 @@ class _ReplyFormState extends State<ReplyForm> {
                   .colorScheme
                   .background, //change your color here
             ),
-            title: Text('Reply'),
+            title: const Text('Reply'),
             backgroundColor: Theme.of(context).colorScheme.primary,
             centerTitle: true,
           ),
@@ -128,7 +127,7 @@ class _ReplyFormState extends State<ReplyForm> {
                           borderRadius: BorderRadius.circular(10),
                         ),
                         child: Padding(
-                          padding: EdgeInsets.all(10),
+                          padding: const EdgeInsets.all(10),
                           child: Row(
                             children: [
                               Expanded(
@@ -154,7 +153,7 @@ class _ReplyFormState extends State<ReplyForm> {
                                             CrossAxisAlignment.start,
                                         children: [
                                           Padding(
-                                            padding: EdgeInsets.only(right: 10),
+                                            padding: const EdgeInsets.only(right: 10),
                                             child: Text(
                                               !(listReply[index].anonymous ??
                                                       false)
@@ -162,7 +161,7 @@ class _ReplyFormState extends State<ReplyForm> {
                                                           .authorName ??
                                                       ''
                                                   : 'Anonymous',
-                                              style: TextStyle(
+                                              style: const TextStyle(
                                                   fontWeight: FontWeight.w500),
                                             ),
                                           ),
@@ -177,7 +176,7 @@ class _ReplyFormState extends State<ReplyForm> {
                                         ],
                                       ),
                                     ),
-                                    VerticalDivider(),
+                                    const VerticalDivider(),
                                     Expanded(
                                       flex: 7,
                                       child:
@@ -199,7 +198,7 @@ class _ReplyFormState extends State<ReplyForm> {
                       Card(
                         color: Theme.of(context).colorScheme.background,
                         child: Padding(
-                          padding: EdgeInsets.all(12),
+                          padding: const EdgeInsets.all(12),
                           child: TextField(
                             controller: comment,
                             maxLines: 1, //or null
@@ -211,13 +210,13 @@ class _ReplyFormState extends State<ReplyForm> {
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
                           ...getAnonymousWidget(),
-                          Spacer(),
+                          const Spacer(),
                           TextButton(
                             style: Theme.of(context).textButtonTheme.style,
                             onPressed: () async {
                               await postReply();
                             },
-                            child: Text('Reply'),
+                            child: const Text('Reply'),
                           ),
                         ],
                       ),

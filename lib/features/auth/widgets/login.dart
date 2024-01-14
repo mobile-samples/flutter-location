@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_user/common/widgets/circle-background.dart';
+import 'package:flutter_user/common/widgets/circle_background.dart';
 import 'package:flutter_user/common/widgets/dialog.dart';
 import 'package:flutter_user/common/widgets/hyberlink.dart';
-import 'package:flutter_user/router/router_constants.dart';
+import 'package:flutter_user/features/home.dart';
 
 import '../auth_model.dart';
 import '../auth_service.dart';
-import 'change-password.dart';
-import 'forgot-password.dart';
+import 'change_password.dart';
+import 'forgot_password.dart';
 import 'signup.dart';
 
 class LoginWidget extends StatefulWidget {
-  const LoginWidget({Key? key}) : super(key: key);
+  const LoginWidget({super.key});
 
   @override
   State<LoginWidget> createState() => _LoginWidgetState();
@@ -51,8 +51,12 @@ class _LoginWidgetState extends State<LoginWidget> {
     }
     final AuthResponse res = await AuthService.instance
         .authenticate(username: username, password: password);
+    if (!mounted) return;
     if (res.user?.token != '') {
-      Navigator.pushNamed(context, homeRoute);
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => const HomeWidget()),
+      );
     }
   }
 
@@ -67,22 +71,22 @@ class _LoginWidgetState extends State<LoginWidget> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Padding(
-                  padding: EdgeInsets.fromLTRB(30, 0, 30, 0),
+                  padding: const EdgeInsets.fromLTRB(30, 0, 30, 0),
                   child: Column(
                     children: [
                       Text(
                         "Login",
                         style: Theme.of(context).textTheme.titleLarge,
                       ),
-                      SizedBox(width: 0, height: 20),
+                      const SizedBox(width: 0, height: 20),
                       Text(
                         "Please sigin to continue",
                         style: Theme.of(context).textTheme.titleMedium,
                       ),
                       TextField(
-                        style: TextStyle(color: Colors.black),
+                        style: const TextStyle(color: Colors.black),
                         controller: userNameController,
-                        decoration: InputDecoration(
+                        decoration: const InputDecoration(
                           prefixIcon: Icon(Icons.account_box),
                           hintText: "Username",
                           border: InputBorder.none,
@@ -94,26 +98,29 @@ class _LoginWidgetState extends State<LoginWidget> {
                         obscureText: true,
                         enableSuggestions: false,
                         autocorrect: false,
-                        style: TextStyle(color: Colors.black),
-                        decoration: InputDecoration(
+                        style: const TextStyle(color: Colors.black),
+                        decoration: const InputDecoration(
                           prefixIcon: Icon(Icons.password),
                           hintText: "Password",
                           border: InputBorder.none,
                           fillColor: Colors.green,
                         ),
                       ),
-                      SizedBox(width: 0, height: 20),
+                      const SizedBox(width: 0, height: 20),
                       ElevatedButton(
                         onPressed: () {
                           handleLogin();
                         },
-                        child: const Text('Sign in'),
+                        child: Text(
+                          'Sign in', 
+                          style: Theme.of(context).textTheme.labelMedium,
+                        ),
                       ),
-                      SizedBox(width: 0, height: 20),
+                      const SizedBox(width: 0, height: 20),
                       getHyberLink('Sign up', signupWidget),
-                      SizedBox(width: 0, height: 20),
+                      const SizedBox(width: 0, height: 20),
                       getHyberLink('Change password', changePwWidget),
-                      SizedBox(width: 0, height: 20),
+                      const SizedBox(width: 0, height: 20),
                       getHyberLink('Forgot password', forgotPwWidget),
                     ],
                   ),

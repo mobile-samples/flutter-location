@@ -14,7 +14,7 @@ abstract class SearchState<W extends StatefulWidget, T, S extends Filter>
   S getFilter();
 
   @protected
-  Client<T, String, ResultInfo<T>, S> getService();
+  Client<T, String, S> getService();
 
   @protected
   PreferredSizeWidget buildAppbar(BuildContext context);
@@ -31,10 +31,9 @@ abstract class SearchState<W extends StatefulWidget, T, S extends Filter>
 
   void search() {
     final filter = getFilter();
-    final res = getService().search(true, false, filter);
+    final res = getService().search(true, true, filter);
     setState(() {
       searchResult = res;
-      this.setFilter();
     });
   }
 
@@ -52,15 +51,9 @@ abstract class SearchState<W extends StatefulWidget, T, S extends Filter>
                 ScaffoldMessenger.of(context).showSnackBar(
                     const SnackBar(content: Text('Cannot get data')));
               });
-              return buildChild(context, SearchResult(0, []));
+              return buildChild(context, SearchResult(0, [], '', true));
             }
-            return Center(
-              child: CircularProgressIndicator(
-                backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-                valueColor: new AlwaysStoppedAnimation<Color>(
-                    Theme.of(context).colorScheme.primary),
-              ),
-            );
+            return const CircularProgressIndicator();
           }),
     );
   }

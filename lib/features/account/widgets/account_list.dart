@@ -3,11 +3,11 @@ import 'package:flutter_user/common/models/search.dart';
 import 'package:flutter_user/features/account/user_service.dart';
 
 import '../user_model.dart';
-import 'account-card.dart';
+import 'account_card.dart';
 import 'account.dart';
 
 class AccountListWidget extends StatefulWidget {
-  const AccountListWidget({Key? key}) : super(key: key);
+  const AccountListWidget({super.key});
 
   @override
   State<AccountListWidget> createState() => _AccountListWidgetState();
@@ -36,11 +36,11 @@ class _AccountListWidgetState extends State<AccountListWidget> {
         body: SingleChildScrollView(
           child: Column(
             children: [
-              if (listUser.length > 0)
+              if (listUser.isNotEmpty)
                 GridView.builder(
                     shrinkWrap: true,
                     itemCount: listUser.length,
-                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                    gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                         crossAxisCount: 2),
                     itemBuilder: (context, index) {
                       return GestureDetector(

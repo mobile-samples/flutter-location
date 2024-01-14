@@ -20,9 +20,9 @@ import 'article_model.dart';
 import 'article_service.dart';
 
 class ArticleDetail extends StatefulWidget {
-  const ArticleDetail({Key? key, required this.articleID});
+  const ArticleDetail({super.key, required this.articleID});
 
-  final articleID;
+  final String articleID;
 
   @override
   State<StatefulWidget> createState() {
@@ -49,8 +49,8 @@ class _ArticleDetailState extends State<ArticleDetail> {
   getArticleByID() async {
     final articleRes = await ArticleService.instance.getByID(widget.articleID);
     setState(() {
-      this.article = articleRes;
-      this._loading = false;
+      article = articleRes;
+      _loading = false;
     });
   }
 
@@ -77,7 +77,7 @@ class _ArticleDetailState extends State<ArticleDetail> {
     String review,
     bool anonymous,
   ) async {
-    final storage = new FlutterSecureStorage();
+    const storage = FlutterSecureStorage();
     late String baseUrl = HttpHelper.instance.getUrl();
     final userId = await storage.read(key: 'userId');
     final headers = await HttpHelper.instance.buildHeader();
@@ -103,7 +103,7 @@ class _ArticleDetailState extends State<ArticleDetail> {
       return Center(
         child: CircularProgressIndicator(
           backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-          valueColor: new AlwaysStoppedAnimation<Color>(
+          valueColor: AlwaysStoppedAnimation<Color>(
               Theme.of(context).colorScheme.primary),
         ),
       );
@@ -115,36 +115,36 @@ class _ArticleDetailState extends State<ArticleDetail> {
           iconTheme: IconThemeData(
             color: Theme.of(context).scaffoldBackgroundColor,
           ),
-          title: Text("Article"),
+          title: const Text("Article"),
           backgroundColor: Theme.of(context).colorScheme.primary,
           centerTitle: true,
         ),
         body: Column(
           children: [
             Text(
-              this.article?.title ?? '',
+              article?.title ?? '',
               style: Theme.of(context).textTheme.titleLarge,
             ),
-            SizedBox(width: 0, height: 10),
+            const SizedBox(width: 0, height: 10),
             Text(
-              this.article?.description ?? '',
+              article?.description ?? '',
               style: Theme.of(context).textTheme.labelLarge,
             ),
-            SizedBox(width: 0, height: 10),
-            SizedBox(width: 0, height: 10),
+            const SizedBox(width: 0, height: 10),
+            const SizedBox(width: 0, height: 10),
             Expanded(
               child: SingleChildScrollView(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    HtmlWidget(this.article?.content ?? ""),
+                    HtmlWidget(article?.content ?? ""),
                     TextButton(
                       style: Theme.of(context).textButtonTheme.style,
                       onPressed: () {
                         showModalBottomSheet(
                           context: context,
                           isScrollControlled: true,
-                          shape: RoundedRectangleBorder(
+                          shape: const RoundedRectangleBorder(
                             borderRadius: BorderRadius.vertical(
                                 top: Radius.circular(20.0)),
                           ),
@@ -153,10 +153,10 @@ class _ArticleDetailState extends State<ArticleDetail> {
                           },
                         );
                       },
-                      child: Text('Post a Review'),
+                      child: const Text('Post a Review'),
                     ),
                     Padding(
-                      padding: EdgeInsets.fromLTRB(10, 0, 0, 0),
+                      padding: const EdgeInsets.fromLTRB(10, 0, 0, 0),
                       child: Text(
                         "Reviews",
                         style: Theme.of(context).textTheme.titleMedium,
@@ -169,7 +169,7 @@ class _ArticleDetailState extends State<ArticleDetail> {
                       getRates: getRates,
                     ),
                     Padding(
-                      padding: EdgeInsets.fromLTRB(10, 0, 0, 0),
+                      padding: const EdgeInsets.fromLTRB(10, 0, 0, 0),
                       child: Text(
                         "Comments",
                         style: Theme.of(context).textTheme.titleMedium,

@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import '../user_model.dart';
 
 class AccountCard extends StatelessWidget {
-  const AccountCard({Key? key, required this.userInfo}) : super(key: key);
+  const AccountCard({super.key, required this.userInfo});
   final UserInfo userInfo;
   @override
   Widget build(BuildContext context) {
@@ -23,7 +23,7 @@ class AccountCard extends StatelessWidget {
               fit: BoxFit.cover,
             ),
             Padding(
-              padding: EdgeInsets.fromLTRB(5, 5, 0, 0),
+              padding: const EdgeInsets.fromLTRB(5, 5, 0, 0),
               child: Text(
                 userInfo.username ?? '',
               ),

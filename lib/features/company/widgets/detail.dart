@@ -1,16 +1,14 @@
-// import 'package:flutter/cupertino.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_user/common/widgets/custom_appbar.dart';
 import 'package:flutter_user/features/company/company_service.dart';
 
 import '../company_model.dart';
-import 'review-tab.dart';
+import 'review_tab.dart';
 
 class CompanyDetail extends StatefulWidget {
-  const CompanyDetail({Key? key, required this.companyID});
+  const CompanyDetail({super.key, required this.companyID});
 
-  final companyID;
+  final String companyID;
 
   @override
   State<CompanyDetail> createState() => _CompanyDetailState();
@@ -34,7 +32,7 @@ class _CompanyDetailState extends State<CompanyDetail>
   getCompanyByID() async {
     final companyRes = await CompanyService.instance.getByID(widget.companyID);
     setState(() {
-      this.company = companyRes;
+      company = companyRes;
       _loading = false;
     });
   }
@@ -47,7 +45,7 @@ class _CompanyDetailState extends State<CompanyDetail>
       return Center(
         child: CircularProgressIndicator(
           backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-          valueColor: new AlwaysStoppedAnimation<Color>(
+          valueColor: AlwaysStoppedAnimation<Color>(
               Theme.of(context).colorScheme.primary),
         ),
       );
@@ -66,12 +64,84 @@ class _CompanyDetailState extends State<CompanyDetail>
           title: 'Company',
           childHeight: profileHeight,
           height: imageHeight,
-          backgroundImage: this.company?.imageURL ?? '',
+          backgroundImage: company?.imageURL ?? '',
           firstIcon: IconButton(
-            icon: Icon(
+            icon: const Icon(
               Icons.arrow_back_ios,
             ),
             onPressed: () => Navigator.pop(context),
+          ),
+          bottom: Column(
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 5),
+                    child: Row(
+                      children: [
+                        OutlinedButton(
+                          onPressed: () {},
+                          style: OutlinedButton.styleFrom(
+                            minimumSize: const Size(50, 50),
+                            shape: const CircleBorder(),
+                          ),
+                          child: const Icon(Icons.phone),
+                        ),
+                        OutlinedButton(
+                          onPressed: () {},
+                          style: OutlinedButton.styleFrom(
+                            minimumSize: const Size(50, 50),
+                            shape: const CircleBorder(),
+                          ),
+                          child: const Icon(Icons.mail_outline),
+                        )
+                      ],
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 5),
+                    child: Row(
+                      children: [
+                        OutlinedButton(
+                          onPressed: () {},
+                          style: OutlinedButton.styleFrom(
+                            minimumSize: const Size(116, 50),
+                          ),
+                          child: const Text('Follow'),
+                        )
+                      ],
+                    ),
+                  )
+                ],
+              ),
+              const SizedBox(width: 0, height: 10),
+              Column(
+                children: [
+                  Text(
+                    company?.name ?? '',
+                    style: Theme.of(context).textTheme.titleLarge,
+                  ),
+                  Text(
+                    company?.size == null ? '0' : company!.size.toString(),
+                    style: Theme.of(context).textTheme.titleMedium,
+                  ),
+                ],
+              ),
+              const SizedBox(width: 0, height: 10),
+              Column(
+                children: [
+                  TabBar(
+                    controller: _tabController,
+                    tabs: const <Widget>[
+                      Text("Overview"),
+                      Text("Review"),
+                      Text("About"),
+                    ],
+                  ),
+                ],
+              )
+            ],
           ),
           child: Container(
             decoration: BoxDecoration(
@@ -87,97 +157,25 @@ class _CompanyDetailState extends State<CompanyDetail>
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
                 image: DecorationImage(
-                  image: NetworkImage(this.company?.imageURL ?? ''),
+                  image: NetworkImage(company?.imageURL ?? ''),
                   fit: BoxFit.cover,
                 ),
               ),
             ),
-          ),
-          bottom: Column(
-            children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 5),
-                    child: Row(
-                      children: [
-                        OutlinedButton(
-                          onPressed: () {},
-                          child: Icon(Icons.phone),
-                          style: OutlinedButton.styleFrom(
-                            minimumSize: Size(50, 50),
-                            shape: CircleBorder(),
-                          ),
-                        ),
-                        OutlinedButton(
-                          onPressed: () {},
-                          child: Icon(Icons.mail_outline),
-                          style: OutlinedButton.styleFrom(
-                            minimumSize: Size(50, 50),
-                            shape: CircleBorder(),
-                          ),
-                        )
-                      ],
-                    ),
-                  ),
-                  Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 5),
-                    child: Row(
-                      children: [
-                        OutlinedButton(
-                          onPressed: () {},
-                          child: const Text('Follow'),
-                          style: OutlinedButton.styleFrom(
-                            minimumSize: Size(116, 50),
-                          ),
-                        )
-                      ],
-                    ),
-                  )
-                ],
-              ),
-              SizedBox(width: 0, height: 10),
-              Column(
-                children: [
-                  Text(
-                    company?.name ?? '',
-                    style: Theme.of(context).textTheme.titleLarge,
-                  ),
-                  Text(
-                    company?.size == null ? '0' : company!.size.toString(),
-                    style: Theme.of(context).textTheme.titleMedium,
-                  ),
-                ],
-              ),
-              SizedBox(width: 0, height: 10),
-              Column(
-                children: [
-                  TabBar(
-                    controller: _tabController,
-                    tabs: <Widget>[
-                      Text("Overview"),
-                      Text("Review"),
-                      Text("About"),
-                    ],
-                  ),
-                ],
-              )
-            ],
           ),
         ),
         resizeToAvoidBottomInset: false,
         body: TabBarView(
           controller: _tabController,
           children: [
-            Text("Overview"),
+            const Text("Overview"),
             SingleChildScrollView(
               child: ReviewTabWidget(
                 companyID: widget.companyID,
                 companyInfo: company?.info,
               ),
             ),
-            Text("About"),
+            const Text("About"),
           ],
         ),
         // body: SingleChildScrollView(

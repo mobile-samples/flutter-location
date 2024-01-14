@@ -11,14 +11,14 @@ import 'package:flutter_user/features/comment/comment_model.dart';
 
 class CommentItem extends StatelessWidget {
   const CommentItem({
-    Key? key,
+    super.key,
     required this.item,
     required this.commentThreadReplyService,
     required this.commentThreadService,
     required this.load,
     required this.useFul,
     required this.deleteUseFul,
-  }) : super(key: key);
+  });
   final CommentThread item;
 
   final Function load;
@@ -28,13 +28,13 @@ class CommentItem extends StatelessWidget {
   final CommentThreadService commentThreadService;
 
   updateComment(String commentId, String comment) async {
-    final storage = new FlutterSecureStorage();
+    const storage = FlutterSecureStorage();
     final userId = await storage.read(key: 'userId');
-    print("update");
-    print(commentId + comment + userId!);
-    final res = await commentThreadService.update(commentId, comment, userId!);
-    if (res > 0) {
-      await load();
+    if (userId != null) {
+      final res = await commentThreadService.update(commentId, comment, userId);
+      if (res > 0) {
+        await load();
+      }
     }
   }
 
@@ -42,7 +42,7 @@ class CommentItem extends StatelessWidget {
     showModalBottomSheet(
         context: context,
         isScrollControlled: true,
-        shape: RoundedRectangleBorder(
+        shape: const RoundedRectangleBorder(
             borderRadius: BorderRadius.vertical(top: Radius.circular(20.0))),
         builder: (BuildContext buildContext) {
           return ListHistories(
@@ -56,12 +56,13 @@ class CommentItem extends StatelessWidget {
     showModalBottomSheet(
         context: context,
         isScrollControlled: true,
-        shape: RoundedRectangleBorder(
+        shape: const RoundedRectangleBorder(
             borderRadius: BorderRadius.vertical(top: Radius.circular(20.0))),
         builder: (BuildContext buildContext) {
           return CommentBox(
             post: (commentu, anonymousu) async {
               await updateComment(id, commentu);
+              if (!context.mounted) return;
               Navigator.of(context).pop(false);
             },
             id: id,
@@ -80,9 +81,10 @@ class CommentItem extends StatelessWidget {
       textOK: const Text('Yes'),
       textCancel: const Text('No'),
     )) {
-      final storage = new FlutterSecureStorage();
+      const storage = FlutterSecureStorage();
       final userId = await storage.read(key: 'userId');
       final res = await commentThreadService.delete(commentId, userId!);
+      if (!context.mounted) return;
       if (res > 0) {
         await load();
       } else {
@@ -91,159 +93,158 @@ class CommentItem extends StatelessWidget {
           isError: true,
         );
       }
+      if (!context.mounted) return;
       Navigator.of(context).pop();
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: Padding(
-          padding: EdgeInsets.all(10),
-          child: IntrinsicHeight(
-              child: Row(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              Flexible(
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Row(mainAxisAlignment: MainAxisAlignment.start, children: [
-                      item.authorURL!.length > 0
-                          ? CircleAvatar(
-                              backgroundImage:
-                                  NetworkImage(item.authorURL ?? ''),
-                            )
-                          : Avatar(
-                              name: item.authorName ?? "",
-                              shape: AvatarShape.circle(22.0)),
-                      Padding(
-                        padding: EdgeInsets.only(left: 8.0),
-                        child: Text(item.authorName ?? "",
-                            style: Theme.of(context).textTheme.titleSmall),
-                      ),
-                      Spacer(),
-                      Text(
-                        dt.DateUtils.formatDate(item.time ?? ""),
-                        style: Theme.of(context).textTheme.titleSmall,
-                      ),
-                      IconButton(
-                        icon: Icon(Icons.more_vert),
-                        onPressed: () {
-                          showModalBottomSheet(
-                              context: context,
-                              isScrollControlled: true,
-                              shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.vertical(
-                                      top: Radius.circular(20.0))),
-                              builder: (BuildContext buildContext) {
-                                return OptionsCommentWidget(
-                                  onDelete: () async {
-                                    delete(context, item.commentId ?? "");
-                                  },
-                                  onEdit: () {
-                                    showModelEdit(
-                                        context,
-                                        item.commentId.toString(),
-                                        item.comment.toString(),
-                                        item.anonymous ?? false);
-                                  },
-                                  onShowHistory: () {
-                                    showModel(context, item.histories ?? []);
-                                  },
-                                );
-                              });
-                        },
-                      )
-                    ]),
-                    Container(
-                      margin: EdgeInsets.only(left: 45.0),
-                      padding: EdgeInsets.all(10.0),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(16.0),
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.grey.withOpacity(0.1),
-                          ),
-                        ],
-                      ),
-                      child: Column(
-                        mainAxisSize: MainAxisSize.min,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Row(
-                            children: [
-                              Expanded(
-                                child: Padding(
-                                  padding: EdgeInsets.all(10),
-                                  child: Text(
-                                    item.comment ?? "",
-                                  ),
+    return Padding(
+        padding: const EdgeInsets.all(10),
+        child: IntrinsicHeight(
+            child: Row(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            Flexible(
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Row(mainAxisAlignment: MainAxisAlignment.start, children: [
+                    item.authorURL!.isNotEmpty
+                        ? CircleAvatar(
+                            backgroundImage:
+                                NetworkImage(item.authorURL ?? ''),
+                          )
+                        : Avatar(
+                            name: item.authorName ?? "",
+                            shape: AvatarShape.circle(22.0)),
+                    Padding(
+                      padding: const EdgeInsets.only(left: 8.0),
+                      child: Text(item.authorName ?? "",
+                          style: Theme.of(context).textTheme.titleSmall),
+                    ),
+                    const Spacer(),
+                    Text(
+                      dt.DateUtils.formatDate(item.time ?? ""),
+                      style: Theme.of(context).textTheme.titleSmall,
+                    ),
+                    IconButton(
+                      icon: const Icon(Icons.more_vert),
+                      onPressed: () {
+                        showModalBottomSheet(
+                            context: context,
+                            isScrollControlled: true,
+                            shape: const RoundedRectangleBorder(
+                                borderRadius: BorderRadius.vertical(
+                                    top: Radius.circular(20.0))),
+                            builder: (BuildContext buildContext) {
+                              return OptionsCommentWidget(
+                                onDelete: () async {
+                                  delete(context, item.commentId ?? "");
+                                },
+                                onEdit: () {
+                                  showModelEdit(
+                                      context,
+                                      item.commentId.toString(),
+                                      item.comment.toString(),
+                                      item.anonymous ?? false);
+                                },
+                                onShowHistory: () {
+                                  showModel(context, item.histories ?? []);
+                                },
+                              );
+                            });
+                      },
+                    )
+                  ]),
+                  Container(
+                    margin: const EdgeInsets.only(left: 45.0),
+                    padding: const EdgeInsets.all(10.0),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(16.0),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.grey.withOpacity(0.1),
+                        ),
+                      ],
+                    ),
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Row(
+                          children: [
+                            Expanded(
+                              child: Padding(
+                                padding: const EdgeInsets.all(10),
+                                child: Text(
+                                  item.comment ?? "",
                                 ),
                               ),
-                            ],
-                          ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Row(
-                                children: [
-                                  IconButton(
-                                      onPressed: () {
-                                        if (!(item.disable ?? false)) {
-                                          useFul(
-                                            item.commentId ?? "",
-                                            item.author ?? '',
-                                          );
-                                        } else {
-                                          deleteUseFul(
-                                            item.commentId ?? "",
-                                            item.author ?? '',
-                                          );
-                                        }
-                                      },
-                                      icon: Icon(item.disable ?? false
-                                          ? Icons.favorite
-                                          : Icons.favorite_outline)),
-                                  Text((item.usefulCount ?? 0).toString())
-                                ],
-                              ),
-                              Row(
-                                children: [
-                                  IconButton(
-                                      onPressed: () {
-                                        showModalBottomSheet(
-                                            context: context,
-                                            isScrollControlled: true,
-                                            shape: RoundedRectangleBorder(
-                                                borderRadius:
-                                                    BorderRadius.vertical(
-                                                        top: Radius.circular(
-                                                            20.0))),
-                                            builder:
-                                                (BuildContext buildContext) {
-                                              return CommentReplyForm(
-                                                id: item.id,
-                                                commentId: item.commentId,
-                                                commentThreadReplyService:
-                                                    commentThreadReplyService,
-                                              );
-                                            });
-                                      },
-                                      icon: Icon(Icons.comment_outlined)),
-                                  Text((item.replyCount ?? 0).toString())
-                                ],
-                              )
-                            ],
-                          ),
-                        ],
-                      ),
+                            ),
+                          ],
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Row(
+                              children: [
+                                IconButton(
+                                    onPressed: () {
+                                      if (!(item.disable ?? false)) {
+                                        useFul(
+                                          item.commentId ?? "",
+                                          item.author ?? '',
+                                        );
+                                      } else {
+                                        deleteUseFul(
+                                          item.commentId ?? "",
+                                          item.author ?? '',
+                                        );
+                                      }
+                                    },
+                                    icon: Icon(item.disable ?? false
+                                        ? Icons.favorite
+                                        : Icons.favorite_outline)),
+                                Text((item.usefulCount ?? 0).toString())
+                              ],
+                            ),
+                            Row(
+                              children: [
+                                IconButton(
+                                    onPressed: () {
+                                      showModalBottomSheet(
+                                          context: context,
+                                          isScrollControlled: true,
+                                          shape: const RoundedRectangleBorder(
+                                              borderRadius:
+                                                  BorderRadius.vertical(
+                                                      top: Radius.circular(
+                                                          20.0))),
+                                          builder:
+                                              (BuildContext buildContext) {
+                                            return CommentReplyForm(
+                                              id: item.id ?? '',
+                                              commentId: item.commentId ?? '',
+                                              commentThreadReplyService:
+                                                  commentThreadReplyService,
+                                            );
+                                          });
+                                    },
+                                    icon: const Icon(Icons.comment_outlined)),
+                                Text((item.replyCount ?? 0).toString())
+                              ],
+                            )
+                          ],
+                        ),
+                      ],
                     ),
-                  ],
-                ),
+                  ),
+                ],
               ),
-            ],
-          ))),
-    );
+            ),
+          ],
+        )));
   }
 }

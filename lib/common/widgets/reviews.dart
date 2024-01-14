@@ -1,23 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_user/common/models/search.dart';
-import 'package:flutter_user/features/location/widgets/location-form-reply.dart';
+import 'package:flutter_user/features/location/widgets/location_form_reply.dart';
 import 'package:flutter_user/features/rate/rate_model.dart';
 import 'package:flutter_user/features/rate/rate_service.dart';
 
 class Reviews extends StatefulWidget {
-  Reviews({
-    Key? key,
+  const Reviews({super.key, 
     required this.id,
     required this.serviceName,
     required this.rateRes,
     required this.getRates,
   });
 
-  late String id;
-  late String serviceName;
-  late SearchResult<RateComment> rateRes;
-  late Function getRates;
+  final String id;
+  final String serviceName;
+  final SearchResult<RateComment> rateRes;
+  final Function getRates;
 
   @override
   State<StatefulWidget> createState() {
@@ -43,19 +42,18 @@ class _ReviewsState extends State<Reviews> {
       itemBuilder: (context, index) {
         return Card(
           child: Padding(
-            padding: EdgeInsets.all(10),
+            padding: const EdgeInsets.all(10),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  'Review by ' +
-                      (!widget.rateRes.list[index].anonymous
+                  'Review by ${!widget.rateRes.list[index].anonymous
                           ? widget.rateRes.list[index].authorName ?? 'Anonymous'
-                          : 'Anonymous'),
-                  style: TextStyle(fontSize: 14, fontWeight: FontWeight.w400),
+                          : 'Anonymous'}',
+                  style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w400),
                 ),
-                Divider(),
-                Container(
+                const Divider(),
+                SizedBox(
                   width: double.maxFinite,
                   height: 120,
                   child: Column(
@@ -69,7 +67,7 @@ class _ReviewsState extends State<Reviews> {
                         direction: Axis.horizontal,
                         itemCount: 5,
                         itemSize: 14,
-                        itemPadding: EdgeInsets.symmetric(horizontal: 4.0),
+                        itemPadding: const EdgeInsets.symmetric(horizontal: 4.0),
                         itemBuilder: (context, _) => Icon(
                           Icons.star,
                           color: Theme.of(context).colorScheme.tertiary,
@@ -78,7 +76,7 @@ class _ReviewsState extends State<Reviews> {
                       ),
                       Text(
                         widget.rateRes.list[index].review ?? '',
-                        style: TextStyle(
+                        style: const TextStyle(
                             fontSize: 14, fontWeight: FontWeight.w400),
                       ),
                       Row(
@@ -95,13 +93,13 @@ class _ReviewsState extends State<Reviews> {
                                   : Icons.favorite_outline)),
                           Text(widget.rateRes.list[index].usefulCount
                               .toString()),
-                          Spacer(),
+                          const Spacer(),
                           IconButton(
                               onPressed: () {
                                 showModalBottomSheet(
                                   context: context,
                                   isScrollControlled: true,
-                                  shape: RoundedRectangleBorder(
+                                  shape: const RoundedRectangleBorder(
                                       borderRadius: BorderRadius.vertical(
                                           top: Radius.circular(20.0))),
                                   builder: (BuildContext buildContext) {
@@ -109,12 +107,12 @@ class _ReviewsState extends State<Reviews> {
                                       serviceName: widget.serviceName,
                                       locationId: widget.id,
                                       authorOfRate:
-                                          widget.rateRes.list[index].author,
+                                          widget.rateRes.list[index].author ?? '',
                                     );
                                   },
                                 );
                               },
-                              icon: Icon(Icons.comment_outlined)),
+                              icon: const Icon(Icons.comment_outlined)),
                           Text(
                             widget.rateRes.list[index].replyCount.toString(),
                           )

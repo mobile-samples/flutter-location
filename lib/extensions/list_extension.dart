@@ -4,17 +4,15 @@ extension UtilListExtension on List {
       List<Map<String, dynamic>> result = [];
       List<String> keys = [];
 
-      this.forEach((f) => keys.add(f[key]));
+      forEach((f) => keys.add(f[key]));
 
-      [...keys.toSet()].forEach((k) {
-        List data = [...this.where((e) => e[key] == k)];
+      for (var k in [...keys.toSet()]) {
+        List data = [...where((e) => e[key] == k)];
         result.add({k: data});
-      });
+      }
 
       return result;
-    } catch (e, s) {
-      print(e);
-      print(s);
+    } catch (e) {
       return this;
     }
   }

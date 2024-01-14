@@ -31,21 +31,21 @@ class Location {
   String? updatedby;
   String? version;
   factory Location.fromJson(Map<String, dynamic> json) => Location(
-      json['createdat'] == null ? '' : json['createdat'],
-      json['createdby'] == null ? '' : json['createdby'],
-      json['customurl'] == null ? '' : json['customurl'],
-      json['description'] == null ? '' : json['description'],
-      json['geo'] == null ? '' : json['geo'],
-      json['id'] == null ? '' : json['id'],
-      json['imageURL'] == null ? '' : json['imageURL'],
+      json['createdat'] ?? '',
+      json['createdby'] ?? '',
+      json['customurl'] ?? '',
+      json['description'] ?? '',
+      json['geo'] ?? '',
+      json['id'] ?? '',
+      json['imageURL'] ?? '',
       json['info'] != null ? LocationInfo.fromJson(json['info']) : null,
-      json['latitude'] == null ? '' : json['latitude'],
-      json['longitude'] == null ? '' : json['longitude'],
-      json['name'] == null ? '' : json['name'],
-      json['status'] == null ? '' : json['status'],
-      json['type'] == null ? '' : json['type'],
-      json['updatedby'] == null ? '' : json['updatedby'],
-      json['version'] == null ? '' : json['version']);
+      json['latitude'] ?? '',
+      json['longitude'] ?? '',
+      json['name'] ?? '',
+      json['status'] ?? '',
+      json['type'] ?? '',
+      json['updatedby'] ?? '',
+      json['version'] ?? '');
 }
 
 class LocationInfo {
@@ -82,7 +82,7 @@ class LocationInfo {
   }
 
   factory LocationInfo.fromJson(Map<String, dynamic> json) => LocationInfo(
-      json['count'] == null ? 0 : json['count'],
+      json['count'] ?? 0,
       json['rate'] == null
           ? 0
           : (json['rate'] is int

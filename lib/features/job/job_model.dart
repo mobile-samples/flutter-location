@@ -74,9 +74,9 @@ class JobFilter extends Filter {
     // this.companyId,
     // this.publishedAt,
     // this.expiredAt,
-    int? limit,
-    int? page,
-  ) : super(limit, page);
+    super.limit,
+    super.page,
+  );
 
   String? id;
   String? title;

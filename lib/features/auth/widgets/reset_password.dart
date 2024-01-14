@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_user/common/widgets/circle-background.dart';
+import 'package:flutter_user/common/widgets/circle_background.dart';
 import 'package:flutter_user/common/widgets/dialog.dart';
 
 import '../auth_service.dart';
-import 'forgot-password.dart';
+import 'forgot_password.dart';
 import 'login.dart';
 
 class ResetPasswordWidget extends StatefulWidget {
-  const ResetPasswordWidget({Key? key}) : super(key: key);
+  const ResetPasswordWidget({super.key});
 
   @override
   State<ResetPasswordWidget> createState() => _ResetPasswordWidget();
@@ -28,6 +28,7 @@ class _ResetPasswordWidget extends State<ResetPasswordWidget> {
       passcode: passcode,
       password: password,
     );
+    if (!mounted) return;
     if (resBody == 1) {
       return Navigator.push(
         context,
@@ -40,6 +41,7 @@ class _ResetPasswordWidget extends State<ResetPasswordWidget> {
   sendEmail(String contract) async {
     final isSend =
         await AuthService.instance.sendEmailForgotPW(contact: contract);
+    if (!mounted) return;
     if (!isSend) {
       return showDialogWithMsg(context, 'Alert', 'Send email error');
     }
@@ -58,22 +60,22 @@ class _ResetPasswordWidget extends State<ResetPasswordWidget> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Padding(
-                  padding: EdgeInsets.fromLTRB(30, 0, 30, 0),
+                  padding: const EdgeInsets.fromLTRB(30, 0, 30, 0),
                   child: Column(
                     children: [
                       Text(
                         "Reset password",
                         style: Theme.of(context).textTheme.titleLarge,
                       ),
-                      SizedBox(width: 0, height: 20),
+                      const SizedBox(width: 0, height: 20),
                       Text(
                         "Please input your passcode in email, username and new password",
                         style: Theme.of(context).textTheme.titleMedium,
                       ),
-                      SizedBox(width: 0, height: 20),
+                      const SizedBox(width: 0, height: 20),
                       TextField(
                         controller: usernameController,
-                        decoration: InputDecoration(
+                        decoration: const InputDecoration(
                           prefixIcon: Icon(Icons.account_box),
                           hintText: "Username",
                           border: InputBorder.none,
@@ -82,7 +84,7 @@ class _ResetPasswordWidget extends State<ResetPasswordWidget> {
                       ),
                       TextField(
                         controller: passcodeController,
-                        decoration: InputDecoration(
+                        decoration: const InputDecoration(
                           prefixIcon: Icon(Icons.numbers),
                           hintText: "Passcode",
                           border: InputBorder.none,
@@ -94,17 +96,17 @@ class _ResetPasswordWidget extends State<ResetPasswordWidget> {
                         obscureText: true,
                         enableSuggestions: false,
                         autocorrect: false,
-                        decoration: InputDecoration(
+                        decoration: const InputDecoration(
                           prefixIcon: Icon(Icons.password),
                           hintText: "Password",
                           border: InputBorder.none,
                           fillColor: Colors.green,
                         ),
                       ),
-                      SizedBox(width: 0, height: 20),
+                      const SizedBox(width: 0, height: 20),
                       Row(
                         children: [
-                          new Flexible(
+                          Flexible(
                             child: ElevatedButton(
                               onPressed: () {
                                 sendEmail(contract as String);
@@ -112,8 +114,8 @@ class _ResetPasswordWidget extends State<ResetPasswordWidget> {
                               child: const Text('Resend email'),
                             ),
                           ),
-                          SizedBox(width: 10, height: 0),
-                          new Flexible(
+                          const SizedBox(width: 10, height: 0),
+                          Flexible(
                             child: ElevatedButton(
                               onPressed: () {
                                 resetPW();
@@ -123,7 +125,7 @@ class _ResetPasswordWidget extends State<ResetPasswordWidget> {
                           ),
                         ],
                       ),
-                      SizedBox(width: 0, height: 20),
+                      const SizedBox(width: 0, height: 20),
                       OutlinedButton(
                         onPressed: () {
                           Navigator.pop(

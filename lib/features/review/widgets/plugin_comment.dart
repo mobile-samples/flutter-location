@@ -4,17 +4,17 @@ import 'package:flutter_user/utils/date_utils.dart' as dt;
 
 class ListHistories extends StatelessWidget {
   const ListHistories({
-    Key? key,
+    super.key,
     required this.list,
-  }) : super(key: key);
+  });
   final List<Histories> list;
 
   @override
   Widget build(BuildContext context) {
     return SizedBox(
         height: 500,
-        child: list.length == 0
-            ? ListTile(
+        child: list.isEmpty
+            ? const ListTile(
                 title: Text("No data"),
               )
             : ListView.builder(
@@ -31,13 +31,13 @@ class ListHistories extends StatelessWidget {
 
 class CommentBox extends StatefulWidget {
   const CommentBox({
-    Key? key,
+    super.key,
     required this.post,
     this.id,
     required this.comment,
     required this.isHiddenAnonymous,
     required this.anonymous,
-  }) : super(key: key);
+  });
 
   final Function post;
   final dynamic id;
@@ -52,7 +52,7 @@ class CommentBox extends StatefulWidget {
 class _CommentBoxState extends State<CommentBox> {
   TextEditingController comment = TextEditingController();
   bool anonymous = false;
-  final _formKey = GlobalKey<FormState>();
+  // final _formKey = GlobalKey<FormState>();
 
   @override
   void initState() {
@@ -61,7 +61,7 @@ class _CommentBoxState extends State<CommentBox> {
   }
 
   dynamic validator(String value) {
-    if (value == null || value.isEmpty) {
+    if (value.isEmpty) {
       return 'Please enter value';
     }
     return null;
@@ -77,7 +77,7 @@ class _CommentBoxState extends State<CommentBox> {
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                if (!widget.isHiddenAnonymous) Text('Anonymous'),
+                if (!widget.isHiddenAnonymous) const Text('Anonymous'),
                 if (!widget.isHiddenAnonymous)
                   Switch(
                     value: anonymous,
@@ -88,15 +88,15 @@ class _CommentBoxState extends State<CommentBox> {
                       });
                     },
                   ),
-                if (!widget.isHiddenAnonymous) Spacer(),
+                if (!widget.isHiddenAnonymous) const Spacer(),
                 Expanded(
                   flex: 1,
                   child: Padding(
-                    padding: EdgeInsets.all(16),
+                    padding: const EdgeInsets.all(16),
                     child: TextField(
                       minLines: 1,
                       maxLines: 3,
-                      scrollPhysics: BouncingScrollPhysics(),
+                      scrollPhysics: const BouncingScrollPhysics(),
                       decoration: InputDecoration(
                         labelText: 'Comment',
                         hintText: 'Enter your comment',
@@ -113,6 +113,7 @@ class _CommentBoxState extends State<CommentBox> {
                   style: Theme.of(context).textButtonTheme.style,
                   onPressed: () async {
                     await widget.post(comment.text.toString(), anonymous);
+                    if (!context.mounted) return;
                     Navigator.of(context).pop();
                   },
                 ),
@@ -129,11 +130,11 @@ class OptionsCommentWidget extends StatelessWidget {
   final Function onShowHistory;
 
   const OptionsCommentWidget({
-    Key? key,
+    super.key,
     required this.onDelete,
     required this.onEdit,
     required this.onShowHistory,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -142,25 +143,25 @@ class OptionsCommentWidget extends StatelessWidget {
       child: ListView(children: [
         GestureDetector(
             onTap: () {
-              this.onShowHistory();
+              onShowHistory();
             },
-            child: ListTile(
+            child: const ListTile(
               leading: Icon(Icons.history),
               title: Text('History'),
             )),
         GestureDetector(
             onTap: () {
-              this.onEdit();
+              onEdit();
             },
-            child: ListTile(
+            child: const ListTile(
               leading: Icon(Icons.edit),
               title: Text('Edit'),
             )),
         GestureDetector(
             onTap: () {
-              this.onDelete();
+              onDelete();
             },
-            child: ListTile(
+            child: const ListTile(
               leading: Icon(Icons.delete_outline),
               title: Text('Remove'),
             )),

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 
 class RateForm extends StatefulWidget {
-  const RateForm({Key? key, required this.postRate}) : super(key: key);
+  const RateForm({super.key, required this.postRate});
   final Function postRate;
   @override
   State<RateForm> createState() => _RateFormState();
@@ -15,6 +15,7 @@ class _RateFormState extends State<RateForm> {
 
   postRateHandle(BuildContext context) async {
     final res = await widget.postRate(rate, review.value.text, anonymous);
+    if (!context.mounted) return;
     if (res > 0) {
       Navigator.pop(context);
     }
@@ -27,7 +28,7 @@ class _RateFormState extends State<RateForm> {
       child: SizedBox(
         height: 460,
         child: Padding(
-          padding: EdgeInsets.all(10),
+          padding: const EdgeInsets.all(10),
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
@@ -39,25 +40,25 @@ class _RateFormState extends State<RateForm> {
                     onPressed: () {
                       Navigator.pop(context);
                     },
-                    child: Text('Done'),
+                    child: const Text('Done'),
                   ),
                   TextButton(
                     style: Theme.of(context).textButtonTheme.style,
                     onPressed: () async {
                       await postRateHandle(context);
                     },
-                    child: Text('Post'),
+                    child: const Text('Post'),
                   ),
                 ],
               ),
-              Divider(),
+              const Divider(),
               RatingBar.builder(
                 initialRating: rate,
                 minRating: 1,
                 direction: Axis.horizontal,
                 itemCount: 10,
                 itemSize: 30,
-                itemPadding: EdgeInsets.symmetric(horizontal: 4.0),
+                itemPadding: const EdgeInsets.symmetric(horizontal: 4.0),
                 itemBuilder: (context, _) => Icon(
                   Icons.star,
                   color: Theme.of(context).colorScheme.tertiary,
@@ -78,7 +79,7 @@ class _RateFormState extends State<RateForm> {
               Row(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  Text('Anonymous'),
+                  const Text('Anonymous'),
                   Switch(
                     value: anonymous,
                     activeColor: Theme.of(context).colorScheme.primary,

@@ -40,7 +40,7 @@ class CommentThread {
     if (json['histories'] != null) {
       histories = <Histories>[];
       json['histories'].forEach((v) {
-        histories!.add(new Histories.fromJson(v));
+        histories!.add(Histories.fromJson(v));
       });
     }
     replyCount = json['replyCount'];
@@ -52,22 +52,22 @@ class CommentThread {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['commentId'] = this.commentId;
-    data['id'] = this.id;
-    data['author'] = this.author;
-    data['comment'] = this.comment;
-    data['time'] = this.time;
-    data['updatedAt'] = this.updatedAt;
-    if (this.histories != null) {
-      data['histories'] = this.histories!.map((v) => v.toJson()).toList();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['commentId'] = commentId;
+    data['id'] = id;
+    data['author'] = author;
+    data['comment'] = comment;
+    data['time'] = time;
+    data['updatedAt'] = updatedAt;
+    if (histories != null) {
+      data['histories'] = histories!.map((v) => v.toJson()).toList();
     }
-    data['replyCount'] = this.replyCount;
-    data['usefulCount'] = this.usefulCount;
-    data['authorName'] = this.authorName;
-    data['authorURL'] = this.authorURL;
-    data['disable'] = this.disable;
-    data['anonymous'] = this.anonymous;
+    data['replyCount'] = replyCount;
+    data['usefulCount'] = usefulCount;
+    data['authorName'] = authorName;
+    data['authorURL'] = authorURL;
+    data['disable'] = disable;
+    data['anonymous'] = anonymous;
     return data;
   }
 }
@@ -93,7 +93,7 @@ class CommentReply {
     if (json['histories'] != null) {
       histories = <Histories>[];
       json['histories'].forEach((v) {
-        histories!.add(new Histories.fromJson(v));
+        histories!.add(Histories.fromJson(v));
       });
     }
     authorName = json['authorName'];
@@ -101,17 +101,17 @@ class CommentReply {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['commentId'] = this.commentId;
-    data['id'] = this.id;
-    data['author'] = this.author;
-    data['comment'] = this.comment;
-    data['time'] = this.time;
-    if (this.histories != null) {
-      data['histories'] = this.histories!.map((v) => v.toJson()).toList();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['commentId'] = commentId;
+    data['id'] = id;
+    data['author'] = author;
+    data['comment'] = comment;
+    data['time'] = time;
+    if (histories != null) {
+      data['histories'] = histories!.map((v) => v.toJson()).toList();
     }
-    data['authorName'] = this.authorName;
-    data['authorURL'] = this.authorURL;
+    data['authorName'] = authorName;
+    data['authorURL'] = authorURL;
     return data;
   }
 }

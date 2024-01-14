@@ -25,9 +25,10 @@ class RateClient implements RateService {
 
   static final RateClient instance = RateClient._instantiate();
 
+  @override
   Future<int> postRate(
       String id, int rate, String review, String time, bool anonymous) async {
-    final storage = new FlutterSecureStorage();
+    const storage = FlutterSecureStorage();
     final userId = await storage.read(key: 'userId');
     final headers = await HttpHelper.instance.buildHeader();
     final response = await http.post(
@@ -55,6 +56,7 @@ class RateReplyClient implements RateCommentService {
 
   RateReplyClient(this.url);
 
+  @override
   Future<List<RateReply>> getComments(
       String locationId, String authorOfRate) async {
     final response = await http
@@ -72,9 +74,10 @@ class RateReplyClient implements RateCommentService {
     }
   }
 
+  @override
   Future<int> comment(String id, String authorOfRate, String comment,
       String time, bool anonymous) async {
-    final storage = new FlutterSecureStorage();
+    const storage = FlutterSecureStorage();
     final userId = await storage.read(key: 'userId');
     final headers = await HttpHelper.instance.buildHeader();
 
@@ -118,7 +121,6 @@ class RateReplyClient implements RateCommentService {
       headers: headers,
       body: jsonEncode(<String, dynamic>{'comment': comment}),
     );
-    print(response.body);
     if (response.statusCode == 200) {
       return 1;
     } else {

@@ -2,17 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:flutter_user/features/job/job_model.dart';
 
 class JobCard extends StatelessWidget {
-  const JobCard({Key? key, required this.data}) : super(key: key);
+  const JobCard({super.key, required this.data});
 
   final Job data;
 
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.fromLTRB(20, 5, 20, 5),
+      padding: const EdgeInsets.fromLTRB(20, 5, 20, 5),
       child: Row(
         children: [
-          Expanded(
+          const Expanded(
             flex: 1,
             child: CircleAvatar(
               backgroundImage: NetworkImage(
@@ -22,17 +22,17 @@ class JobCard extends StatelessWidget {
           Expanded(
             flex: 8,
             child: Padding(
-              padding: EdgeInsets.all(10),
+              padding: const EdgeInsets.all(10),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(data.title,
                       style:
-                          TextStyle(fontSize: 18, fontWeight: FontWeight.w400)),
+                          const TextStyle(fontSize: 18, fontWeight: FontWeight.w400)),
                   Text(
                     data.benefit,
-                    style: TextStyle(fontSize: 16, color: Colors.black),
+                    style: const TextStyle(fontSize: 16, color: Colors.black),
                     maxLines: 1,
                     overflow: TextOverflow.visible,
                   )
@@ -40,7 +40,7 @@ class JobCard extends StatelessWidget {
               ),
             ),
           ),
-          Expanded(
+          const Expanded(
             flex: 1,
             child: Icon(Icons.chevron_right),
           )

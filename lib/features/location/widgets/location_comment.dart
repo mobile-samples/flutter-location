@@ -4,13 +4,12 @@ import 'package:flutter_user/features/rate/rate_model.dart';
 import 'package:flutter_user/features/rate/rate_service.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 
-import 'location-form-rate.dart';
-import 'location-form-reply.dart';
+import 'location_form_rate.dart';
+import 'location_form_reply.dart';
 
 class LocationComment extends StatefulWidget {
   const LocationComment(
-      {Key? key, required this.locationId, required this.getLocationDetail})
-      : super(key: key);
+      {super.key, required this.locationId, required this.getLocationDetail});
   final String locationId;
   final Function getLocationDetail;
 
@@ -69,7 +68,7 @@ class _LocationCommentState extends State<LocationComment> {
       return Center(
         child: CircularProgressIndicator(
           backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-          valueColor: new AlwaysStoppedAnimation<Color>(
+          valueColor: AlwaysStoppedAnimation<Color>(
               Theme.of(context).colorScheme.primary),
         ),
       );
@@ -82,14 +81,14 @@ class _LocationCommentState extends State<LocationComment> {
             showModalBottomSheet(
                 context: context,
                 isScrollControlled: true,
-                shape: RoundedRectangleBorder(
+                shape: const RoundedRectangleBorder(
                     borderRadius:
                         BorderRadius.vertical(top: Radius.circular(20.0))),
                 builder: (BuildContext buildContext) {
                   return RateForm(postRate: postRate);
                 });
           },
-          child: Text('Post a Review'),
+          child: const Text('Post a Review'),
         ),
         ListView.builder(
             shrinkWrap: true,
@@ -98,20 +97,19 @@ class _LocationCommentState extends State<LocationComment> {
             itemBuilder: (context, index) {
               return Card(
                 child: Padding(
-                  padding: EdgeInsets.all(10),
+                  padding: const EdgeInsets.all(10),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        'Review by ' +
-                            (!listRate.list[index].anonymous
+                        'Review by ${!listRate.list[index].anonymous
                                 ? listRate.list[index].authorName ?? 'Anonymous'
-                                : 'Anonymous'),
-                        style: TextStyle(
+                                : 'Anonymous'}',
+                        style: const TextStyle(
                             fontSize: 14, fontWeight: FontWeight.w400),
                       ),
-                      Divider(),
-                      Container(
+                      const Divider(),
+                      SizedBox(
                         width: double.maxFinite,
                         height: 120,
                         child: Column(
@@ -125,7 +123,7 @@ class _LocationCommentState extends State<LocationComment> {
                               itemCount: 5,
                               itemSize: 14,
                               itemPadding:
-                                  EdgeInsets.symmetric(horizontal: 4.0),
+                                  const EdgeInsets.symmetric(horizontal: 4.0),
                               itemBuilder: (context, _) => Icon(
                                 Icons.star,
                                 color: Theme.of(context).colorScheme.tertiary,
@@ -134,7 +132,7 @@ class _LocationCommentState extends State<LocationComment> {
                             ),
                             Text(
                               listRate.list[index].review ?? '',
-                              style: TextStyle(
+                              style: const TextStyle(
                                   fontSize: 14, fontWeight: FontWeight.w400),
                             ),
                             Row(
@@ -149,13 +147,13 @@ class _LocationCommentState extends State<LocationComment> {
                                         : Icons.favorite_outline)),
                                 Text(listRate.list[index].usefulCount
                                     .toString()),
-                                Spacer(),
+                                const Spacer(),
                                 IconButton(
                                     onPressed: () {
                                       showModalBottomSheet(
                                           context: context,
                                           isScrollControlled: true,
-                                          shape: RoundedRectangleBorder(
+                                          shape: const RoundedRectangleBorder(
                                               borderRadius:
                                                   BorderRadius.vertical(
                                                       top: Radius.circular(
@@ -165,10 +163,10 @@ class _LocationCommentState extends State<LocationComment> {
                                                 serviceName: "locations",
                                                 locationId: widget.locationId,
                                                 authorOfRate: listRate
-                                                    .list[index].author);
+                                                    .list[index].author ?? '');
                                           });
                                     },
-                                    icon: Icon(Icons.comment_outlined)),
+                                    icon: const Icon(Icons.comment_outlined)),
                                 Text(listRate.list[index].replyCount.toString())
                               ],
                             ),

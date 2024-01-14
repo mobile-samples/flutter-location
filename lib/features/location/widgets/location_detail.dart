@@ -2,13 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_user/features/location/location_model.dart';
 import 'package:flutter_user/features/location/location_service.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
-import 'package:flutter_user/features/location/widgets/map-widget.dart';
+import 'package:flutter_user/features/location/widgets/map_widget.dart';
 
-import 'location-comment.dart';
+import 'location_comment.dart';
 
 class LocationDetail extends StatefulWidget {
-  const LocationDetail({Key? key, required this.locationId}) : super(key: key);
-  final locationId;
+  const LocationDetail({super.key, required this.locationId});
+  final String locationId;
   @override
   State<LocationDetail> createState() => _LocationDetailState();
 }
@@ -35,7 +35,7 @@ class _LocationDetailState extends State<LocationDetail> {
     List<Widget> list = [];
     final infoMap = info?.toMap();
     for (var i = 5; i > 0; i--) {
-      final per = infoMap?['rate' + i.toString()] ?? 0;
+      final per = infoMap?['rate$i'] ?? 0;
       list.add(Row(
         children: [
           RatingBar.builder(
@@ -44,14 +44,14 @@ class _LocationDetailState extends State<LocationDetail> {
             direction: Axis.horizontal,
             itemCount: i,
             itemSize: 16,
-            itemPadding: EdgeInsets.symmetric(horizontal: 4.0),
+            itemPadding: const EdgeInsets.symmetric(horizontal: 4.0),
             itemBuilder: (context, _) => Icon(
               Icons.star,
               color: Theme.of(context).colorScheme.tertiary,
             ),
             onRatingUpdate: (rating) {},
           ),
-          Container(
+          SizedBox(
               width: 150,
               child: LinearProgressIndicator(
                 backgroundColor: Theme.of(context).colorScheme.secondary,
@@ -63,7 +63,7 @@ class _LocationDetailState extends State<LocationDetail> {
         ],
       ));
     }
-    return new Column(
+    return Column(
         crossAxisAlignment: CrossAxisAlignment.end, children: list);
   }
 
@@ -73,7 +73,7 @@ class _LocationDetailState extends State<LocationDetail> {
       return Center(
         child: CircularProgressIndicator(
           backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-          valueColor: new AlwaysStoppedAnimation<Color>(
+          valueColor: AlwaysStoppedAnimation<Color>(
               Theme.of(context).colorScheme.primary),
         ),
       );
@@ -97,7 +97,7 @@ class _LocationDetailState extends State<LocationDetail> {
                   IconButton(
                     onPressed: () {},
                     iconSize: 32,
-                    icon: Icon(Icons.chevron_left),
+                    icon: const Icon(Icons.chevron_left),
                   ),
                 ],
               ),
@@ -109,14 +109,14 @@ class _LocationDetailState extends State<LocationDetail> {
                 child: Container(
                   width: MediaQuery.of(context).size.width,
                   height: MediaQuery.of(context).size.height,
-                  decoration: BoxDecoration(
+                  decoration: const BoxDecoration(
                     borderRadius: BorderRadius.only(
                         topLeft: Radius.circular(32),
                         topRight: Radius.circular(32)),
                     color: Colors.white,
                   ),
                   child: Padding(
-                    padding: EdgeInsets.all(8),
+                    padding: const EdgeInsets.all(8),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
@@ -142,26 +142,26 @@ class _LocationDetailState extends State<LocationDetail> {
                                 showModalBottomSheet(
                                     context: context,
                                     isScrollControlled: true,
-                                    shape: RoundedRectangleBorder(
+                                    shape: const RoundedRectangleBorder(
                                         borderRadius: BorderRadius.vertical(
                                             top: Radius.circular(20.0))),
                                     builder: (BuildContext buildContext) {
                                       return MapWidget(
-                                          latitude: location.latitude,
-                                          longitude: location.longitude,
-                                          locationName: location.name);
+                                          latitude: location.latitude ?? 0,
+                                          longitude: location.longitude ?? 0,
+                                          locationName: location.name ?? '');
                                     });
                               },
-                              child: Text('View Map'),
+                              child: const Text('View Map'),
                             ),
                           ],
                         ),
-                        Divider(),
+                        const Divider(),
                         Text(
                           'Rating & Reviews',
                           style: Theme.of(context).textTheme.titleMedium,
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 10,
                         ),
                         Row(
@@ -178,7 +178,7 @@ class _LocationDetailState extends State<LocationDetail> {
                                 )
                               ],
                             ),
-                            Spacer(),
+                            const Spacer(),
                             Row(
                               children: [
                                 getListStarWidgets(location.info, context),

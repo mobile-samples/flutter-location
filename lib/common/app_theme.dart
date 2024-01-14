@@ -5,48 +5,47 @@ ThemeData getAppTheme(BuildContext context, bool isDarkTheme) {
     scaffoldBackgroundColor: isDarkTheme ? Colors.black : Colors.white,
     appBarTheme: Theme.of(context).appBarTheme.copyWith(
           backgroundColor: Colors.green,
-          titleTextStyle: TextStyle(
+          titleTextStyle: const TextStyle(
             color: Colors.white,
             fontSize: 24,
             fontWeight: FontWeight.w700,
           ),
         ),
     textTheme: Theme.of(context).textTheme.copyWith(
-        titleLarge: TextStyle(
-          color: isDarkTheme ? Colors.white : Colors.black,
-          fontSize: 28,
-          fontWeight: FontWeight.w600,
-        ),
-        bodyMedium: TextStyle(
+      titleLarge: TextStyle(
+        color: isDarkTheme ? Colors.white : Colors.black,
+        fontSize: 28,
+        fontWeight: FontWeight.w600,
+      ),
+      titleMedium: TextStyle(
           color: isDarkTheme ? Colors.white : Colors.black,
           fontSize: 16,
-          fontWeight: FontWeight.w500,
-        ),
-        headlineMedium: TextStyle(
-            color: isDarkTheme ? Colors.white : Colors.black,
-            fontSize: 20,
-            fontWeight: FontWeight.w600),
-        labelSmall: TextStyle(
-            color: isDarkTheme ? Colors.white : Colors.grey,
-            fontSize: 10,
-            fontWeight: FontWeight.w500),
-        titleMedium: TextStyle(
-            color: Color.fromARGB(225, 255, 255, 255),
-            fontSize: 14,
-            fontWeight: FontWeight.w500)),
+          fontWeight: FontWeight.w500),
+      bodyMedium: TextStyle(
+        color: isDarkTheme ? Colors.white : Colors.black,
+        fontSize: 16,
+        fontWeight: FontWeight.w500,
+      ),
+      headlineMedium: TextStyle(
+          color: isDarkTheme ? Colors.white : Colors.black,
+          fontSize: 20,
+          fontWeight: FontWeight.w600),
+      labelSmall: TextStyle(
+          color: isDarkTheme ? Colors.white : Colors.grey,
+          fontSize: 10,
+          fontWeight: FontWeight.w500),
+      labelMedium: TextStyle(
+          color: isDarkTheme ? Colors.black : Colors.white,
+          fontSize: 16,
+          fontWeight: FontWeight.w500),
+    ),
     iconTheme: Theme.of(context).iconTheme.copyWith(color: Colors.green),
     cardTheme: Theme.of(context).cardTheme.copyWith(
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(10),
           ),
-          color: Color.fromARGB(245, 252, 252, 252),
+          color: const Color.fromARGB(245, 252, 252, 252),
         ),
-    textButtonTheme: TextButtonThemeData(
-      style: ButtonStyle(
-        textStyle: MaterialStateProperty.all(TextStyle(fontSize: 16)),
-        foregroundColor: MaterialStateProperty.all(Colors.green),
-      ),
-    ),
     colorScheme: Theme.of(context).colorScheme.copyWith(
         background: isDarkTheme ? Colors.black : Colors.white,
         primary: Colors.green,
@@ -55,7 +54,8 @@ ThemeData getAppTheme(BuildContext context, bool isDarkTheme) {
     elevatedButtonTheme: ElevatedButtonThemeData(
       style: ButtonStyle(
         backgroundColor: MaterialStateProperty.all<Color>(Colors.green),
-        minimumSize: MaterialStateProperty.all(Size(double.infinity, 50)),
+        foregroundColor: MaterialStateProperty.all<Color>(Colors.white),
+        minimumSize: MaterialStateProperty.all(const Size(double.infinity, 50)),
         padding: MaterialStateProperty.all(
           const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
         ),
@@ -64,17 +64,17 @@ ThemeData getAppTheme(BuildContext context, bool isDarkTheme) {
     outlinedButtonTheme: OutlinedButtonThemeData(
       style: OutlinedButton.styleFrom(
         backgroundColor: Colors.white,
-        minimumSize: Size(100, 50),
+        minimumSize: const Size(100, 50),
         padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
         // textStyle: TextStyle(color: Colors.green),
-        side: BorderSide(width: 1.0, color: Colors.green),
+        side: const BorderSide(width: 1.0, color: Colors.green),
         foregroundColor: Colors.green,
       ),
     ),
     dialogTheme: DialogTheme(
       backgroundColor: Colors.green[200],
     ),
-    tabBarTheme: TabBarTheme(
+    tabBarTheme: const TabBarTheme(
       labelColor: Colors.green,
       labelStyle: TextStyle(color: Colors.green),
       indicator: UnderlineTabIndicator(

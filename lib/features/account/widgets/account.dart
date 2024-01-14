@@ -5,12 +5,12 @@ import 'package:flutter_user/common/widgets/dialog.dart';
 import 'package:flutter_user/features/account/user_service.dart';
 
 import '../user_model.dart';
-import 'basic-form.dart';
+import 'basic_form.dart';
 import 'setting.dart';
 import 'skill.dart';
 
 class AccountWidget extends StatefulWidget {
-  const AccountWidget({Key? key, required this.userId}) : super(key: key);
+  const AccountWidget({super.key, required this.userId});
   final String userId;
   @override
   State<AccountWidget> createState() => _AccountWidgetState();
@@ -34,7 +34,7 @@ class _AccountWidgetState extends State<AccountWidget> {
   }
 
   getUserId() async {
-    final storage = new FlutterSecureStorage();
+    const storage = FlutterSecureStorage();
     final userIdFromStore = await storage.read(key: 'userId');
     if (userIdFromStore != '') {
       setState(() {
@@ -43,8 +43,9 @@ class _AccountWidgetState extends State<AccountWidget> {
     }
   }
 
-  saveInfo(UserInfo userInfo, BuildContext context) async {
+  saveInfo(BuildContext context, UserInfo userInfo) async {
     SaveResult<UserInfo> res = await UserService.instance.saveInfo(userInfo);
+    if (!context.mounted) return;
     if (res.status > 0) {
       setState(() {
         userInfo = res.value;
@@ -64,13 +65,13 @@ class _AccountWidgetState extends State<AccountWidget> {
             color: Theme.of(context)
                 .scaffoldBackgroundColor, //change your color here
           ),
-          title: Text("Profile"),
+          title: const Text("Profile"),
           backgroundColor: Theme.of(context).colorScheme.primary,
           centerTitle: true,
         ),
         body: Column(
           children: [
-            Container(
+            SizedBox(
               width: double.infinity,
               height: 210,
               child: Stack(
@@ -90,9 +91,9 @@ class _AccountWidgetState extends State<AccountWidget> {
                             Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (context) => SettingWidget()));
+                                    builder: (context) => const SettingWidget()));
                           },
-                          icon: Icon(Icons.settings))),
+                          icon: const Icon(Icons.settings))),
                   Positioned(
                     top: 75,
                     left: MediaQuery.of(context).size.width / 3,
@@ -110,7 +111,7 @@ class _AccountWidgetState extends State<AccountWidget> {
               userInfo?.givenname ?? '',
               style: Theme.of(context).textTheme.titleLarge,
             ),
-            Row(
+            const Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Icon(Icons.people),
@@ -120,25 +121,25 @@ class _AccountWidgetState extends State<AccountWidget> {
                 Text("1")
               ],
             ),
-            SizedBox(
+            const SizedBox(
               height: 20,
             ),
             Padding(
-              padding: EdgeInsets.only(left: 10, right: 10),
+              padding: const EdgeInsets.only(left: 10, right: 10),
               child: Column(
                 children: [
                   Card(
-                    color: Color.fromARGB(255, 246, 246, 246),
+                    color: const Color.fromARGB(255, 246, 246, 246),
                     child: Padding(
-                      padding: EdgeInsets.fromLTRB(10, 10, 10, 20),
+                      padding: const EdgeInsets.fromLTRB(10, 10, 10, 20),
                       child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Row(
                               children: [
-                                Icon(Icons.account_box),
-                                Text("Basic Info"),
-                                Spacer(),
+                                const Icon(Icons.account_box),
+                                const Text("Basic Info"),
+                                const Spacer(),
                                 IconButton(
                                     onPressed: () {
                                       Navigator.push(
@@ -150,27 +151,27 @@ class _AccountWidgetState extends State<AccountWidget> {
                                                     saveInfo: saveInfo,
                                                   )));
                                     },
-                                    icon: Icon(Icons.edit))
+                                    icon: const Icon(Icons.edit))
                               ],
                             ),
-                            Divider(),
+                            const Divider(),
                             Text(userInfo?.occupation ?? ''),
                             Text(userInfo?.company ?? '')
                           ]),
                     ),
                   ),
                   Card(
-                    color: Color.fromARGB(255, 246, 246, 246),
+                    color: const Color.fromARGB(255, 246, 246, 246),
                     child: Padding(
-                      padding: EdgeInsets.all(10),
+                      padding: const EdgeInsets.all(10),
                       child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Row(
                               children: [
-                                Icon(Icons.account_box),
-                                Text("Skills"),
-                                Spacer(),
+                                const Icon(Icons.account_box),
+                                const Text("Skills"),
+                                const Spacer(),
                                 IconButton(
                                     onPressed: () {
                                       Navigator.push(
@@ -182,10 +183,10 @@ class _AccountWidgetState extends State<AccountWidget> {
                                                     saveInfo: saveInfo,
                                                   )));
                                     },
-                                    icon: Icon(Icons.edit))
+                                    icon: const Icon(Icons.edit))
                               ],
                             ),
-                            Divider(),
+                            const Divider(),
                             Text(userInfo?.skills
                                     ?.map((e) => e.skill)
                                     .join(', ')

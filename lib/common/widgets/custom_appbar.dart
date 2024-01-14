@@ -4,7 +4,7 @@ AppBar getAppBarWithArrowBack(BuildContext context, String title) {
   return AppBar(
     leading: Builder(
       builder: (context) => IconButton(
-        icon: Icon(Icons.arrow_back),
+        icon: const Icon(Icons.arrow_back),
         onPressed: () => Navigator.pop(context),
       ),
     ),
@@ -27,8 +27,8 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   final String backgroundImage;
   final Widget bottom;
 
-  CustomAppBar({
-    Key? key,
+  const CustomAppBar({
+    super.key,
     required this.height,
     required this.backgroundImage,
     required this.title,
@@ -36,7 +36,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
     required this.firstIcon,
     required this.child,
     required this.bottom,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -51,15 +51,15 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
                   children: <Widget>[
                     ClipPath(
                       clipper: _AppBarProfileClipper(
-                          this.height + (this.childHeight / 2)),
+                          height + (childHeight / 2)),
                       child: Container(
                         width: double.maxFinite,
-                        height: this.height,
+                        height: height,
                         alignment: Alignment.topCenter,
                         child: Image(
-                          image: NetworkImage(this.backgroundImage ?? ''),
+                          image: NetworkImage(backgroundImage),
                           fit: BoxFit.cover,
-                          height: this.height,
+                          height: height,
                           width: MediaQuery.of(context).size.width,
                         ),
                       ),
@@ -77,7 +77,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
                         // Text(
                         //   title,
                         // ),
-                        SizedBox(),
+                        const SizedBox(),
                         // IconButton(
                         //   icon: Icon(
                         //     Icons.settings,
@@ -89,7 +89,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
                     ),
                   ],
                 ),
-                this.bottom,
+                bottom,
               ],
             ),
           );
@@ -99,7 +99,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   }
 
   @override
-  Size get preferredSize => Size.fromHeight(this.height + this.childHeight);
+  Size get preferredSize => Size.fromHeight(height + childHeight);
 }
 
 class _AppBarProfileClipper extends CustomClipper<Path> {

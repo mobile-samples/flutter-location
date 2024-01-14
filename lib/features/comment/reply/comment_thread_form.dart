@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 
 class CommentThreadForm extends StatefulWidget {
-  const CommentThreadForm({Key? key, required this.post}) : super(key: key);
+  const CommentThreadForm({super.key, required this.post});
   final Function post;
   @override
   State<CommentThreadForm> createState() => _CommentThreadFormState();
@@ -14,6 +13,7 @@ class _CommentThreadFormState extends State<CommentThreadForm> {
 
   postHandle(BuildContext context) async {
     final res = await widget.post(review.value.text, anonymous);
+    if (!context.mounted) return;
     if (res > 0) {
       Navigator.pop(context);
     }
@@ -26,7 +26,7 @@ class _CommentThreadFormState extends State<CommentThreadForm> {
       child: SizedBox(
         height: 460,
         child: Padding(
-          padding: EdgeInsets.all(10),
+          padding: const EdgeInsets.all(10),
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
@@ -38,18 +38,18 @@ class _CommentThreadFormState extends State<CommentThreadForm> {
                     onPressed: () {
                       Navigator.pop(context);
                     },
-                    child: Text('Done'),
+                    child: const Text('Done'),
                   ),
                   TextButton(
                     style: Theme.of(context).textButtonTheme.style,
                     onPressed: () async {
                       await postHandle(context);
                     },
-                    child: Text('Post'),
+                    child: const Text('Post'),
                   ),
                 ],
               ),
-              Divider(),
+              const Divider(),
               Card(
                 color: Theme.of(context).colorScheme.background,
                 child: TextField(

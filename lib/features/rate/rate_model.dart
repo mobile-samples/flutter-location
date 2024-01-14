@@ -28,16 +28,16 @@ class RateComment {
 
   factory RateComment.fromJson(Map<String, dynamic> json) => RateComment(
       json['author'],
-      json['authorName'] != null ? json['authorName'] : '',
+      json['authorName'] ?? '',
       json['id'],
       json['time'],
       json['review'],
-      json['disable'] != null ? json['disable'] : false,
+      json['disable'] ?? false,
       json['rate'] != null ? double.parse(json['rate'].toString()) : 0.0,
-      json['rates'] != null ? json['rates'].cast<int>() : null,
+      json['rates']?.cast<int>(),
       json['replyCount'],
       json['usefulCount'],
-      json['anonymous'] != null ? json['anonymous'] : false);
+      json['anonymous'] ?? false);
 }
 
 class RateReply {
@@ -60,13 +60,13 @@ class RateReply {
     author = json['author'];
     comment = json['comment'];
     time = json['time'];
-    authorName = json['authorName'] != null ? json['authorName'] : '';
-    authorURL = json['authorURL'] != null ? json['authorURL'] : '';
-    anonymous = json['anonymous'] == null ? false : json['anonymous'];
+    authorName = json['authorName'] ?? '';
+    authorURL = json['authorURL'] ?? '';
+    anonymous = json['anonymous'] ?? false;
     if (json['histories'] != null) {
       histories = <Histories>[];
       json['histories'].forEach((v) {
-        histories!.add(new Histories.fromJson(v));
+        histories!.add(Histories.fromJson(v));
       });
     }
   }

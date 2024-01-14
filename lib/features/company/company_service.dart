@@ -24,7 +24,7 @@ class CompanyService {
     searchOption += '&limit=20';
     late String baseUrl = HttpHelper.instance.getUrl();
     final response =
-        await http.get(Uri.parse(baseUrl + '/companies/search?$searchOption'));
+        await http.get(Uri.parse('$baseUrl/companies/search?$searchOption'));
 
     if (response.statusCode == 200) {
       dynamic res = jsonDecode(response.body);
@@ -37,7 +37,7 @@ class CompanyService {
 
   Future<Company> getByID(String id) async {
     late String baseUrl = HttpHelper.instance.getUrl();
-    final response = await http.get(Uri.parse(baseUrl + '/companies/$id'));
+    final response = await http.get(Uri.parse('$baseUrl/companies/$id'));
 
     if (response.statusCode == 200) {
       dynamic res = jsonDecode(response.body);

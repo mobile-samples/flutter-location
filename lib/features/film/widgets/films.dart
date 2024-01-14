@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 
 import '../film_model.dart';
 import '../film_service.dart';
-import 'film-detail.dart';
+import 'film_detail.dart';
 import 'film_card.dart';
 
 class FilmListWidget extends StatefulWidget {
-  const FilmListWidget({Key? key}) : super(key: key);
+  const FilmListWidget({super.key});
 
   @override
   State<FilmListWidget> createState() => _FilmListWidgetState();
@@ -16,18 +16,17 @@ class _FilmListWidgetState extends State<FilmListWidget> {
   late List<Film> films;
   late int total;
   bool _loading = true;
-  late TextEditingController _textController;
+  // late TextEditingController _textController;
   @override
   void initState() {
     super.initState();
     load();
-    _textController = TextEditingController(text: '');
+    // _textController = TextEditingController(text: '');
   }
 
   load() async {
     final res = await FilmService.instance.search();
     setState(() {
-      print(res);
       films = res.list;
       total = res.total;
       _loading = false;
@@ -40,7 +39,7 @@ class _FilmListWidgetState extends State<FilmListWidget> {
       return Center(
           child: CircularProgressIndicator(
         backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-        valueColor: new AlwaysStoppedAnimation<Color>(
+        valueColor: AlwaysStoppedAnimation<Color>(
             Theme.of(context).colorScheme.primary),
       ));
     } else {
@@ -52,13 +51,13 @@ class _FilmListWidgetState extends State<FilmListWidget> {
           body: Column(children: [
             // CupertinoSearchTextField(controller: _textController),
             Container(
-              margin: EdgeInsets.all(16.0),
-              child: TextField(
+              margin: const EdgeInsets.all(16.0),
+              child: const TextField(
                 decoration: InputDecoration(hintText: 'Search...'),
               ),
             ),
             Container(
-              margin: EdgeInsets.symmetric(horizontal: 16.0),
+              margin: const EdgeInsets.symmetric(horizontal: 16.0),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
@@ -102,7 +101,7 @@ class _FilmListWidgetState extends State<FilmListWidget> {
             Navigator.push(
                 context,
                 MaterialPageRoute(
-                    builder: (context) => FilmDetail(id: films[index].id)));
+                    builder: (context) => FilmDetail(id: films[index].id ?? '')));
           },
         );
       },
@@ -112,7 +111,7 @@ class _FilmListWidgetState extends State<FilmListWidget> {
   Widget getGridWidget() {
     return GridView.builder(
       gridDelegate:
-          SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2),
+          const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2),
       itemBuilder: (BuildContext context, int index) {
         return FilmCard(
           isList: false,
@@ -121,7 +120,7 @@ class _FilmListWidgetState extends State<FilmListWidget> {
             Navigator.push(
                 context,
                 MaterialPageRoute(
-                    builder: (context) => FilmDetail(id: films[index].id)));
+                    builder: (context) => FilmDetail(id: films[index].id ?? '')));
           },
         );
       },

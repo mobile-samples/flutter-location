@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_user/common/widgets/autocomplete-custom.dart';
+import 'package:flutter_user/common/widgets/autocomplete_custom.dart';
 import 'package:flutter_user/features/account/user_service.dart';
 
 import '../user_model.dart';
 
 class SkillsWidget extends StatefulWidget {
-  const SkillsWidget({Key? key, required this.userInfo, required this.saveInfo})
-      : super(key: key);
+  const SkillsWidget({super.key, required this.userInfo, required this.saveInfo});
   final UserInfo userInfo;
   final Function saveInfo;
   @override
@@ -43,15 +42,16 @@ class _SkillsWidgetState extends State<SkillsWidget> {
     return SafeArea(
         child: Scaffold(
       appBar: AppBar(
-        title: Text('Skills'),
+        title: const Text('Skills'),
       ),
       body: Padding(
-          padding: EdgeInsets.all(16),
+          padding: const EdgeInsets.all(16),
           child: Column(
             children: [
               Expanded(
+                flex: 10,
                 child: AutoCompleteCustom(
-                  selected: widget.userInfo.skills!.length > 0
+                  selected: widget.userInfo.skills!.isNotEmpty
                       ? widget.userInfo.skills!
                           .map((e) => e.skill.toString())
                           .toList()
@@ -59,15 +59,14 @@ class _SkillsWidgetState extends State<SkillsWidget> {
                   loadOptions: loadOptions,
                   callbackFn: getSkillsSelected,
                 ),
-                flex: 10,
               ),
               Expanded(
+                flex: 1,
                 child: ElevatedButton(
                     onPressed: () {
                       saveInfo(context);
                     },
-                    child: Text("Save")),
-                flex: 1,
+                    child: const Text("Save")),
               )
             ],
           )),

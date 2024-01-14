@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_user/common/widgets/circle-background.dart';
+import 'package:flutter_user/common/widgets/circle_background.dart';
 import 'package:flutter_user/common/widgets/dialog.dart';
 import 'package:flutter_user/features/auth/auth_service.dart';
 
-import 'reset-password.dart';
+import 'reset_password.dart';
 
 class ForgotPasswordWidget extends StatefulWidget {
-  const ForgotPasswordWidget({Key? key}) : super(key: key);
+  const ForgotPasswordWidget({super.key});
 
   @override
   State<ForgotPasswordWidget> createState() => _ForgotPasswordWidget();
@@ -18,13 +18,14 @@ class _ForgotPasswordWidget extends State<ForgotPasswordWidget> {
   sendEmail() async {
     final isSend = await AuthService.instance
         .sendEmailForgotPW(contact: contactController.value.text);
+    if (!context.mounted) return;
     if (!isSend) {
       return showDialogWithMsg(context, 'Alert', 'Send email error');
     }
     return Navigator.push(
       context,
       MaterialPageRoute(
-          builder: (context) => ResetPasswordWidget(),
+          builder: (context) => const ResetPasswordWidget(),
           settings: RouteSettings(
             arguments: contactController.value.text,
           )),
@@ -42,36 +43,36 @@ class _ForgotPasswordWidget extends State<ForgotPasswordWidget> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Padding(
-                  padding: EdgeInsets.fromLTRB(30, 0, 30, 0),
+                  padding: const EdgeInsets.fromLTRB(30, 0, 30, 0),
                   child: Column(
                     children: [
                       Text(
                         "Forgot password",
                         style: Theme.of(context).textTheme.titleLarge,
                       ),
-                      SizedBox(width: 0, height: 20),
+                      const SizedBox(width: 0, height: 20),
                       Text(
                         "Please input your contact and we will send the code to your email",
                         style: Theme.of(context).textTheme.titleMedium,
                       ),
-                      SizedBox(width: 0, height: 20),
+                      const SizedBox(width: 0, height: 20),
                       TextField(
                         controller: contactController,
-                        decoration: InputDecoration(
+                        decoration: const InputDecoration(
                           prefixIcon: Icon(Icons.contact_mail),
                           hintText: "Contact",
                           border: InputBorder.none,
                           fillColor: Colors.green,
                         ),
                       ),
-                      SizedBox(width: 0, height: 20),
+                      const SizedBox(width: 0, height: 20),
                       ElevatedButton(
                         onPressed: () {
                           sendEmail();
                         },
                         child: const Text('Send'),
                       ),
-                      SizedBox(width: 0, height: 20),
+                      const SizedBox(width: 0, height: 20),
                       OutlinedButton(
                         onPressed: () {
                           Navigator.pop(

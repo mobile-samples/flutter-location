@@ -1,14 +1,13 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_user/features/location/location_model.dart';
 import 'package:flutter_user/features/location/location_service.dart';
 import "package:collection/collection.dart";
 
-import 'location-card.dart';
-import 'location-detail.dart';
+import 'location_card.dart';
+import 'location_detail.dart';
 
 class LocationListWidget extends StatefulWidget {
-  const LocationListWidget({Key? key}) : super(key: key);
+  const LocationListWidget({super.key});
 
   @override
   State<LocationListWidget> createState() => _LocationListWidgetState();
@@ -44,7 +43,7 @@ class _LocationListWidgetState extends State<LocationListWidget> {
       return Center(
           child: CircularProgressIndicator(
         backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-        valueColor: new AlwaysStoppedAnimation<Color>(
+        valueColor: AlwaysStoppedAnimation<Color>(
             Theme.of(context).colorScheme.primary),
       ));
     } else {
@@ -53,7 +52,7 @@ class _LocationListWidgetState extends State<LocationListWidget> {
         body: SafeArea(
             child: SingleChildScrollView(
           scrollDirection: Axis.vertical,
-          padding: EdgeInsets.fromLTRB(10, 20, 10, 10),
+          padding: const EdgeInsets.fromLTRB(10, 20, 10, 10),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisSize: MainAxisSize.min,
@@ -64,17 +63,17 @@ class _LocationListWidgetState extends State<LocationListWidget> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: <Widget>[
-                    Icon(Icons.menu),
+                    const Icon(Icons.menu),
                     Text("Location",
                         style: Theme.of(context).textTheme.titleLarge!),
-                    Icon(Icons.search),
+                    const Icon(Icons.search),
                   ],
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 20,
               ),
-              Container(
+              SizedBox(
                 height: 200,
                 child: PageView.builder(
                   controller:
@@ -88,7 +87,7 @@ class _LocationListWidgetState extends State<LocationListWidget> {
                           Navigator.of(context).push(
                             MaterialPageRoute(builder: (BuildContext context) {
                               return LocationDetail(
-                                locationId: location.id,
+                                locationId: location.id ?? '',
                               );
                             }),
                           );
@@ -142,7 +141,7 @@ class _LocationListWidgetState extends State<LocationListWidget> {
                 physics: const NeverScrollableScrollPhysics(),
                 shrinkWrap: true,
                 itemCount: list.length,
-                padding: EdgeInsets.only(top: 10),
+                padding: const EdgeInsets.only(top: 10),
                 itemBuilder: (context, indexP) {
                   return Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -156,16 +155,16 @@ class _LocationListWidgetState extends State<LocationListWidget> {
                               style: Theme.of(context).textTheme.headlineMedium,
                             ),
                           ),
-                          Icon(Icons.chevron_right),
+                          const Icon(Icons.chevron_right),
                         ],
                       ),
-                      Container(
+                      SizedBox(
                         height: 175,
                         child: ListView.builder(
                             scrollDirection: Axis.horizontal,
                             shrinkWrap: true,
                             itemCount: list[indexP].value.length,
-                            padding: EdgeInsets.only(top: 5, bottom: 5),
+                            padding: const EdgeInsets.only(top: 5, bottom: 5),
                             itemBuilder: (context, indexC) {
                               return GestureDetector(
                                   onTap: () {
@@ -176,7 +175,7 @@ class _LocationListWidgetState extends State<LocationListWidget> {
                                                 LocationDetail(
                                                     locationId: list[indexP]
                                                         .value[indexC]
-                                                        .id)));
+                                                        .id ?? '')));
                                   },
                                   child: LocationCard(
                                     location: list[indexP].value[indexC],

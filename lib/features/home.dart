@@ -1,17 +1,16 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:flutter_user/features/auth/widgets/login.dart';
 import 'package:flutter_user/features/film/widgets/films.dart';
 import 'package:flutter_user/features/job/widgets/job_list.dart';
-import 'package:flutter_user/router/router_constants.dart';
 
-import 'account/widgets/account-list.dart';
+import 'account/widgets/account_list.dart';
 import 'account/widgets/account.dart';
-import 'auth/auth_service.dart';
-import 'location/widgets/location-list.dart';
+import 'location/widgets/location_list.dart';
 
 class HomeWidget extends StatefulWidget {
-  const HomeWidget({Key? key}) : super(key: key);
+  const HomeWidget({super.key});
 
   @override
   State<HomeWidget> createState() => _HomeWidgetState();
@@ -20,25 +19,32 @@ class HomeWidget extends StatefulWidget {
 class _HomeWidgetState extends State<HomeWidget> {
   late String? userId = "";
 
+  gotoLogin() {
+    Navigator.push(
+      context, 
+      MaterialPageRoute(builder: (context) => const LoginWidget()) 
+    );
+  }
+
   @override
   void initState() {
     super.initState();
-    final storage = new FlutterSecureStorage();
+    const storage = FlutterSecureStorage();
     storage
-        .read(key: 'userId')
-        .then((data) => {
-              if (data != '')
-                {
-                  setState(() {
-                    userId = data;
-                  })
-                }
-              else
-                {Navigator.pushReplacementNamed(context, loginRoute)}
-            })
-        .catchError((e) {
-      Navigator.pushReplacementNamed(context, loginRoute);
-    });
+      .read(key: 'userId')
+      .then((data) => {
+        if (data != ''){
+          setState(() {
+            userId = data;
+          })
+        } else { 
+          gotoLogin()
+        }
+      })
+      .catchError((e) {
+        return gotoLogin();
+      }
+    );
   }
 
   @override
@@ -73,16 +79,16 @@ class _HomeWidgetState extends State<HomeWidget> {
         return CupertinoTabView(
           builder: (BuildContext context) {
             if (index == 0) {
-              return LocationListWidget();
+              return const LocationListWidget();
             }
             if (index == 1) {
-              return FilmListWidget();
+              return const FilmListWidget();
             }
             if (index == 2) {
-              return AccountListWidget();
+              return const AccountListWidget();
             }
             if (index == 3) {
-              return JobListWidget();
+              return const JobListWidget();
             }
             if (index == 4 && userId != '') {
               return AccountWidget(
@@ -92,7 +98,7 @@ class _HomeWidgetState extends State<HomeWidget> {
             return Center(
               child: CircularProgressIndicator(
                 backgroundColor: Theme.of(context).colorScheme.background,
-                valueColor: new AlwaysStoppedAnimation<Color>(
+                valueColor: AlwaysStoppedAnimation<Color>(
                     Theme.of(context).colorScheme.primary),
               ),
             );

@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_user/common/widgets/dialog.dart';
@@ -6,7 +5,7 @@ import 'package:flutter_user/common/widgets/dialog.dart';
 import '../company_service.dart';
 
 class ReviewForm extends StatefulWidget {
-  const ReviewForm({Key? key, required this.postRate}) : super(key: key);
+  const ReviewForm({super.key, required this.postRate});
   final Function postRate;
 
   @override
@@ -32,6 +31,7 @@ class _ReviewFormState extends State<ReviewForm> {
     final date = DateTime.now().toIso8601String();
     final res =
         await widget.postRate(rates, reviewText.value.text, date, false);
+    if (!context.mounted) return;
     if (res > 0) {
       Navigator.pop(context);
     }
@@ -42,7 +42,7 @@ class _ReviewFormState extends State<ReviewForm> {
     return SizedBox(
       height: 700,
       child: Padding(
-        padding: EdgeInsets.all(10),
+        padding: const EdgeInsets.all(10),
         child: Column(
           // mainAxisSize: MainAxisSize.min,
           children: [
@@ -53,17 +53,17 @@ class _ReviewFormState extends State<ReviewForm> {
                   onPressed: () {
                     Navigator.pop(context);
                   },
-                  child: Text('Done'),
+                  child: const Text('Done'),
                 ),
                 TextButton(
                   onPressed: () async {
                     await postRateHandle(context);
                   },
-                  child: Text('Post'),
+                  child: const Text('Post'),
                 ),
               ],
             ),
-            Divider(),
+            const Divider(),
             for (var i = 0; i < CompanyService.categories.length; i++) ...[
               Text(CompanyService.categories[i]),
               RatingBar.builder(
@@ -72,7 +72,7 @@ class _ReviewFormState extends State<ReviewForm> {
                 direction: Axis.horizontal,
                 itemCount: 5,
                 itemSize: 30,
-                itemPadding: EdgeInsets.symmetric(horizontal: 4.0),
+                itemPadding: const EdgeInsets.symmetric(horizontal: 4.0),
                 itemBuilder: (context, _) => Icon(
                   Icons.star,
                   color: Theme.of(context).colorScheme.tertiary,
@@ -83,8 +83,8 @@ class _ReviewFormState extends State<ReviewForm> {
                   });
                 },
               ),
-              SizedBox(width: 0, height: 5),
-              Divider(),
+              const SizedBox(width: 0, height: 5),
+              const Divider(),
             ],
             Card(
               color: Theme.of(context).colorScheme.background,

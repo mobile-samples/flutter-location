@@ -9,14 +9,13 @@ import '../rate_model.dart';
 
 class RateReplies extends StatefulWidget {
   const RateReplies(
-      {Key? key,
+      {super.key,
       required this.load,
       required this.id,
       required this.authorOfRate,
-      required this.rateCommentClient})
-      : super(key: key);
-  final id;
-  final authorOfRate;
+      required this.rateCommentClient});
+  final String id;
+  final String authorOfRate;
   final Function load;
   final RateCommentService rateCommentClient;
 
@@ -38,11 +37,9 @@ class _RateRepliesState extends State<RateReplies> {
   }
 
   getReply() async {
-    print(widget.authorOfRate);
-    print(widget.id);
     final res = await widget.rateCommentClient
         .getComments(widget.id, widget.authorOfRate);
-    if (res.length > 0) {
+    if (res.isNotEmpty) {
       setState(() {
         list = res;
       });
@@ -70,7 +67,7 @@ class _RateRepliesState extends State<RateReplies> {
   }
 
   updateComment(String commentId, String comment, bool anonymous) async {
-    final storage = new FlutterSecureStorage();
+    const storage = FlutterSecureStorage();
     final userId = await storage.read(key: 'userId');
     final res =
         await widget.rateCommentClient.update(commentId, comment, userId!);
@@ -83,7 +80,7 @@ class _RateRepliesState extends State<RateReplies> {
     showModalBottomSheet(
         context: context,
         isScrollControlled: true,
-        shape: RoundedRectangleBorder(
+        shape: const RoundedRectangleBorder(
             borderRadius: BorderRadius.vertical(top: Radius.circular(20.0))),
         builder: (BuildContext buildContext) {
           return Positioned(
@@ -103,7 +100,7 @@ class _RateRepliesState extends State<RateReplies> {
   }
 
   delete<double>(BuildContext context, String commentId) async {
-    final storage = new FlutterSecureStorage();
+    const storage = FlutterSecureStorage();
     final userId = await storage.read(key: 'userId');
     final res =
         await widget.rateCommentClient.delete(widget.id, commentId, userId!);
@@ -118,7 +115,7 @@ class _RateRepliesState extends State<RateReplies> {
     showModalBottomSheet(
         context: context,
         isScrollControlled: true,
-        shape: RoundedRectangleBorder(
+        shape: const RoundedRectangleBorder(
             borderRadius: BorderRadius.vertical(top: Radius.circular(20.0))),
         builder: (BuildContext buildContext) {
           return ListHistories(
@@ -133,7 +130,7 @@ class _RateRepliesState extends State<RateReplies> {
       return Center(
         child: CircularProgressIndicator(
           backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-          valueColor: new AlwaysStoppedAnimation<Color>(
+          valueColor: AlwaysStoppedAnimation<Color>(
               Theme.of(context).colorScheme.primary),
         ),
       );
@@ -141,7 +138,7 @@ class _RateRepliesState extends State<RateReplies> {
     return SafeArea(
         child: Padding(
       padding: EdgeInsets.only(
-          top: MediaQueryData.fromWindow(WidgetsBinding.instance!.window)
+          top: MediaQueryData.fromView(View.of(context))
               .padding
               .top),
       child: Scaffold(
@@ -151,7 +148,7 @@ class _RateRepliesState extends State<RateReplies> {
                   .colorScheme
                   .background, //change your color here
             ),
-            title: Text('Reply'),
+            title: const Text('Reply'),
             backgroundColor: Theme.of(context).colorScheme.primary,
             centerTitle: true,
           ),
@@ -171,11 +168,11 @@ class _RateRepliesState extends State<RateReplies> {
                           borderRadius: BorderRadius.circular(10),
                         ),
                         child: Padding(
-                          padding: EdgeInsets.all(10),
+                          padding: const EdgeInsets.all(10),
                           child: Column(
                             children: [
                               Padding(
-                                padding: EdgeInsets.only(left: 20),
+                                padding: const EdgeInsets.only(left: 20),
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
@@ -189,16 +186,16 @@ class _RateRepliesState extends State<RateReplies> {
                                               : 'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png'),
                                         ),
                                         Padding(
-                                          padding: EdgeInsets.only(left: 20),
+                                          padding: const EdgeInsets.only(left: 20),
                                           child: Text(
                                             !(item.anonymous ?? false)
                                                 ? item.authorName ?? ''
                                                 : 'Anonymous',
-                                            style: TextStyle(
+                                            style: const TextStyle(
                                                 fontWeight: FontWeight.w500),
                                           ),
                                         ),
-                                        Spacer(),
+                                        const Spacer(),
                                         Text(
                                           dt.DateUtils.formatDate(
                                               item.time ?? ""),
@@ -207,12 +204,12 @@ class _RateRepliesState extends State<RateReplies> {
                                               .labelSmall,
                                         ),
                                         IconButton(
-                                          icon: Icon(Icons.more_vert),
+                                          icon: const Icon(Icons.more_vert),
                                           onPressed: () {
                                             showModalBottomSheet(
                                                 context: context,
                                                 isScrollControlled: true,
-                                                shape: RoundedRectangleBorder(
+                                                shape: const RoundedRectangleBorder(
                                                     borderRadius:
                                                         BorderRadius.vertical(
                                                             top:
@@ -244,7 +241,7 @@ class _RateRepliesState extends State<RateReplies> {
                                       ],
                                     ),
                                     Padding(
-                                      padding: EdgeInsets.all(5),
+                                      padding: const EdgeInsets.all(5),
                                       child: Text(item.comment ?? ''),
                                     )
                                   ],
@@ -262,10 +259,10 @@ class _RateRepliesState extends State<RateReplies> {
                     child: Column(
                       children: [
                         Padding(
-                          padding: EdgeInsets.all(12),
+                          padding: const EdgeInsets.all(12),
                           child: TextField(
                             maxLines: 1,
-                            scrollPhysics: BouncingScrollPhysics(),
+                            scrollPhysics: const BouncingScrollPhysics(),
                             decoration: InputDecoration(
                               labelText: 'Comment',
                               hintText: 'Enter your reply comment',
@@ -280,7 +277,7 @@ class _RateRepliesState extends State<RateReplies> {
                             mainAxisAlignment: MainAxisAlignment.start,
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
-                              Text('Anonymous'),
+                              const Text('Anonymous'),
                               Switch(
                                 value: anonymous,
                                 activeColor:
@@ -291,7 +288,7 @@ class _RateRepliesState extends State<RateReplies> {
                                   });
                                 },
                               ),
-                              Spacer(),
+                              const Spacer(),
                               IconButton(
                                 icon: const Icon(Icons.send),
                                 style: Theme.of(context).textButtonTheme.style,

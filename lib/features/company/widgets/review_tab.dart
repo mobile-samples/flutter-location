@@ -7,20 +7,20 @@ import 'package:flutter_user/common/models/search.dart';
 import 'package:flutter_user/common/widgets/hyberlink.dart';
 import 'package:flutter_user/features/company/company_model.dart';
 import 'package:flutter_user/features/company/company_service.dart';
-import 'package:flutter_user/features/location/widgets/location-form-reply.dart';
+import 'package:flutter_user/features/location/widgets/location_form_reply.dart';
 import 'package:flutter_user/features/rate/rate_model.dart';
 import 'package:flutter_user/utils/http_helper.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter_user/utils/date_utils.dart' as dt;
 
 import '../../rate/rate_service.dart';
-import 'review-form.dart';
+import 'review_form.dart';
 
 class ReviewTabWidget extends StatefulWidget {
-  ReviewTabWidget({required this.companyID, this.companyInfo});
+  const ReviewTabWidget({super.key, required this.companyID, this.companyInfo});
 
-  String companyID;
-  CompanyInfo? companyInfo;
+  final String companyID;
+  final CompanyInfo? companyInfo;
 
   @override
   State<ReviewTabWidget> createState() => _ReviewTabWidgetState();
@@ -51,16 +51,12 @@ class _ReviewTabWidgetState extends State<ReviewTabWidget> {
     String time,
     bool anonymous,
   ) async {
-    final storage = new FlutterSecureStorage();
+    const storage = FlutterSecureStorage();
     late String baseUrl = HttpHelper.instance.getUrl();
     final userId = await storage.read(key: 'userId');
     final headers = await HttpHelper.instance.buildHeader();
     final response = await http.post(
-      Uri.parse(baseUrl +
-          '/companies/rates/' +
-          widget.companyID +
-          '/' +
-          (userId ?? '')),
+      Uri.parse('$baseUrl/companies/rates/${widget.companyID}/${userId ?? ''}'),
       headers: headers,
       body: jsonEncode(<String, dynamic>{
         'rates': rates,
@@ -89,10 +85,16 @@ class _ReviewTabWidgetState extends State<ReviewTabWidget> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         for (var i = 0; i < categories.length; i++) ...[
-          SizedBox(width: 0, height: 5),
+          const SizedBox(width: 0, height: 5),
           DecoratedBox(
+            decoration: const BoxDecoration(
+              borderRadius: BorderRadius.all(
+                Radius.circular(10.0),
+              ),
+              color: Colors.white,
+            ),
             child: Padding(
-              padding: EdgeInsets.fromLTRB(5.0, 0, 5.0, 0),
+              padding: const EdgeInsets.fromLTRB(5.0, 0, 5.0, 0),
               child: Wrap(
                 crossAxisAlignment: WrapCrossAlignment.center,
                 children: [
@@ -102,12 +104,6 @@ class _ReviewTabWidgetState extends State<ReviewTabWidget> {
                   Text(categories[i]),
                 ],
               ),
-            ),
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.all(
-                Radius.circular(10.0),
-              ),
-              color: Colors.white,
             ),
           ),
         ]
@@ -121,23 +117,23 @@ class _ReviewTabWidgetState extends State<ReviewTabWidget> {
       return Center(
         child: CircularProgressIndicator(
           backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-          valueColor: new AlwaysStoppedAnimation<Color>(
+          valueColor: AlwaysStoppedAnimation<Color>(
               Theme.of(context).colorScheme.primary),
         ),
       );
     }
     return Column(
       children: [
-        SizedBox(width: 0, height: 10),
+        const SizedBox(width: 0, height: 10),
         Text(widget.companyInfo?.rate?.toStringAsFixed(1) ?? "0.0",
             style: Theme.of(context).textTheme.titleLarge),
-        SizedBox(width: 0, height: 10),
+        const SizedBox(width: 0, height: 10),
         RatingBar.builder(
           initialRating: widget.companyInfo?.rate ?? 0.0,
           minRating: 1,
           direction: Axis.horizontal,
           itemSize: 16,
-          itemPadding: EdgeInsets.symmetric(horizontal: 4.0),
+          itemPadding: const EdgeInsets.symmetric(horizontal: 4.0),
           itemBuilder: (context, _) => Icon(
             Icons.star,
             color: Theme.of(context).colorScheme.tertiary,
@@ -145,7 +141,7 @@ class _ReviewTabWidgetState extends State<ReviewTabWidget> {
           onRatingUpdate: (rating) {},
         ),
         Padding(
-          padding: EdgeInsets.symmetric(horizontal: 5),
+          padding: const EdgeInsets.symmetric(horizontal: 5),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
@@ -155,7 +151,7 @@ class _ReviewTabWidgetState extends State<ReviewTabWidget> {
                   showModalBottomSheet(
                     context: context,
                     isScrollControlled: true,
-                    shape: RoundedRectangleBorder(
+                    shape: const RoundedRectangleBorder(
                       borderRadius:
                           BorderRadius.vertical(top: Radius.circular(20.0)),
                     ),
@@ -164,7 +160,7 @@ class _ReviewTabWidgetState extends State<ReviewTabWidget> {
                     },
                   );
                 },
-                child: Text('Review'),
+                child: const Text('Review'),
               )
             ],
           ),
@@ -172,7 +168,7 @@ class _ReviewTabWidgetState extends State<ReviewTabWidget> {
         ListView.builder(
           shrinkWrap: true,
           itemCount: rateRes.total,
-          physics: NeverScrollableScrollPhysics(),
+          physics: const NeverScrollableScrollPhysics(),
           itemBuilder: (context, index) {
             return Card(
               child: Row(
@@ -186,7 +182,7 @@ class _ReviewTabWidgetState extends State<ReviewTabWidget> {
                             double.parse(rateRes.list[index].rate.toString()),
                         direction: Axis.horizontal,
                         itemSize: 16,
-                        itemPadding: EdgeInsets.symmetric(horizontal: 4.0),
+                        itemPadding: const EdgeInsets.symmetric(horizontal: 4.0),
                         itemBuilder: (context, _) => Icon(
                           Icons.star,
                           color: Theme.of(context).colorScheme.tertiary,
@@ -195,7 +191,7 @@ class _ReviewTabWidgetState extends State<ReviewTabWidget> {
                       ),
                     ],
                   ),
-                  SizedBox(width: 10, height: 0),
+                  const SizedBox(width: 10, height: 0),
                   Expanded(
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -208,24 +204,24 @@ class _ReviewTabWidgetState extends State<ReviewTabWidget> {
                                     ? 'Anonymous'
                                     : rateRes.list[index].authorName.toString(),
                                 style: Theme.of(context).textTheme.titleMedium),
-                            SizedBox(width: 0, height: 5),
+                            const SizedBox(width: 0, height: 5),
                             Text(
                                 dt.DateUtils.formatDate(
                                     rateRes.list[index].ratetime.toString()),
                                 style: Theme.of(context).textTheme.labelMedium),
-                            SizedBox(width: 0, height: 5),
+                            const SizedBox(width: 0, height: 5),
                             Text(rateRes.list[index].review.toString(),
                                 style: Theme.of(context).textTheme.bodyMedium),
-                            SizedBox(width: 0, height: 5),
+                            const SizedBox(width: 0, height: 5),
                             Text("Ratings by category",
                                 style: Theme.of(context).textTheme.bodyMedium),
                             getCategoriesWidgets(CompanyService.categories,
                                 rateRes.list[index].rates),
                           ],
                         ),
-                        Divider(),
+                        const Divider(),
                         Padding(
-                          padding: EdgeInsets.fromLTRB(0, 0, 5, 0),
+                          padding: const EdgeInsets.fromLTRB(0, 0, 5, 0),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
@@ -254,7 +250,7 @@ class _ReviewTabWidgetState extends State<ReviewTabWidget> {
                                 showModalBottomSheet(
                                   context: context,
                                   isScrollControlled: true,
-                                  shape: RoundedRectangleBorder(
+                                  shape: const RoundedRectangleBorder(
                                     borderRadius: BorderRadius.vertical(
                                       top: Radius.circular(20.0),
                                     ),
@@ -263,7 +259,7 @@ class _ReviewTabWidgetState extends State<ReviewTabWidget> {
                                     return ReplyForm(
                                       serviceName: 'companies',
                                       locationId: widget.companyID,
-                                      authorOfRate: rateRes.list[index].author,
+                                      authorOfRate: rateRes.list[index].author ?? '',
                                     );
                                   },
                                 );

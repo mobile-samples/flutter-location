@@ -10,14 +10,14 @@ class AuthService {
 
   static final AuthService instance = AuthService._instantiate();
 
-  final storage = new FlutterSecureStorage();
+  final storage = const FlutterSecureStorage();
 
   Future<AuthResponse> authenticate(
       {required String username, required String password}) async {
     late String baseUrl = HttpHelper.instance.getUrl();
     return http
         .post(
-      Uri.parse(baseUrl + '/authenticate'),
+      Uri.parse('$baseUrl/authenticate'),
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
       },
@@ -41,7 +41,7 @@ class AuthService {
       await storage.deleteAll();
       return true;
     } catch (e) {
-      throw (e);
+      rethrow;
     }
   }
 
@@ -64,7 +64,7 @@ class AuthService {
       required String currentPassword}) async {
     late String baseUrl = HttpHelper.instance.getUrl();
     final res = await http.post(
-      Uri.parse(baseUrl + '/password/change'),
+      Uri.parse('$baseUrl/password/change'),
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
       },
@@ -89,7 +89,7 @@ class AuthService {
   }) async {
     late String baseUrl = HttpHelper.instance.getUrl();
     final res = await http.post(
-      Uri.parse(baseUrl + '/signup/signup'),
+      Uri.parse('$baseUrl/signup/signup'),
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
       },
@@ -112,7 +112,7 @@ class AuthService {
   Future<bool> sendEmailForgotPW({required String contact}) async {
     late String baseUrl = HttpHelper.instance.getUrl();
     final res = await http.post(
-      Uri.parse(baseUrl + '/password/forgot'),
+      Uri.parse('$baseUrl/password/forgot'),
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
       },
@@ -137,7 +137,7 @@ class AuthService {
   }) async {
     late String baseUrl = HttpHelper.instance.getUrl();
     final res = await http.post(
-      Uri.parse(baseUrl + '/password/reset'),
+      Uri.parse('$baseUrl/password/reset'),
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
       },

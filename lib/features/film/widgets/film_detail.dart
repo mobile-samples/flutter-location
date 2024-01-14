@@ -15,8 +15,8 @@ import '../film_model.dart';
 import '../film_service.dart';
 
 class FilmDetail extends StatefulWidget {
-  const FilmDetail({Key? key, required this.id}) : super(key: key);
-  final id;
+  const FilmDetail({super.key, required this.id});
+  final String id;
 
   @override
   State<FilmDetail> createState() => _FilmDetailState();
@@ -60,7 +60,7 @@ class _FilmDetailState extends State<FilmDetail> {
       return Center(
         child: CircularProgressIndicator(
           backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-          valueColor: new AlwaysStoppedAnimation<Color>(
+          valueColor: AlwaysStoppedAnimation<Color>(
               Theme.of(context).colorScheme.primary),
         ),
       );
@@ -72,7 +72,7 @@ class _FilmDetailState extends State<FilmDetail> {
             color: Theme.of(context)
                 .scaffoldBackgroundColor, //change your color here
           ),
-          title: Text("Film"),
+          title: const Text("Film"),
           backgroundColor: Theme.of(context).colorScheme.primary,
           centerTitle: true,
         ),
@@ -86,11 +86,11 @@ class _FilmDetailState extends State<FilmDetail> {
                 children: [
                   ClipPath(
                     clipper: NewClipper(),
-                    child: Container(
+                    child: SizedBox(
                       width: 500,
                       height: 300,
                       child: Image(
-                        image: NetworkImage(
+                        image: const NetworkImage(
                           'https://aestheticmedicalpractitioner.com.au/wp-content/uploads/2021/06/no-image.jpg',
                         ),
                         fit: BoxFit.cover,
@@ -118,7 +118,7 @@ class _FilmDetailState extends State<FilmDetail> {
                   ),
                 ],
               ),
-              Divider(),
+              const Divider(),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
@@ -126,19 +126,19 @@ class _FilmDetailState extends State<FilmDetail> {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       Container(
-                        decoration: BoxDecoration(
+                        decoration: const BoxDecoration(
                           color: Colors.red,
                           shape: BoxShape.circle,
                         ),
                         child: IconButton(
-                          icon: Icon(Icons.play_arrow),
+                          icon: const Icon(Icons.play_arrow),
                           color: Colors.white,
                           onPressed: () {
                             // Add your onPressed logic here
                           },
                         ),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 10,
                       ),
                       Text(film.title ?? '',
@@ -161,21 +161,21 @@ class _FilmDetailState extends State<FilmDetail> {
                   ),
                 ],
               ),
-              Divider(),
-              if (film.description!.length > 0)
+              const Divider(),
+              if (film.description!.isNotEmpty)
                 SubDescTitle(
                     title: 'Overview', content: film.description ?? ''),
-              if (film.casts!.length > 0)
+              if (film.casts!.isNotEmpty)
                 SubDescTitle(
                   title: 'Casting',
                   content: (film.casts ?? []).join(",").toString(),
                 ),
-              if (film.directors!.length > 0)
+              if (film.directors!.isNotEmpty)
                 SubDescTitle(
                   title: 'Director',
                   content: (film.directors ?? []).join(",").toString(),
                 ),
-              if (film.productions!.length > 0)
+              if (film.productions!.isNotEmpty)
                 SubDescTitle(
                   title: 'Productions',
                   content: (film.productions ?? []).join(",").toString(),
@@ -228,15 +228,12 @@ class NewClipper extends CustomClipper<Path> {
 }
 
 class CustomChip extends StatefulWidget {
-  List<String> options = [];
+  final List<String> options;
 
-  CustomChip({
-    Key? key,
-    required this.options,
-  }) : super(key: key);
+  const CustomChip({super.key, required this.options});
 
   @override
-  _CustomChipState createState() => _CustomChipState();
+  State<CustomChip> createState() => _CustomChipState();
 }
 
 class _CustomChipState extends State<CustomChip> {
@@ -245,17 +242,18 @@ class _CustomChipState extends State<CustomChip> {
     super.initState();
   }
 
+  @override
   Widget build(BuildContext context) {
     return Wrap(
       children: List<Widget>.generate(
         widget.options.length,
         (int index) {
           return Padding(
-              padding: EdgeInsets.all(4.0),
+              padding: const EdgeInsets.all(4.0),
               child: ChoiceChip(
                 label: Text(
                   widget.options[index],
-                  style: TextStyle(
+                  style: const TextStyle(
                     color: Colors.black,
                   ),
                 ),
@@ -263,7 +261,7 @@ class _CustomChipState extends State<CustomChip> {
                 selectedColor: Colors.white,
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(20),
-                  side: BorderSide(
+                  side: const BorderSide(
                     color: Colors.black,
                     width: 1,
                   ),
@@ -277,15 +275,15 @@ class _CustomChipState extends State<CustomChip> {
 }
 
 class SubDescTitle extends StatelessWidget {
-  const SubDescTitle({Key? key, required this.title, required this.content})
-      : super(key: key);
+  const SubDescTitle({super.key, required this.title, required this.content});
 
   final String title;
   final String content;
 
+  @override
   Widget build(BuildContext context) {
     return Padding(
-        padding: EdgeInsets.all(20.0),
+        padding: const EdgeInsets.all(20.0),
         child: Column(
           children: [
             Column(children: [
@@ -293,11 +291,11 @@ class SubDescTitle extends StatelessWidget {
                 title,
                 style: Theme.of(context).textTheme.titleSmall,
               ),
-              SizedBox(
+              const SizedBox(
                 height: 10,
               ),
               Text(
-                content ?? '',
+                content,
                 style: Theme.of(context).textTheme.bodySmall,
               ),
             ]),

@@ -12,7 +12,7 @@ import 'job_card.dart';
 import 'job_detail.dart';
 
 class JobListWidget extends StatefulWidget {
-  const JobListWidget({Key? key}) : super(key: key);
+  const JobListWidget({super.key});
 
   @override
   State<JobListWidget> createState() => _JobListWidgetState();
@@ -28,7 +28,7 @@ class _JobListWidgetState extends SearchState<JobListWidget, Job, JobFilter> {
   }
 
   @override
-  Client<Job, String, ResultInfo<Job>, JobFilter> getService() {
+  Client<Job, String, JobFilter> getService() {
     return JobService.instance;
   }
 
@@ -40,11 +40,7 @@ class _JobListWidgetState extends SearchState<JobListWidget, Job, JobFilter> {
   }
 
   gotoDetail(String id) {
-    Navigator.push(
-        context, MaterialPageRoute(builder: (context) => JobDetail(id: id)));
-
-    // Cannot use Navigator.pushNamed in a ListView.builder because they are not same context
-    // Navigator.pushNamed(context, jobDetail, arguments: id);
+    Navigator.push(context, MaterialPageRoute(builder: (context) => JobDetail(id: id)));
   }
 
   @override

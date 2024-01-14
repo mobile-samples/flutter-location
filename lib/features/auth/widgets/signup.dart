@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_user/common/widgets/circle-background.dart';
+import 'package:flutter_user/common/widgets/circle_background.dart';
 import 'package:flutter_user/common/widgets/dialog.dart';
 import 'package:flutter_user/features/auth/auth_model.dart';
 
@@ -7,7 +7,7 @@ import '../auth_service.dart';
 import 'login.dart';
 
 class SignupWidget extends StatefulWidget {
-  const SignupWidget({Key? key}) : super(key: key);
+  const SignupWidget({super.key});
 
   @override
   State<SignupWidget> createState() => _SignupWidgetState();
@@ -35,6 +35,8 @@ class _SignupWidgetState extends State<SignupWidget> {
       lastName: lastName,
     );
 
+    if (!mounted) return;
+    
     if (authRes.status == 1) {
       return Navigator.push(
         context,
@@ -44,10 +46,10 @@ class _SignupWidgetState extends State<SignupWidget> {
 
     String msg = '';
     authRes.errors?.forEach((err) {
-      msg += err.field + " " + err.code + '\n';
+      msg += '${err.field} ${err.code} \n';
     });
 
-    return showDialogWithMsg(context, 'Alert', 'Signup failed\n' + msg);
+    return showDialogWithMsg(context, 'Alert', 'Signup failed\n$msg');
   }
 
   @override
@@ -61,7 +63,7 @@ class _SignupWidgetState extends State<SignupWidget> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Padding(
-                  padding: EdgeInsets.fromLTRB(30, 0, 30, 0),
+                  padding: const EdgeInsets.fromLTRB(30, 0, 30, 0),
                   child: Column(
                     children: [
                       Text(
@@ -70,7 +72,7 @@ class _SignupWidgetState extends State<SignupWidget> {
                       ),
                       TextField(
                         controller: userNameController,
-                        decoration: InputDecoration(
+                        decoration: const InputDecoration(
                           prefixIcon: Icon(Icons.account_box),
                           hintText: "Username",
                           border: InputBorder.none,
@@ -82,7 +84,7 @@ class _SignupWidgetState extends State<SignupWidget> {
                         obscureText: true,
                         enableSuggestions: false,
                         autocorrect: false,
-                        decoration: InputDecoration(
+                        decoration: const InputDecoration(
                           prefixIcon: Icon(Icons.password),
                           hintText: "Password",
                           border: InputBorder.none,
@@ -91,7 +93,7 @@ class _SignupWidgetState extends State<SignupWidget> {
                       ),
                       TextField(
                         controller: contactController,
-                        decoration: InputDecoration(
+                        decoration: const InputDecoration(
                           prefixIcon: Icon(Icons.contact_mail),
                           hintText: "Contact",
                           border: InputBorder.none,
@@ -100,7 +102,7 @@ class _SignupWidgetState extends State<SignupWidget> {
                       ),
                       TextField(
                         controller: firstnameController,
-                        decoration: InputDecoration(
+                        decoration: const InputDecoration(
                           prefixIcon: Icon(Icons.person),
                           hintText: "First name",
                           border: InputBorder.none,
@@ -109,21 +111,21 @@ class _SignupWidgetState extends State<SignupWidget> {
                       ),
                       TextField(
                         controller: lastnameController,
-                        decoration: InputDecoration(
+                        decoration: const InputDecoration(
                           prefixIcon: Icon(Icons.person),
                           hintText: "Last name",
                           border: InputBorder.none,
                           fillColor: Colors.green,
                         ),
                       ),
-                      SizedBox(width: 0, height: 20),
+                      const SizedBox(width: 0, height: 20),
                       ElevatedButton(
                         onPressed: () {
                           handleSignup();
                         },
                         child: const Text('Sign up'),
                       ),
-                      SizedBox(width: 0, height: 20),
+                      const SizedBox(width: 0, height: 20),
                       OutlinedButton(
                         onPressed: () {
                           Navigator.pop(

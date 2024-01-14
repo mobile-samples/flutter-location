@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_user/common/widgets/circle-background.dart';
+import 'package:flutter_user/common/widgets/circle_background.dart';
 import 'package:flutter_user/common/widgets/dialog.dart';
 
 import '../auth_service.dart';
 import 'login.dart';
 
 class ChangePasswordWidget extends StatefulWidget {
-  const ChangePasswordWidget({Key? key}) : super(key: key);
+  const ChangePasswordWidget({super.key});
 
   @override
   State<ChangePasswordWidget> createState() => _ChangePasswordWidgetState();
@@ -28,7 +28,7 @@ class _ChangePasswordWidgetState extends State<ChangePasswordWidget> {
         username: usernameController.value.text,
         password: newPasswordController.value.text,
         currentPassword: currentPasswordController.value.text);
-
+    if (!mounted) return;
     if (resBody == 1) {
       return Navigator.push(
         context,
@@ -52,17 +52,17 @@ class _ChangePasswordWidgetState extends State<ChangePasswordWidget> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Padding(
-                  padding: EdgeInsets.fromLTRB(30, 0, 30, 0),
+                  padding: const EdgeInsets.fromLTRB(30, 0, 30, 0),
                   child: Column(
                     children: [
                       Text(
                         "Change password",
                         style: Theme.of(context).textTheme.titleLarge,
                       ),
-                      SizedBox(width: 0, height: 20),
+                      const SizedBox(width: 0, height: 20),
                       TextField(
                         controller: usernameController,
-                        decoration: InputDecoration(
+                        decoration: const InputDecoration(
                           prefixIcon: Icon(Icons.account_box),
                           hintText: "Username",
                           border: InputBorder.none,
@@ -74,7 +74,7 @@ class _ChangePasswordWidgetState extends State<ChangePasswordWidget> {
                         obscureText: true,
                         enableSuggestions: false,
                         autocorrect: false,
-                        decoration: InputDecoration(
+                        decoration: const InputDecoration(
                           prefixIcon: Icon(Icons.password),
                           hintText: "Current password",
                           border: InputBorder.none,
@@ -86,7 +86,7 @@ class _ChangePasswordWidgetState extends State<ChangePasswordWidget> {
                         obscureText: true,
                         enableSuggestions: false,
                         autocorrect: false,
-                        decoration: InputDecoration(
+                        decoration: const InputDecoration(
                           prefixIcon: Icon(Icons.password),
                           hintText: "New password",
                           border: InputBorder.none,
@@ -98,21 +98,21 @@ class _ChangePasswordWidgetState extends State<ChangePasswordWidget> {
                         obscureText: true,
                         enableSuggestions: false,
                         autocorrect: false,
-                        decoration: InputDecoration(
+                        decoration: const InputDecoration(
                           prefixIcon: Icon(Icons.password),
                           hintText: "Confirm password",
                           border: InputBorder.none,
                           fillColor: Colors.green,
                         ),
                       ),
-                      SizedBox(width: 0, height: 20),
+                      const SizedBox(width: 0, height: 20),
                       ElevatedButton(
                         onPressed: () {
                           changePassword();
                         },
                         child: const Text('Change password'),
                       ),
-                      SizedBox(width: 0, height: 20),
+                      const SizedBox(width: 0, height: 20),
                       OutlinedButton(
                         onPressed: () {
                           Navigator.pop(
@@ -123,7 +123,7 @@ class _ChangePasswordWidgetState extends State<ChangePasswordWidget> {
                         },
                         child: const Text('Cancel'),
                       ),
-                      SizedBox(width: 0, height: 20),
+                      const SizedBox(width: 0, height: 20),
                     ],
                   ),
                 ),

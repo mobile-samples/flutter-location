@@ -13,10 +13,10 @@ class Histories {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['time'] = this.time;
-    data['rate'] = this.rate;
-    data['comment'] = this.comment;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['time'] = time;
+    data['rate'] = rate;
+    data['comment'] = comment;
     return data;
   }
 }

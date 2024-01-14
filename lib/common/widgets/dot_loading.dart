@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 
-import 'dot-painter.dart';
+import 'dot_painter.dart';
 
 class DotLoadingIndicator extends StatefulWidget {
   final Color color;
 
-  DotLoadingIndicator({required this.color});
+  const DotLoadingIndicator({super.key, required this.color});
 
   @override
-  _DotLoadingIndicatorState createState() => _DotLoadingIndicatorState();
+  State<DotLoadingIndicator> createState() => _DotLoadingIndicatorState();
 }
 
 class _DotLoadingIndicatorState extends State<DotLoadingIndicator>
@@ -35,7 +35,7 @@ class _DotLoadingIndicatorState extends State<DotLoadingIndicator>
       animation: animation,
       builder: (BuildContext context, Widget? child) {
         return CustomPaint(
-          size: Size(2 * _maxRadius, 2 * _maxRadius),
+          size: const Size(2 * _maxRadius, 2 * _maxRadius),
           painter: DotPainter(radius: animation.value, color: widget.color),
         );
       },

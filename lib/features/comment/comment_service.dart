@@ -211,12 +211,12 @@ class FilmCommentThreadClient implements CommentThreadService {
 
   static final FilmCommentThreadClient instance =
       FilmCommentThreadClient._instantiate();
-  static final String name = "films";
+  static const String name = "films";
   String url = HttpHelper.instance.getUrl() + "/" + name;
 
   @override
   Future<int> comment(String id, String comment) async {
-    final storage = new FlutterSecureStorage();
+    const storage = FlutterSecureStorage();
     late String baseUrl = HttpHelper.instance.getUrl();
     final userId = await storage.read(key: 'userId');
     final headers = await HttpHelper.instance.buildHeader();
@@ -271,11 +271,12 @@ class FilmCommentThreadReplyClient implements CommentThreadReplyService {
 
   static final FilmCommentThreadReplyClient instance =
       FilmCommentThreadReplyClient._instantiate();
-  static final String name = "films";
+  static const String name = "films";
   String url = HttpHelper.instance.getUrl() + "/" + name;
 
+  @override
   Future<int> reply(String id, String commentId, String comment) async {
-    final storage = new FlutterSecureStorage();
+    const storage = FlutterSecureStorage();
     final userId = await storage.read(key: 'userId');
     final headers = await HttpHelper.instance.buildHeader();
     final response = await http.post(
@@ -314,7 +315,6 @@ class FilmCommentThreadReplyClient implements CommentThreadReplyService {
       headers: headers,
       body: jsonEncode(<String, dynamic>{'comment': comment}),
     );
-    print(response.body);
     if (response.statusCode == 200) {
       return 1;
     } else {

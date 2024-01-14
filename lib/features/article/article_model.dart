@@ -24,11 +24,11 @@ class Article {
   factory Article.fromJson(Map<String, dynamic> json) => Article(
         json['authorId'],
         json['content'],
-        json['description'] != null ? json['description'] : null,
+        json['description'],
         json['id'],
         json['name'],
         json['status'],
-        json['tags'] == null ? null : json['tags'].cast<String>(),
+        json['tags']?.cast<String>(),
         json['title'] ?? '',
         json['type'],
       );

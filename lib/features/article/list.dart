@@ -6,7 +6,7 @@ import 'article_service.dart';
 import 'detail.dart';
 
 class ArticleListWidget extends StatefulWidget {
-  const ArticleListWidget({Key? key}) : super(key: key);
+  const ArticleListWidget({super.key});
 
   @override
   State<ArticleListWidget> createState() => _ArticleListWidgetState();
@@ -49,7 +49,7 @@ class _ArticleListWidgetState extends State<ArticleListWidget> {
       return Center(
         child: CircularProgressIndicator(
           backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-          valueColor: new AlwaysStoppedAnimation<Color>(
+          valueColor: AlwaysStoppedAnimation<Color>(
               Theme.of(context).colorScheme.primary),
         ),
       );
@@ -60,7 +60,7 @@ class _ArticleListWidgetState extends State<ArticleListWidget> {
         body: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            SizedBox(width: 0, height: 20),
+            const SizedBox(width: 0, height: 20),
             Text(
               "Search articles",
               style: Theme.of(context).textTheme.headlineMedium,
@@ -75,9 +75,9 @@ class _ArticleListWidgetState extends State<ArticleListWidget> {
                 searchArticles(null);
               },
             ),
-            SizedBox(width: 0, height: 20),
+            const SizedBox(width: 0, height: 20),
             Text("Articles", style: Theme.of(context).textTheme.headlineMedium),
-            SizedBox(width: 0, height: 10),
+            const SizedBox(width: 0, height: 10),
             ListView.builder(
               shrinkWrap: true,
               itemCount: articles.length,
@@ -87,7 +87,7 @@ class _ArticleListWidgetState extends State<ArticleListWidget> {
                   onTap: () {
                     gotoArticleDetail(articles[i].id);
                   },
-                  child: Container(
+                  child: SizedBox(
                     height: 100,
                     child: Card(
                       child: Row(
@@ -102,7 +102,7 @@ class _ArticleListWidgetState extends State<ArticleListWidget> {
                                   overflow: TextOverflow.ellipsis,
                                   style: Theme.of(context).textTheme.titleLarge,
                                 ),
-                                SizedBox(width: 0, height: 10),
+                                const SizedBox(width: 0, height: 10),
                                 Text(
                                   articles[i].description ?? '',
                                   overflow: TextOverflow.ellipsis,
@@ -111,7 +111,7 @@ class _ArticleListWidgetState extends State<ArticleListWidget> {
                               ],
                             ),
                           ),
-                          Icon(Icons.arrow_forward_ios),
+                          const Icon(Icons.arrow_forward_ios),
                         ],
                       ),
                     ),

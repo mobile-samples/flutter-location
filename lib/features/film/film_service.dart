@@ -13,11 +13,10 @@ class FilmService {
   Future<SearchResult<Film>> search() async {
     late String baseUrl = HttpHelper.instance.getUrl();
     final response =
-        await http.get(Uri.parse(baseUrl + '/films/search?limit=24'));
+        await http.get(Uri.parse('$baseUrl/films/search?limit=24'));
     if (response.statusCode == 200) {
       dynamic res = HttpHelper.instance.jsonDecode(response.bodyBytes);
       SearchResult<Film> searchResult = SearchResult.fromJson(res);
-      print(searchResult);
       return searchResult;
     } else {
       throw json.decode(response.body)['error']['message'];
@@ -28,7 +27,7 @@ class FilmService {
     late String baseUrl = HttpHelper.instance.getUrl();
     final headers = await HttpHelper.instance.buildHeader();
     final response = await http.get(
-      Uri.parse(baseUrl + '/films/' + id),
+      Uri.parse('$baseUrl/films/$id'),
       headers: headers,
     );
     if (response.statusCode == 200) {

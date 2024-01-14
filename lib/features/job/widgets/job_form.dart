@@ -16,7 +16,7 @@ class _JobFormWidgetState extends State<JobFormWidget> {
       key: _formKey,
       child: Column(
         children: <Widget>[
-          Text('Title'),
+          const Text('Title'),
           TextFormField(
             // The validator receives the text that the user has entered.
             validator: (value) {

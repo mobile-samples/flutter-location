@@ -10,7 +10,7 @@ import 'rate.dart';
 
 class ReviewsTab extends StatefulWidget {
   const ReviewsTab({
-    Key? key,
+    super.key,
     required this.id,
     required this.rateRange,
     this.info,
@@ -19,7 +19,7 @@ class ReviewsTab extends StatefulWidget {
     required this.rateService,
     required this.searchRateService,
     required this.rateCommentService,
-  }) : super(key: key);
+  });
   final String id;
   final int rateRange;
   final Info? info;
@@ -40,13 +40,13 @@ class _ReviewsTabState extends State<ReviewsTab> {
     // widget.search(widget.id);
   }
 
-  Widget ListStars(Info? info, int rateRange, BuildContext context) {
+  Widget listStars(Info? info, int rateRange, BuildContext context) {
     List<Widget> list = [];
     final infoMap = info?.toMap();
     if ((info?.rate ?? 0) == 0) {
-      return new Column(crossAxisAlignment: CrossAxisAlignment.end, children: [
+      return Column(crossAxisAlignment: CrossAxisAlignment.end, children: [
         Padding(
-            padding: EdgeInsets.only(top: 10, bottom: 10),
+            padding: const EdgeInsets.only(top: 10, bottom: 10),
             child: Text(
               'No data for statistics yet.',
               style: Theme.of(context).textTheme.labelSmall,
@@ -54,7 +54,7 @@ class _ReviewsTabState extends State<ReviewsTab> {
       ]);
     }
     for (var i = rateRange; i > 0; i--) {
-      final per = infoMap?['rate' + i.toString()] ?? 0;
+      final per = infoMap?['rate$i'] ?? 0;
       list.add(Row(
         children: [
           RatingBar.builder(
@@ -64,14 +64,14 @@ class _ReviewsTabState extends State<ReviewsTab> {
             direction: Axis.horizontal,
             itemCount: i,
             itemSize: 12,
-            itemPadding: EdgeInsets.symmetric(horizontal: 4.0),
+            itemPadding: const EdgeInsets.symmetric(horizontal: 4.0),
             itemBuilder: (context, _) => Icon(
               Icons.star,
               color: Theme.of(context).colorScheme.tertiary,
             ),
             onRatingUpdate: (rating) {},
           ),
-          Container(
+          SizedBox(
               width: 200,
               child: LinearProgressIndicator(
                 backgroundColor: Theme.of(context).colorScheme.secondary,
@@ -83,7 +83,7 @@ class _ReviewsTabState extends State<ReviewsTab> {
         ],
       ));
     }
-    return new Column(
+    return Column(
         crossAxisAlignment: CrossAxisAlignment.end, children: list);
   }
 
@@ -93,7 +93,7 @@ class _ReviewsTabState extends State<ReviewsTab> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Padding(
-          padding: EdgeInsets.only(top: 16.0), // set the top padding value here
+          padding: const EdgeInsets.only(top: 16.0), // set the top padding value here
           child: Text(
             'Rating & Reviews',
             style: Theme.of(context).textTheme.titleMedium,
@@ -101,7 +101,7 @@ class _ReviewsTabState extends State<ReviewsTab> {
         ),
         if ((widget.info?.rate ?? 0) > 0)
           Padding(
-              padding: EdgeInsets.only(top: 10, bottom: 10),
+              padding: const EdgeInsets.only(top: 10, bottom: 10),
               child: Center(
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -110,7 +110,7 @@ class _ReviewsTabState extends State<ReviewsTab> {
                       widget.info?.rate.toString() ?? '0',
                       style: Theme.of(context).textTheme.titleLarge,
                     ),
-                    SizedBox(height: 10.0),
+                    const SizedBox(height: 10.0),
                     Text(
                       'out of 10',
                       style: Theme.of(context).textTheme.labelSmall,
@@ -120,7 +120,7 @@ class _ReviewsTabState extends State<ReviewsTab> {
               )),
         Row(
           children: [
-            ListStars(widget.info, widget.rateRange, context),
+            listStars(widget.info, widget.rateRange, context),
           ],
         ),
         Rates(

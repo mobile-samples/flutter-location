@@ -4,7 +4,7 @@ import 'package:flutter_user/features/job/job_model.dart';
 import 'package:flutter_user/features/job/Job_service.dart';
 
 class JobDetail extends StatefulWidget {
-  const JobDetail({Key? key, required this.id});
+  const JobDetail({super.key, required this.id});
 
   final String id;
 
@@ -27,8 +27,8 @@ class _JobDetailState extends State<JobDetail> {
   getByID() async {
     final res = await JobService.instance.load(widget.id);
     setState(() {
-      this.data = res;
-      this._loading = false;
+      data = res;
+      _loading = false;
     });
   }
 
@@ -38,7 +38,7 @@ class _JobDetailState extends State<JobDetail> {
       return Center(
         child: CircularProgressIndicator(
           backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-          valueColor: new AlwaysStoppedAnimation<Color>(
+          valueColor: AlwaysStoppedAnimation<Color>(
               Theme.of(context).colorScheme.primary),
         ),
       );
@@ -50,12 +50,12 @@ class _JobDetailState extends State<JobDetail> {
         body: Column(
           children: [
             Text(
-              this.data?.title ?? '',
+              data?.title ?? '',
               style: Theme.of(context).textTheme.titleLarge,
             ),
-            SizedBox(width: 0, height: 10),
+            const SizedBox(width: 0, height: 10),
             Text(
-              this.data?.description ?? '',
+              data?.description ?? '',
               style: Theme.of(context).textTheme.labelLarge,
             ),
           ],

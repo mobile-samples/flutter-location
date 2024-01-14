@@ -20,17 +20,17 @@ class HttpHelper {
   }
 
   jsonDecode(List<int> bodyBytes) {
-     String source = Utf8Decoder().convert(bodyBytes);
+     String source = const Utf8Decoder().convert(bodyBytes);
      return json.decode(source);
   }
 
   buildHeader() async {
-    final storage = new FlutterSecureStorage();
+    const storage = FlutterSecureStorage();
     final token = await storage.read(key: 'token') ?? '';
     if (token != '') {
       return {
         'Content-Type': 'application/json; charset=UTF-8',
-        'Authorization': 'Bearer ' + token,
+        'Authorization': 'Bearer $token',
       };
     }
     return {

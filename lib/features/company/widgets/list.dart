@@ -7,7 +7,7 @@ import 'card.dart';
 import 'detail.dart';
 
 class CompanyListWidget extends StatefulWidget {
-  const CompanyListWidget({Key? key}) : super(key: key);
+  const CompanyListWidget({super.key});
 
   @override
   State<CompanyListWidget> createState() => _CompanyListWidgetState();
@@ -64,7 +64,7 @@ class _CompanyListWidgetState extends State<CompanyListWidget> {
       return Center(
           child: CircularProgressIndicator(
         backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-        valueColor: new AlwaysStoppedAnimation<Color>(
+        valueColor: AlwaysStoppedAnimation<Color>(
             Theme.of(context).colorScheme.primary),
       ));
     }
@@ -75,7 +75,7 @@ class _CompanyListWidgetState extends State<CompanyListWidget> {
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisSize: MainAxisSize.min,
           children: [
-            SizedBox(width: 0, height: 20),
+            const SizedBox(width: 0, height: 20),
             Text(
               "Search companies",
               style: Theme.of(context).textTheme.headlineMedium,
@@ -90,10 +90,10 @@ class _CompanyListWidgetState extends State<CompanyListWidget> {
                 searchCompanies('');
               },
             ),
-            SizedBox(width: 0, height: 20),
+            const SizedBox(width: 0, height: 20),
             Text("Company list",
                 style: Theme.of(context).textTheme.headlineMedium),
-            SizedBox(width: 0, height: 10),
+            const SizedBox(width: 0, height: 10),
             ListView.builder(
               shrinkWrap: true,
               itemCount: companies.length,

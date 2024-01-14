@@ -38,12 +38,12 @@ class ErrorMessage {
 }
 
 class ResultInfo<T> {
-  num status;
+  num? status;
   List<ErrorMessage>? errors;
   T? value;
   String? message;
 
-  ResultInfo(this.status, this.errors, this.value, this.message);
+  ResultInfo({this.status, this.errors, this.value, this.message});
 }
 
 class SearchResult<T> {
@@ -52,5 +52,5 @@ class SearchResult<T> {
   String? nextPageToken;
   bool? last;
 
-  SearchResult(this.total, this.list);
+  SearchResult(this.total, this.list, this.nextPageToken, this.last);
 }

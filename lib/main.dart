@@ -1,15 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:flutter_user/features/landing.dart';
 
 import 'common/app_theme.dart';
-import 'router/router_constants.dart';
-import 'router/routes.dart';
 
 void main() {
-  runApp(MyApp());
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
@@ -18,9 +19,8 @@ class MyApp extends StatelessWidget {
       localizationsDelegates: AppLocalizations.localizationsDelegates,
       supportedLocales: AppLocalizations.supportedLocales,
       theme: getAppTheme(context, false),
-      routes: routes,
-      onGenerateRoute: generateRoutes,
-      initialRoute: landingRoute,
+      debugShowCheckedModeBanner: false,
+      home: const LandingWidget(),
     );
   }
 }

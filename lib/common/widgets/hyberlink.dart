@@ -5,7 +5,7 @@ InkWell getHyberLink(String title, Function onTapFunc) {
     onTap: () => onTapFunc(),
     child: Text(
       title,
-      style: TextStyle(
+      style: const TextStyle(
         decoration: TextDecoration.underline,
         color: Colors.blue,
       ),

@@ -2,15 +2,14 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_user/features/account/user_service.dart';
-import 'package:flutter_user/common/widgets/dot-loading.dart';
+import 'package:flutter_user/common/widgets/dot_loading.dart';
 
 class AutoCompleteCustom extends StatefulWidget {
   const AutoCompleteCustom(
-      {Key? key,
+      {super.key,
       required this.selected,
       required this.loadOptions,
-      required this.callbackFn})
-      : super(key: key);
+      required this.callbackFn});
   final List<String> selected;
   final Function loadOptions;
   final Function callbackFn;
@@ -53,13 +52,13 @@ class _AutoCompleteCustomState extends State<AutoCompleteCustom> {
       decoration: InputDecoration(
           hintText: "Type here...",
           suffixIcon: loading
-              ? SizedBox(
+              ? const SizedBox(
                   width: 12,
                   height: 12,
                   child: DotLoadingIndicator(color: Colors.green),
                 )
               : IconButton(
-                  icon: Icon(Icons.add),
+                  icon: const Icon(Icons.add),
                   onPressed: () {
                     setState(() {
                       selected.add(textFieldController.text);
@@ -70,13 +69,11 @@ class _AutoCompleteCustomState extends State<AutoCompleteCustom> {
                   },
                 )),
       onChanged: (value) {
-        if (debounceTimer != null) {
-          debounceTimer.cancel();
-        }
-        setState(() {
+        debounceTimer.cancel();
+              setState(() {
           loading = true;
         });
-        debounceTimer = Timer(Duration(milliseconds: 500), () async {
+        debounceTimer = Timer(const Duration(milliseconds: 500), () async {
           List<String> options = await getFilteredSuggestions(value);
           setState(() {
             filteredSuggestions = options;
@@ -89,10 +86,8 @@ class _AutoCompleteCustomState extends State<AutoCompleteCustom> {
 
   @override
   void dispose() {
-    if (debounceTimer != null) {
-      debounceTimer.cancel();
-    }
-    super.dispose();
+    debounceTimer.cancel();
+      super.dispose();
   }
 
   Widget buildSuggestionsList() {
