@@ -1,3 +1,5 @@
+import 'package:flutter_user/common/client/model.dart';
+
 class UserInfo {
   String? id;
   String? username;
@@ -65,7 +67,7 @@ class UserInfo {
         skills!.add(Skills.fromJson(v));
       });
     } else {
-      skills = [];
+      skills = [Skills(skill: 'Android'), Skills(skill: 'ReactJS')];
     }
     if (json['achievements'] != null) {
       achievements = <Achievements>[];
@@ -137,6 +139,21 @@ class UserInfo {
     data['coverURL'] = coverURL;
     return data;
   }
+
+  static String getId(UserInfo user) => user.id ?? '';
+}
+
+class UserFilter extends Filter {
+  UserFilter(
+    super.limit,
+    super.page,
+  );
+
+  @override
+  Map<String, dynamic> toJson() => {
+        'limit': limit ?? 0,
+        'page': page ?? 0,
+      };
 }
 
 class Skills {

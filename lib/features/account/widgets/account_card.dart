@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_user/common/widgets/app_size.dart';
 
 import '../user_model.dart';
 
@@ -7,27 +8,36 @@ class AccountCard extends StatelessWidget {
   final UserInfo userInfo;
   @override
   Widget build(BuildContext context) {
-    return Container(
-      alignment: Alignment.centerLeft,
-      height: double.maxFinite,
-      width: 150,
-      child: Card(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+    return Card(
+      child: Padding(
+        padding: const EdgeInsets.all(10),
+        child: Row(
           children: [
             Image(
+              width: 150,
+              height: 150,
               image: NetworkImage(userInfo.imageURL ??
                   'https://upload.wikimedia.org/wikipedia/commons/thumb/d/d1/Image_not_available.png/640px-Image_not_available.png'),
-              width: double.infinity,
-              height: 150,
-              fit: BoxFit.cover,
+              fit: BoxFit.fitHeight,
             ),
-            Padding(
-              padding: const EdgeInsets.fromLTRB(5, 5, 0, 0),
-              child: Text(
-                userInfo.username ?? '',
+            spaceWidth(20),
+            Expanded(
+              child: Column(
+                children: [
+                  Text(userInfo.username ?? ''),
+                  spaceHeight(20),
+                  Wrap(
+                    direction: Axis.horizontal,
+                    spacing: 10,
+                    children: userInfo.skills != null
+                        ? userInfo.skills!.map((e) {
+                            return Chip(label: Text(e.skill ?? ''));
+                          }).toList()
+                        : [],
+                  ),
+                ],
               ),
-            )
+            ),
           ],
         ),
       ),

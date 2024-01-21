@@ -1,29 +1,33 @@
 import 'dart:convert';
-import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:flutter_user/common/client/client.dart';
 import 'package:flutter_user/common/models/search.dart';
 import 'package:flutter_user/utils/http_helper.dart';
 import 'package:http/http.dart' as http;
 
 import 'user_model.dart';
 
-class UserService {
-  UserService._instantiate();
-  static final UserService instance = UserService._instantiate();
-  final storage = const FlutterSecureStorage();
+class UserService extends Client<UserInfo, String, UserFilter> {
 
-  Future<List<UserInfo>> searchUser(Filter filter) async {
-    late String baseUrl = HttpHelper.instance.getUrl();
-    final headers = await HttpHelper.instance.buildHeader();
-    final response = await http.post(Uri.parse('$baseUrl/users/search'),
-        headers: headers, body: jsonEncode(filter));
-    if (response.statusCode == 200) {
-      dynamic res = jsonDecode(response.body);
-      SearchResult<UserInfo> searchRes = SearchResult.fromJson(res);
-      return searchRes.list;
-    } else {
-      throw json.decode(response.body)['error'];
-    }
-  }
+  UserService._instantiate() : super(
+    serviceUrl: HttpHelper.instance.getUrl() + '/users',
+    fromJson: UserInfo.fromJson,
+    getId: UserInfo.getId,
+  );
+  static final UserService instance = UserService._instantiate();
+
+  // Future<List<UserInfo>> searchUser(Filter filter) async {
+  //   late String baseUrl = HttpHelper.instance.getUrl();
+  //   final headers = await HttpHelper.instance.buildHeader();
+  //   final response = await http.post(Uri.parse('$baseUrl/users/search'),
+  //       headers: headers, body: jsonEncode(filter));
+  //   if (response.statusCode == 200) {
+  //     dynamic res = jsonDecode(response.body);
+  //     SearchResult<UserInfo> searchRes = SearchResult.fromJson(res);
+  //     return searchRes.list;
+  //   } else {
+  //     throw json.decode(response.body)['error'];
+  //   }
+  // }
 
   Future<UserInfo> getUserInfo(String userId) async {
     late String baseUrl = HttpHelper.instance.getUrl();

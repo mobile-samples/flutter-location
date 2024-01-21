@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_user/common/widgets/app_size.dart';
 import 'package:flutter_user/common/widgets/circle_background.dart';
 import 'package:flutter_user/common/widgets/dialog.dart';
 import 'package:flutter_user/common/widgets/hyberlink.dart';
@@ -89,8 +90,6 @@ class _LoginWidgetState extends State<LoginWidget> {
                         decoration: const InputDecoration(
                           prefixIcon: Icon(Icons.account_box),
                           hintText: "Username",
-                          border: InputBorder.none,
-                          fillColor: Colors.green,
                         ),
                       ),
                       TextField(
@@ -102,25 +101,22 @@ class _LoginWidgetState extends State<LoginWidget> {
                         decoration: const InputDecoration(
                           prefixIcon: Icon(Icons.password),
                           hintText: "Password",
-                          border: InputBorder.none,
-                          fillColor: Colors.green,
                         ),
                       ),
-                      const SizedBox(width: 0, height: 20),
+                      spaceHeight(20),
                       ElevatedButton(
                         onPressed: () {
                           handleLogin();
                         },
-                        child: Text(
+                        child: const Text(
                           'Sign in', 
-                          style: Theme.of(context).textTheme.labelMedium,
                         ),
                       ),
-                      const SizedBox(width: 0, height: 20),
+                      spaceHeight(20),
                       getHyberLink('Sign up', signupWidget),
-                      const SizedBox(width: 0, height: 20),
+                      spaceHeight(20),
                       getHyberLink('Change password', changePwWidget),
-                      const SizedBox(width: 0, height: 20),
+                      spaceHeight(20),
                       getHyberLink('Forgot password', forgotPwWidget),
                     ],
                   ),
@@ -130,7 +126,6 @@ class _LoginWidgetState extends State<LoginWidget> {
           )
         ],
       ),
-      bottomNavigationBar: null,
     );
   }
 }

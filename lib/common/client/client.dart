@@ -61,7 +61,7 @@ class GenericClient<T, ID, R> extends ViewClient<T, ID> {
         if (res.statusCode == 409) {
           throw Exception('Version Error');
         }
-        return this.createResult(jsonDecode(res.body));
+        return this.createResult(res.body);
       })
       .catchError((err) {
         throw err;
@@ -78,7 +78,7 @@ class GenericClient<T, ID, R> extends ViewClient<T, ID> {
         if (res.statusCode == 409) {
           throw Exception('Version Error');
         }
-        return this.createResult(jsonDecode(res.body));
+        return this.createResult(res.body);
       })
       .catchError((err) {
         throw err;
@@ -95,7 +95,7 @@ class GenericClient<T, ID, R> extends ViewClient<T, ID> {
         if (res.statusCode == 409) {
           throw Exception('Version Error');
         }
-        return this.createResult(jsonDecode(res.body));
+        return this.createResult(res.body);
       })
       .catchError((err) {
         throw err;

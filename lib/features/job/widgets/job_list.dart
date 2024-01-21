@@ -54,7 +54,6 @@ class _JobListWidgetState extends SearchState<JobListWidget, Job, JobFilter> {
     return CustomScrollView(
       controller: _scrollController,
       slivers: [
-        // Implement search form
         SliverList(
           delegate: SliverChildBuilderDelegate(
             (context, index) {
